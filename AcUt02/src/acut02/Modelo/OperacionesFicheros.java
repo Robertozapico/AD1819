@@ -123,6 +123,8 @@ iv.Crear dos  excepciones personalizadas
 
         return contadorCreados;
     }
+    
+    //HACER EL EJERCICIO 1.C
 
     //Ejercicio 2
     public int fibonacci(int n) {
@@ -202,9 +204,6 @@ iv.Crear dos  excepciones personalizadas
     }
 
     /*Crear  los  siguientes  filtros  implementado  la  interface  FileNameFilter  (Se  puede  crear  una  clase  Filtros):  
-    i.Filtro  ficheros  de  imágenes  (jpg,  gif,  tiff,  ...)  
-    ii.Filtro  ficheros  de  video  (avi,  mp4,  mkv,  ...)  
-    iii.Filtro  directorios.    iv.Filtro  ficheros  con  un  tamaño  mínimo.  
     v.Filtro  fichero  modificados  en  las  últimas  24  horas.    
     vi.Probar  el  correcto  funcionamiento  desde  un  método  main().  
     vii.Generar  Javadoc. */

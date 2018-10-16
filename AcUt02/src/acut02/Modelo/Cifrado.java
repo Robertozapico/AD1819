@@ -72,5 +72,7 @@ public class Cifrado {
         System.out.println(distribucionLetras.toString());
         return caracteresCifrados;
     }
+    
+    
 
 }

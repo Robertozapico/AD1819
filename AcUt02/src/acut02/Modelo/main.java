@@ -20,11 +20,12 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String[] lista = null;
         File[] archivos = null;
         OperacionesFicheros of = new OperacionesFicheros();
         Cifrado cifrar = new Cifrado();
+        QuijoteLogica logicaQuijote = new QuijoteLogica();
         //Filtros
         //prueba de que el ejercicio 1.A funciona entero, falta javadoc
         //of.ListarFicheros("/home/alumnop/Carpetavacia/docu.txt", true, true);
@@ -43,27 +44,25 @@ public class main {
             System.out.print(of.fibonacci(i) + " ");
         }
          */
- 
- 
- 
         //of.ListarFicheros("", true, true);
-         //of.listarArchivosRecursivamente("/");
-         Filtros filtro = new Filtros();
-         //System.out.println(of.listarFicheros(filtro.filtroGif()));
-         System.out.println(of.listarFicheros(filtro.filtroPorFechaDeModificacion()));
-         
-       
-
+        //of.listarArchivosRecursivamente("/");
+//Filtros
+//Filtros filtro = new Filtros();
+//System.out.println(of.listarFicheros(filtro.filtroGif()));
+//System.out.println(of.listarFicheros(filtro.filtroPorFechaDeModificacion()));
 //Cifrado
-         /*
-         try {
-            System.out.println(cifrar.cifrar("archivo.csv", "archivoCifrado.csv", 3, true));
+/*
+try {
+System.out.println(cifrar.cifrar("archivo.csv", "archivoCifrado.csv", 3, true));
+} catch (IOException ex) {
+Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+}
+         */
+        try {
+            System.out.println(logicaQuijote.contarCantidadLetras("archivo.csv"));
         } catch (IOException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
-         
-
     }
 
 }
