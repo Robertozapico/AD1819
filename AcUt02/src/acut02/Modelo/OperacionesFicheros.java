@@ -180,105 +180,24 @@ iv.Crear dos  excepciones personalizadas
     }
 
     public ArrayList<File> listarFicheros(FilenameFilter filtro) {
-        /*EJEMPLO
-        File file = new File("\\");
-        FilenameFilter filtroGif = new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".gif");
-            }
 
-        };*/
         File file = new File("/home/alumnop/Documentos");
         ArrayList<File> listaFicherosFiltrados = new ArrayList<File>();
         File[] listaFicheros;
-        /*FilenameFilter filtroGif = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(".gif");
-            }
 
-        };*/
-        FilenameFilter filtroJpg = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(".jpg");
-            }
-
-        };
-        FilenameFilter filtroTiff = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(".tiff");
-            }
-
-        };
-        FilenameFilter filtroAvi = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(".avi");
-            }
-
-        };
-        FilenameFilter filtroMkv = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(".mkv");
-            }
-
-        };
-        FilenameFilter filtroMp4 = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.endsWith(".mp4");
-            }
-
-        };
         listaFicheros = file.listFiles();
         for (int i = 0; i < listaFicheros.length; i++) {
 
             if (filtro.accept(file, listaFicheros[i].getName())) {
-                
-                File[] listaFicherosGif = file.listFiles(filtro);
-                for (File file1 : listaFicherosGif) {
+
+                File[] listaFicherosFiltro = file.listFiles(filtro);
+                for (File file1 : listaFicherosFiltro) {
                     listaFicherosFiltrados.add(file1);
                 }
                 return listaFicherosFiltrados;
-                //listaDeFicheros.add(listaFicherosGif);
-            } else if (filtro.equals(filtroJpg)) {
-                File[] listaFicherosJpg = file.listFiles(filtroJpg);
-                for (File file1 : listaFicherosJpg) {
-                    listaFicherosFiltrados.add(file1);
-                }
-                return listaFicherosFiltrados;
-            } else if (filtro.equals(filtroTiff)) {
-                File[] listaFicherosTiff = file.listFiles(filtroTiff);
-                for (File file1 : listaFicherosTiff) {
-                    listaFicherosFiltrados.add(file1);
-                }
-                return listaFicherosFiltrados;
-            } else if (filtro.equals(filtroMp4)) {
-                File[] listaFicherosMp4 = file.listFiles(filtroMp4);
-                for (File file1 : listaFicherosMp4) {
-                    listaFicherosFiltrados.add(file1);
-                }
-                return listaFicherosFiltrados;
-            } else if (filtro.equals(filtroMkv)) {
-                File[] listaFicherosMkv = file.listFiles(filtroMkv);
-                for (File file1 : listaFicherosMkv) {
-                    listaFicherosFiltrados.add(file1);
-                }
-                return listaFicherosFiltrados;
-            } else if (filtro.equals(filtroAvi)) {
-                File[] listaFicherosAvi = file.listFiles(filtroAvi);
-                for (File file1 : listaFicherosAvi) {
-                    listaFicherosFiltrados.add(file1);
-                }
-                return listaFicherosFiltrados;
-            }/*else{
-                for(File file1 : listaFicherosFiltrados)
-            }*/
+            }
         }
+
         return listaFicherosFiltrados;
     }
 

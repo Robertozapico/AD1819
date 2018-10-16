@@ -7,13 +7,15 @@ package acut02.Modelo;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
 /**
  *
  * @author alumnop
  */
 public class Filtros {
-
 
     public FilenameFilter filtroGif() {
         FilenameFilter filtroGif = new FilenameFilter() {
@@ -81,9 +83,64 @@ public class Filtros {
         return filtroMkv;
     }
 
-    public FilenameFilter filtritocarpetas(){
-        
-        return null;
-        
+    public FilenameFilter filtroCarpetas() {
+        FilenameFilter filtroCarpetas = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                File ficheroCarpeta = new File(file + "/" + name);
+                return ficheroCarpeta.isDirectory();
+            }
+        };
+        return filtroCarpetas;
+
     }
+
+    public FilenameFilter filtroPorTamanno() {
+        System.out.println("Escribe el tamaño en bytes");
+        Scanner miTeclado = new Scanner(System.in);
+        int tamannoArchivos = miTeclado.nextInt();
+        FilenameFilter filtroCarpetas = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                File ficheroCarpeta = new File(file + "/" + name);
+                System.out.println("Hecho por tamaño");
+                return ficheroCarpeta.length() >= tamannoArchivos;
+            }
+        };
+        return filtroCarpetas;
+
+    }
+
+    public FilenameFilter filtroPorFechaDeModificacion() {
+        FilenameFilter filtroCarpetas = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                File ficheroCarpeta = new File(file + "/" + name);
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+                Date fecha = new Date();
+                System.out.println("Fecha de hoy: " + fecha);
+                System.out.println("Fecha total: " + sdf.format(fecha));
+
+                //System.out.println("Hecho por fecha " + sdf.format(ficheroCarpeta.lastModified())-sdf.format(SystemDate));
+                //return (ficheroCarpeta.lastModified() - fecha)<=24;
+                //cambiarlo el return
+                return true;
+            }
+        };
+        return filtroCarpetas;
+
+    }
+    /*PA COGER LA FECHA DE AYER
+private Date yesterday() {
+    final Calendar cal = Calendar.getInstance();
+    cal.add(Calendar.DATE, -1);
+    return cal.getTime();
+}
+
+private String getYesterdayDateString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return dateFormat.format(yesterday());
+}
+     */
 }

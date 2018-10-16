@@ -49,7 +49,8 @@ public class main {
         //of.ListarFicheros("", true, true);
          //of.listarArchivosRecursivamente("/");
          Filtros filtro = new Filtros();
-         System.out.println(of.listarFicheros(filtro.filtroGif()));
+         //System.out.println(of.listarFicheros(filtro.filtroGif()));
+         System.out.println(of.listarFicheros(filtro.filtroPorFechaDeModificacion()));
          
        
 
