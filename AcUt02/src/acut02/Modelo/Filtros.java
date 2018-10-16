@@ -8,6 +8,7 @@ package acut02.Modelo;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -116,31 +117,20 @@ public class Filtros {
             @Override
             public boolean accept(File file, String name) {
                 File ficheroCarpeta = new File(file + "/" + name);
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-                Date fecha = new Date();
-                System.out.println("Fecha de hoy: " + fecha);
-                System.out.println("Fecha total: " + sdf.format(fecha));
-
-                //System.out.println("Hecho por fecha " + sdf.format(ficheroCarpeta.lastModified())-sdf.format(SystemDate));
-                //return (ficheroCarpeta.lastModified() - fecha)<=24;
-                //cambiarlo el return
-                return true;
+                Date fecha = new Date(ficheroCarpeta.lastModified());
+                
+                Date fechaPasada = yesterday();
+                return fechaPasada.before(fecha);
             }
         };
         return filtroCarpetas;
-
     }
-    /*PA COGER LA FECHA DE AYER
-private Date yesterday() {
-    final Calendar cal = Calendar.getInstance();
-    cal.add(Calendar.DATE, -1);
-    return cal.getTime();
-}
 
-private String getYesterdayDateString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        return dateFormat.format(yesterday());
-}
-     */
+    /*PA COGER LA FECHA DE AYER*/
+    public Date yesterday() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
+
 }

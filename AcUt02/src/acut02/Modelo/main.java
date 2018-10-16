@@ -50,6 +50,8 @@ public class main {
 //Filtros filtro = new Filtros();
 //System.out.println(of.listarFicheros(filtro.filtroGif()));
 //System.out.println(of.listarFicheros(filtro.filtroPorFechaDeModificacion()));
+
+
 //Cifrado
 /*
 try {
@@ -58,11 +60,19 @@ System.out.println(cifrar.cifrar("archivo.csv", "archivoCifrado.csv", 3, true));
 Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
 }
          */
-        try {
-            System.out.println(logicaQuijote.contarCantidadLetras("archivo.csv"));
-        } catch (IOException ex) {
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+
+//QUIJOTE
+//try {
+            //System.out.println(logicaQuijote.contarCantidadLetras("archivo.csv"));
+            //System.out.println(logicaQuijote.contarLineas("archivo.csv"));
+            //System.out.println(logicaQuijote.buscarPalabra("quijote.txt","quijote"));
+            //System.out.println(logicaQuijote.escribirLineasAlReves("quijote.txt","quijotealreves.txt"));
+            //System.out.println(logicaQuijote.contarCantidadPalabras("quijote.txt"));
+           // System.out.println(logicaQuijote.separarEnCapitulos("quijote.txt"));
+      //  } catch (IOException ex) {
+    //        Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+    //    }
     }
 
 }

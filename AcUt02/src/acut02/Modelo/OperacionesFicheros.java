@@ -67,22 +67,7 @@ public class OperacionesFicheros {
                 }
 
             });
-            /*
-            for (int i = 0; i < lista.length; i++) {
-                System.out.println(lista[i].toString());
-                System.out.println(lista[i].length());
-
-            }
-             */
         }
-        /*else {
-            for (int i = 0; i < lista.length; i++) {
-                System.out.println(lista[i].toString());
-                System.out.println(lista[i].length());
-
-            }
-        }*/
-
         if (soloDirectorios == true) {
 
             for (int i = 0; i < lista.length; i++) {
@@ -118,14 +103,14 @@ iv.Crear dos  excepciones personalizadas
             }
             nuevoDirectorio.mkdir();
             contadorCreados++;
-
         }
-
         return contadorCreados;
     }
-    
-    //HACER EL EJERCICIO 1.C
 
+    //HACER EL EJERCICIO 1.C
+    
+    
+    
     //Ejercicio 2
     public int fibonacci(int n) {
         if (n > 1) {
@@ -161,37 +146,28 @@ iv.Crear dos  excepciones personalizadas
     public void listarArchivosRecursivamente(String ruta) {
         File rutaFicheros = new File(ruta);
         File[] ficheros = rutaFicheros.listFiles();
-
         for (int i = 0; i < ficheros.length; i++) {
-
             if (ficheros[i].isDirectory() == false) {
                 String guion = "-";
                 for (int j = 0; j < ficheros[i].getParent().length(); j++) {
                     guion += "-";
                 }
                 System.out.println("\n" + "./" + guion + "/" + ficheros[i].getName());
-
             } else {
-
                 System.out.println(ficheros[i].getAbsolutePath());
                 listarArchivosRecursivamente(ficheros[i].getAbsolutePath());
-
             }
-
         }
     }
 
     public ArrayList<File> listarFicheros(FilenameFilter filtro) {
-
-        File file = new File("/home/alumnop/Documentos");
+        //File file = new File("/home/alumnop/Documentos");
+        File file = new File("C:/Prueba");
         ArrayList<File> listaFicherosFiltrados = new ArrayList<File>();
         File[] listaFicheros;
-
         listaFicheros = file.listFiles();
         for (int i = 0; i < listaFicheros.length; i++) {
-
             if (filtro.accept(file, listaFicheros[i].getName())) {
-
                 File[] listaFicherosFiltro = file.listFiles(filtro);
                 for (File file1 : listaFicherosFiltro) {
                     listaFicherosFiltrados.add(file1);
@@ -199,12 +175,8 @@ iv.Crear dos  excepciones personalizadas
                 return listaFicherosFiltrados;
             }
         }
-
         return listaFicherosFiltrados;
     }
-
-    /*Crear  los  siguientes  filtros  implementado  la  interface  FileNameFilter  (Se  puede  crear  una  clase  Filtros):  
-    v.Filtro  fichero  modificados  en  las  últimas  24  horas.    
-    vi.Probar  el  correcto  funcionamiento  desde  un  método  main().  
+    /*
     vii.Generar  Javadoc. */
 }
