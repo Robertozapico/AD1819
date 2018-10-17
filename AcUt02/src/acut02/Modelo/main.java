@@ -39,6 +39,11 @@ public class main {
         File ruta = new File("/home/alumnop/Carpetavacia");
         System.out.println(of.crearDirectorio(ruta, listaDirectorios));
          */
+        
+        
+        //cambiar extensiones
+        //System.out.println(of.cambiarExtensionFicheros("/home/alumnop/Carpetavacia/", "txt", "tiff"));
+        
  /*FIBONACCI
         for (int i = 0; i < 10; i++) {
             System.out.print(of.fibonacci(i) + " ");
@@ -63,16 +68,16 @@ Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         
 
 //QUIJOTE
-//try {
+try {
             //System.out.println(logicaQuijote.contarCantidadLetras("archivo.csv"));
             //System.out.println(logicaQuijote.contarLineas("archivo.csv"));
             //System.out.println(logicaQuijote.buscarPalabra("quijote.txt","quijote"));
             //System.out.println(logicaQuijote.escribirLineasAlReves("quijote.txt","quijotealreves.txt"));
-            //System.out.println(logicaQuijote.contarCantidadPalabras("quijote.txt"));
-           // System.out.println(logicaQuijote.separarEnCapitulos("quijote.txt"));
-      //  } catch (IOException ex) {
-    //        Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
-    //    }
+            logicaQuijote.contarCantidadPalabras("quijote.txt");
+           //System.out.println(logicaQuijote.separarEnCapitulos("quijote.txt"));
+        } catch (IOException ex) {
+           Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

@@ -24,9 +24,8 @@ public class QuijoteLogica {
 
     private FileInputStream FicheroALeer = null;
     private Map<String, Long> distribucionLetras = new HashMap<>();
-    private Map<String, Long> distribucionPalabras = new HashMap<>();
+    private Map<String, Float> distribucionPalabras = new HashMap<>();
 
-    // e.Mostrar  las  palabras  distintas  que  hay  en  el  texto  y  el  número  de  veces  que  aparecen.  f.Dividir  el  fichero  de  El  Quijote  en  los  distintos  capítulos. 
     public int contarCantidadLetras(String ficheroParaLeer) throws FileNotFoundException, IOException {
 
         FicheroALeer = new FileInputStream(ficheroParaLeer);
@@ -90,33 +89,39 @@ public class QuijoteLogica {
         return palabrasDadasDeVuelta;
     }
 
-    public int contarCantidadPalabras(String ruta) throws FileNotFoundException, IOException {
+    public long contarCantidadPalabras(String ruta) throws FileNotFoundException, IOException {
 
         BufferedReader inputStream = new BufferedReader(new FileReader(ruta));
 
-        int cantidadPalabras = 0;
+        float cantidadPalabras = 0;
+        long cantidadPalabrasTotales=0;
         int caracterLeido;
         String palabraLeida = "";
+        
         while ((caracterLeido = inputStream.read()) != -1) {
-            long contadorLetras = 1;
+            cantidadPalabras = 1;
 
             if (caracterLeido != 10 && caracterLeido != 32) {
                 palabraLeida += (char) caracterLeido;
-                if (distribucionLetras.containsKey(palabraLeida)) {
-                    contadorLetras += distribucionLetras.get(palabraLeida);
-
-                }
-                distribucionLetras.put(palabraLeida, contadorLetras);
-                cantidadPalabras++;
             } else {
+                if (distribucionPalabras.containsKey(palabraLeida)) {
+                    cantidadPalabras += distribucionPalabras.get(palabraLeida);
+                }
+                if(caracterLeido != 10 || caracterLeido != 32){
+                distribucionPalabras.put(palabraLeida, cantidadPalabras);
                 palabraLeida = "";
+                }
             }
 
         }
-        System.out.println(distribucionLetras.toString());
+        if (distribucionPalabras.containsKey(palabraLeida)) {
+            cantidadPalabras += distribucionPalabras.get(palabraLeida);
+        }//60809
+        distribucionPalabras.put(palabraLeida, cantidadPalabras);
+        System.out.println(distribucionPalabras.toString());
         inputStream.close();
 
-        return cantidadPalabras;
+        return cantidadPalabrasTotales;
     }
 
     public int separarEnCapitulos(String ruta) throws FileNotFoundException, IOException {
@@ -125,18 +130,18 @@ public class QuijoteLogica {
         FileWriter outputStream;
         int cantidadLineas = 0;
         String linea;
-        
+
         int contadorFicheros = 0;
         while ((linea = inputStream.readLine()) != null) {
             if (!linea.contains("Capítulo")) {
-                outputStream = new FileWriter("ficheronuevo" + contadorFicheros+".txt", true);
-                outputStream.write(linea+"\n");
+                outputStream = new FileWriter("ficheronuevo" + contadorFicheros + ".txt", true);
+                outputStream.write(linea + "\n");
                 outputStream.close();
                 cantidadLineas++;
             } else {
                 contadorFicheros++;
-                outputStream = new FileWriter("ficheronuevo" + contadorFicheros+".txt", true);
-                outputStream.write(linea+"\n");
+                outputStream = new FileWriter("ficheronuevo" + contadorFicheros + ".txt", true);
+                outputStream.write(linea + "\n");
                 outputStream.close();
                 cantidadLineas++;
             }

@@ -107,10 +107,59 @@ iv.Crear dos  excepciones personalizadas
         return contadorCreados;
     }
 
-    //HACER EL EJERCICIO 1.C
-    
-    
-    
+    //EJERCICIO 1.C
+    //iv.Generar  Javadoc
+    public int cambiarExtensionFicheros(String ruta, String extensionAntigua, String extensionNueva) throws ExcepcionPersonalizada {
+        File file = new File(ruta);
+        int ficheroCambiado = 0;
+        File[] listaFicheros;
+        listaFicheros = file.listFiles();
+        for (int i = 0; i < listaFicheros.length; i++) {
+
+            if (listaFicheros[i].getName().endsWith(extensionAntigua)) {
+
+                String nombreDelFichero = listaFicheros[i].getName().substring(0, listaFicheros[i].getName().lastIndexOf('.'));
+                nombreDelFichero += "." + extensionNueva;
+                for (int j = 0; j < listaFicheros.length; j++) {
+
+                    if (listaFicheros[j].getName().equals(nombreDelFichero)) {
+                        throw new ExcepcionPersonalizada("Ya existe el archivo con ese nombre");
+                    }
+                }
+                nombreDelFichero += "." + extensionNueva;
+                listaFicheros[i].renameTo(new File(listaFicheros[i].getParentFile(), nombreDelFichero));
+                ficheroCambiado++;
+            }
+        }
+        System.out.println(file.listFiles());
+        return ficheroCambiado;
+    }
+
+    public int cambiarExtensionFicheros(File file, String extensionAntigua, String extensionNueva) throws ExcepcionPersonalizada {
+        int ficheroCambiado = 0;
+        File[] listaFicheros;
+        listaFicheros = file.listFiles();
+        for (int i = 0; i < listaFicheros.length; i++) {
+
+            if (listaFicheros[i].getName().endsWith(extensionAntigua)) {
+
+                String nombreDelFichero = listaFicheros[i].getName().substring(0, listaFicheros[i].getName().lastIndexOf('.'));
+                nombreDelFichero += "." + extensionNueva;
+                for (int j = 0; j < listaFicheros.length; j++) {
+
+                    if (listaFicheros[j].getName().equals(nombreDelFichero)) {
+                        throw new ExcepcionPersonalizada("Ya existe el archivo con ese nombre");
+                    }
+                }
+                nombreDelFichero += "." + extensionNueva;
+                listaFicheros[i].renameTo(new File(listaFicheros[i].getParentFile(), nombreDelFichero));
+                ficheroCambiado++;
+            }
+        }
+        System.out.println(file.listFiles());
+        return ficheroCambiado;
+    }
+
     //Ejercicio 2
     public int fibonacci(int n) {
         if (n > 1) {
