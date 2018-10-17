@@ -18,6 +18,10 @@ import java.util.Scanner;
  */
 public class Filtros {
 
+    /**
+     *
+     * @return
+     */
     public FilenameFilter filtroGif() {
         FilenameFilter filtroGif = new FilenameFilter() {
             @Override
@@ -29,6 +33,10 @@ public class Filtros {
         return filtroGif;
     }
 
+    /**
+     *
+     * @return
+     */
     public FilenameFilter filtroJpg() {
         FilenameFilter filtroJpg = new FilenameFilter() {
             @Override
@@ -40,6 +48,10 @@ public class Filtros {
         return filtroJpg;
     }
 
+    /**
+     *
+     * @return
+     */
     public FilenameFilter filtroTiff() {
         FilenameFilter filtroTiff = new FilenameFilter() {
             @Override
@@ -51,6 +63,10 @@ public class Filtros {
         return filtroTiff;
     }
 
+    /**
+     *
+     * @return
+     */
     public FilenameFilter filtroAvi() {
         FilenameFilter filtroAvi = new FilenameFilter() {
             @Override
@@ -73,6 +89,10 @@ public class Filtros {
         return filtroMp4;
     }
 
+    /**
+     *
+     * @return
+     */
     public FilenameFilter filtroMkv() {
         FilenameFilter filtroMkv = new FilenameFilter() {
             @Override
@@ -84,6 +104,10 @@ public class Filtros {
         return filtroMkv;
     }
 
+    /**
+     *
+     * @return
+     */
     public FilenameFilter filtroCarpetas() {
         FilenameFilter filtroCarpetas = new FilenameFilter() {
             @Override
@@ -96,6 +120,10 @@ public class Filtros {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public FilenameFilter filtroPorTamanno() {
         System.out.println("Escribe el tamaño en bytes");
         Scanner miTeclado = new Scanner(System.in);
@@ -112,25 +140,60 @@ public class Filtros {
 
     }
 
-    public FilenameFilter filtroPorFechaDeModificacion() {
+    /**
+     *
+     * @return
+     */
+    public FilenameFilter filtroPorModificacionEnLasUltimas24h() {
         FilenameFilter filtroCarpetas = new FilenameFilter() {
             @Override
             public boolean accept(File file, String name) {
-                File ficheroCarpeta = new File(file + "/" + name);
-                Date fecha = new Date(ficheroCarpeta.lastModified());
-                
-                Date fechaPasada = yesterday();
-                return fechaPasada.before(fecha);
+                File ficheroAFiltrar = new File(file + "/" + name);
+                Date fechaDeUltimaModificacionDelFichero = new Date(ficheroAFiltrar.lastModified());
+
+                Date fechaPasada = fechaDeAyer();
+                return fechaPasada.before(fechaDeUltimaModificacionDelFichero);
             }
         };
         return filtroCarpetas;
     }
 
-    /*PA COGER LA FECHA DE AYER*/
-    public Date yesterday() {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        return cal.getTime();
+    /**
+     *
+     * @param totalHoras
+     * @param totalMinutos
+     * @param totalsegundos
+     * @return
+     */
+    public FilenameFilter filtroPorFechaDeModificacion(int totalHoras, int totalMinutos, int totalsegundos) {
+        FilenameFilter filtroCarpetas = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                File ficheroCarpeta = new File(file + "/" + name);
+
+                Date fechaHoy = null;
+
+                long timeActual = fechaHoy.getTime();
+
+                if ((ficheroCarpeta.lastModified() - timeActual) < (1000 * 3600 * totalHoras + 1000 * 60 * totalMinutos + 1000 * totalsegundos)) {
+                    return true;
+
+                }
+                return true;
+
+            }
+        };
+        return filtroCarpetas;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Date fechaDeAyer() {
+        Calendar fecha = Calendar.getInstance();
+        fecha.add(Calendar.DATE, -1);
+        return fecha.getTime();
     }
 
 }

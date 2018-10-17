@@ -116,7 +116,7 @@ public class QuijoteLogica {
         }
         if (distribucionPalabras.containsKey(palabraLeida)) {
             cantidadPalabras += distribucionPalabras.get(palabraLeida);
-        }//60809
+        }
         distribucionPalabras.put(palabraLeida, cantidadPalabras);
         System.out.println(distribucionPalabras.toString());
         inputStream.close();
