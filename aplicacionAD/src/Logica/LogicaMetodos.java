@@ -13,10 +13,9 @@ import java.io.File;
  */
 public class LogicaMetodos {
 
-    
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public File[] obtenerParticiones() {
         File[] particiones = File.listRoots();
@@ -34,21 +33,24 @@ public class LogicaMetodos {
         int espacioDisponibleDeLaUnidad = (int) (unidadSeleccionada.getFreeSpace() / 1073741824);
         return espacioDisponibleDeLaUnidad;
     }
-/**
- * 
- * @param rutaEscaneada
- * @return 
- */
+
+    /**
+     *
+     * @param rutaEscaneada
+     * @return
+     */
     public File[] escanearUnidad(String rutaEscaneada) {
         File unidadSeleccionada = new File(rutaEscaneada);
         File[] ficherosDeLaUnidad = unidadSeleccionada.listFiles();
         int ficheroCogido;
-        for (ficheroCogido = 0; ficheroCogido < ficherosDeLaUnidad.length; ficheroCogido++) {
-            if (ficherosDeLaUnidad[ficheroCogido].isDirectory()) {
+        if (ficherosDeLaUnidad != null) {
+            for (ficheroCogido = 0; ficheroCogido < ficherosDeLaUnidad.length; ficheroCogido++) {
+                if (ficherosDeLaUnidad[ficheroCogido].isDirectory()) {
 
-                escanearUnidad(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                    escanearUnidad(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                }
+                System.out.println(ficherosDeLaUnidad[ficheroCogido].getName());
             }
-            System.out.println(ficherosDeLaUnidad[ficheroCogido].getName());
         }
         System.out.println("-------------------------------------------");
         return ficherosDeLaUnidad;
@@ -60,5 +62,5 @@ public class LogicaMetodos {
     •Sugiere  eliminar  ficheros  de  gran  tamaño.
     •Sugiere  eliminar  ficheros  antiguos.
     •Busca  ficheros  duplicados
-    */
+     */
 }
