@@ -8,13 +8,11 @@ package acut02.Modelo;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -23,132 +21,174 @@ import java.util.regex.Pattern;
 public class QuijoteLogica {
 
     private FileInputStream FicheroALeer = null;
-    private Map<String, Long> distribucionLetras = new HashMap<>();
-    private Map<String, Float> distribucionPalabras = new HashMap<>();
+    private Map<String, Long> distribucionLetrasDeUnFichero = new HashMap<>();
+    private Map<String, Float> palabrasDeUnFichero = new HashMap<>();
 
-    public int contarCantidadLetras(String ficheroParaLeer) throws FileNotFoundException, IOException {
+    /**
+     *
+     * @param ficheroParaLeer
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public int contarCantidadLetrasDeUnFichero(String ficheroParaLeer) throws FileNotFoundException, IOException {
 
         FicheroALeer = new FileInputStream(ficheroParaLeer);
-        int cantidadCaracteres = 0;
-        int caracterLeido;
+        int cantidadCaracteresDeUnFichero = 0;
+        int caracterLeidoDelFichero;
 
-        while ((caracterLeido = FicheroALeer.read()) != -1) {
-            long contadorLetras = 1;
+        while ((caracterLeidoDelFichero = FicheroALeer.read()) != -1) {
+            long contadorCuantasVecesApareceUnaLetra = 1;
 
-            if (caracterLeido != 10 && caracterLeido != 32) {
-                cantidadCaracteres++;
-                if (distribucionLetras.containsKey(Character.toString((char) caracterLeido))) {
-                    contadorLetras += distribucionLetras.get(Character.toString((char) caracterLeido));
+            if (caracterLeidoDelFichero != 10 && caracterLeidoDelFichero != 32) {
+                cantidadCaracteresDeUnFichero++;
+                if (distribucionLetrasDeUnFichero.containsKey(Character.toString((char) caracterLeidoDelFichero))) {
+                    contadorCuantasVecesApareceUnaLetra += distribucionLetrasDeUnFichero.get(Character.toString((char) caracterLeidoDelFichero));
 
                 }
-                distribucionLetras.put(Character.toString((char) caracterLeido), contadorLetras);
+                distribucionLetrasDeUnFichero.put(Character.toString((char) caracterLeidoDelFichero), contadorCuantasVecesApareceUnaLetra);
             }
         }
         FicheroALeer.close();
 
-        System.out.println(distribucionLetras.toString());
-        return cantidadCaracteres;
+        System.out.println(distribucionLetrasDeUnFichero.toString());
+        return cantidadCaracteresDeUnFichero;
     }
 
-    public static int contarLineas(String ruta) throws FileNotFoundException, IOException {
-        BufferedReader inputStream = new BufferedReader(new FileReader("quijote.txt"));
-        int totalLineas = 0;
-        String linea;
-        while ((linea = inputStream.readLine()) != null) {
-            totalLineas++;
+    /**
+     *
+     * @param rutaDelFicheroParaLeer
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static int contarLineasDeUnFichero(String rutaDelFicheroParaLeer) throws FileNotFoundException, IOException {
+        BufferedReader ficheroLeido = new BufferedReader(new FileReader("quijote.txt"));
+        int totalLineasLeidasDelFichero = 0;
+        String lineaLeidaDelFicheroLeido;
+        while ((lineaLeidaDelFicheroLeido = ficheroLeido.readLine()) != null) {
+            totalLineasLeidasDelFichero++;
         }
-        return totalLineas;
+        return totalLineasLeidasDelFichero;
     }
 
-    public static int buscarPalabra(String ruta, String palabra) throws FileNotFoundException, IOException {
-        BufferedReader inputStream = new BufferedReader(new FileReader("quijote.txt"));
-        int totalVecesAparecePalabra = 0;
-        String linea;
-        while ((linea = inputStream.readLine()) != null) {
-            linea = linea.toLowerCase();
-            if (linea.contains(palabra)) {
-                totalVecesAparecePalabra++;
+    /**
+     *
+     * @param rutaDelFicheroParaLeer
+     * @param ficheroNuevoDondeGuardarLaInformacion
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static int buscarPalabraEnUnFichero(String rutaDelFicheroParaLeer, String ficheroNuevoDondeGuardarLaInformacion) throws FileNotFoundException, IOException {
+        BufferedReader ficheroLeido = new BufferedReader(new FileReader("quijote.txt"));
+        int totalVecesApareceLaPalabra = 0;
+        String lineaLeidaDelFicheroLeido;
+        while ((lineaLeidaDelFicheroLeido = ficheroLeido.readLine()) != null) {
+            lineaLeidaDelFicheroLeido = lineaLeidaDelFicheroLeido.toLowerCase();
+            if (lineaLeidaDelFicheroLeido.contains(ficheroNuevoDondeGuardarLaInformacion)) {
+                totalVecesApareceLaPalabra++;
             }
         }
-        return totalVecesAparecePalabra;
+        return totalVecesApareceLaPalabra;
     }
 
-    public static int escribirLineasAlReves(String ruta, String ficheronuevo) throws FileNotFoundException, IOException {
-        BufferedReader inputStream = new BufferedReader(new FileReader(ruta));
-        FileWriter outputStream = new FileWriter(ficheronuevo, true);
+    /**
+     *
+     * @param rutaDelFicheroParaLeer
+     * @param ficheroNuevoDondeGuardarLaInformacion
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static int escribirLineasAlRevesDeUnFichero(String rutaDelFicheroParaLeer, String ficheroNuevoDondeGuardarLaInformacion) throws FileNotFoundException, IOException {
+        BufferedReader ficheroLeido = new BufferedReader(new FileReader(rutaDelFicheroParaLeer));
+        FileWriter ficheroParaGrabar = new FileWriter(ficheroNuevoDondeGuardarLaInformacion, true);
         int palabrasDadasDeVuelta = 0;
-        String linea;
+        String lineaLeidaDelFicheroLeido;
 
-        while ((linea = inputStream.readLine()) != null) {
-            StringBuilder reverse = new StringBuilder(linea);
+        while ((lineaLeidaDelFicheroLeido = ficheroLeido.readLine()) != null) {
+            StringBuilder stringParaDarLaVueltaAUnString = new StringBuilder(lineaLeidaDelFicheroLeido);
             palabrasDadasDeVuelta++;
-            String lineaDadaVuelta = reverse.reverse().toString();
-            //System.out.println(reverse.reverse().toString());
-            outputStream.write(lineaDadaVuelta + "\n");
+            String lineaDadaVuelta = stringParaDarLaVueltaAUnString.reverse().toString();
+            ficheroParaGrabar.write(lineaDadaVuelta + "\n");
         }
         return palabrasDadasDeVuelta;
     }
 
-    public long contarCantidadPalabras(String ruta) throws FileNotFoundException, IOException {
+    /**
+     *
+     * @param rutaDelFicheroParaLeer
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public int contarCantidadPalabrasDeUnFichero(String rutaDelFicheroParaLeer) throws FileNotFoundException, IOException {
 
-        BufferedReader inputStream = new BufferedReader(new FileReader(ruta));
+        BufferedReader ficheroLeido = new BufferedReader(new FileReader(rutaDelFicheroParaLeer));
 
-        float cantidadPalabras = 0;
-        long cantidadPalabrasTotales=0;
-        int caracterLeido;
-        String palabraLeida = "";
-        
-        while ((caracterLeido = inputStream.read()) != -1) {
-            cantidadPalabras = 1;
+        float cantidadVecesApareceLaPalabra = 0;
+        int CaracterLeidoDelFichero;
+        String palabraLeidaResultanteDelCaracterLeido = "";
 
-            if (caracterLeido != 10 && caracterLeido != 32) {
-                palabraLeida += (char) caracterLeido;
+        while ((CaracterLeidoDelFichero = ficheroLeido.read()) != -1) {
+            cantidadVecesApareceLaPalabra = 1;
+
+            if (CaracterLeidoDelFichero != 10 && CaracterLeidoDelFichero != 32) {
+                palabraLeidaResultanteDelCaracterLeido += (char) CaracterLeidoDelFichero;
             } else {
-                if (distribucionPalabras.containsKey(palabraLeida)) {
-                    cantidadPalabras += distribucionPalabras.get(palabraLeida);
+                if (palabrasDeUnFichero.containsKey(palabraLeidaResultanteDelCaracterLeido)) {
+                    cantidadVecesApareceLaPalabra += palabrasDeUnFichero.get(palabraLeidaResultanteDelCaracterLeido);
                 }
-                if(caracterLeido != 10 || caracterLeido != 32){
-                distribucionPalabras.put(palabraLeida, cantidadPalabras);
-                palabraLeida = "";
+                if (CaracterLeidoDelFichero != 10 || CaracterLeidoDelFichero != 32) {
+                    palabrasDeUnFichero.put(palabraLeidaResultanteDelCaracterLeido, cantidadVecesApareceLaPalabra);
+                    palabraLeidaResultanteDelCaracterLeido = "";
                 }
             }
 
         }
-        if (distribucionPalabras.containsKey(palabraLeida)) {
-            cantidadPalabras += distribucionPalabras.get(palabraLeida);
+        if (palabrasDeUnFichero.containsKey(palabraLeidaResultanteDelCaracterLeido)) {
+            cantidadVecesApareceLaPalabra += palabrasDeUnFichero.get(palabraLeidaResultanteDelCaracterLeido);
         }
-        distribucionPalabras.put(palabraLeida, cantidadPalabras);
-        System.out.println(distribucionPalabras.toString());
-        inputStream.close();
+        palabrasDeUnFichero.put(palabraLeidaResultanteDelCaracterLeido, cantidadVecesApareceLaPalabra);
+        System.out.println(palabrasDeUnFichero.toString());
+        ficheroLeido.close();
 
-        return cantidadPalabrasTotales;
+        return palabrasDeUnFichero.size();
     }
 
-    public int separarEnCapitulos(String ruta) throws FileNotFoundException, IOException {
+    /**
+     *
+     * @param rutaDelFicheroParaLeer
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public int separarEnCapitulosDeUnFichero(String rutaDelFicheroParaLeer) throws FileNotFoundException, IOException {
 
-        BufferedReader inputStream = new BufferedReader(new FileReader(ruta));
-        FileWriter outputStream;
-        int cantidadLineas = 0;
-        String linea;
+        BufferedReader ficheroParaLeer = new BufferedReader(new FileReader(rutaDelFicheroParaLeer));
+        FileWriter ficheroParaGrabar;
+        int cantidadLineasLeidas = 0;
+        String lineaLeida;
 
-        int contadorFicheros = 0;
-        while ((linea = inputStream.readLine()) != null) {
-            if (!linea.contains("Capítulo")) {
-                outputStream = new FileWriter("ficheronuevo" + contadorFicheros + ".txt", true);
-                outputStream.write(linea + "\n");
-                outputStream.close();
-                cantidadLineas++;
+        int contadorFicherosCreados = 0;
+        while ((lineaLeida = ficheroParaLeer.readLine()) != null) {
+            if (!lineaLeida.contains("Capítulo")) {
+                ficheroParaGrabar = new FileWriter("ficheronuevo" + contadorFicherosCreados + ".txt", true);
+                ficheroParaGrabar.write(lineaLeida + "\n");
+                ficheroParaGrabar.close();
+                cantidadLineasLeidas++;
             } else {
-                contadorFicheros++;
-                outputStream = new FileWriter("ficheronuevo" + contadorFicheros + ".txt", true);
-                outputStream.write(linea + "\n");
-                outputStream.close();
-                cantidadLineas++;
+                contadorFicherosCreados++;
+                ficheroParaGrabar = new FileWriter("ficheronuevo" + contadorFicherosCreados + ".txt", true);
+                ficheroParaGrabar.write(lineaLeida + "\n");
+                ficheroParaGrabar.close();
+                cantidadLineasLeidas++;
             }
 
         }
 
-        return cantidadLineas;
+        return cantidadLineasLeidas;
     }
 
 }

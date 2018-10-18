@@ -21,45 +21,47 @@ public class OperacionesFicheros {
 //http://bit.ly/JJCMAD2018
     //FALTA GENERAR JAVADOC
     //Ejercicio 1 y 2
-    //Falta filtro de carpetas, tamaño y modificados en las ultimas 24h
-
-    private File[] rutasFicheros;
 
     //Ejercicio 1.A
-    public File[] ListarFicheros(String ruta, boolean ordenadosPorTamanio, boolean soloDirectorios) {
-        File[] lista = null;
-
-        if (ruta.equals("")) {
-            rutasFicheros = File.listRoots();
-            ruta = rutasFicheros[0].toString();
+    /**
+     *
+     * @param rutaParaListar
+     * @param quiereOrdenarPorTamanio
+     * @param quiereSoloDirectorios
+     * @return
+     */
+    public File[] ListarFicheros(String rutaParaListar, boolean quiereOrdenarPorTamanio, boolean quiereSoloDirectorios) {
+        File[] listaDeFicherosParaListar = null;
+        File[] rutasDeFicherosParaLaLista;
+        if (rutaParaListar.equals("")) {
+            rutasDeFicherosParaLaLista = File.listRoots();
+            rutaParaListar = rutasDeFicherosParaLaLista[0].toString();
         }
-        File archivos = new File(ruta);
+        File rutaParaListarConvertidaAFile = new File(rutaParaListar);
 
-        lista = archivos.listFiles();
-        //HACER ESTAS EXCEPCIONES COMO PROPIAS
-        if (archivos.isDirectory() == false) {
+        listaDeFicherosParaListar = rutaParaListarConvertidaAFile.listFiles();
+        if (rutaParaListarConvertidaAFile.isDirectory() == false) {
             try {
-                throw new ExcepcionPersonalizada/*IllegalArgumentException*/("La ruta no es un directorio, no se puede listar");
+                throw new ExcepcionPersonalizada("La ruta no es un directorio, no se puede listar");
+            } catch (ExcepcionPersonalizada ex) {
+                String respuestaALaExcepcion = ex.getMessage();
+            }
+        }
+        if (listaDeFicherosParaListar.length == 0) {
+            try {
+                throw new ExcepcionPersonalizada("La carpeta está vacia");
             } catch (ExcepcionPersonalizada ex) {
                 String respuesta = ex.getMessage();
             }
         }
-        if (lista.length == 0) {
-            try {
-                throw new ExcepcionPersonalizada/*IllegalArgumentException*/("La carpeta está vacia");
-            } catch (ExcepcionPersonalizada ex) {
-                String respuesta = ex.getMessage();
-            }
-            /*throw new IllegalArgumentException("La carpeta está vacia");*/
-        }
-        if (ordenadosPorTamanio == true) {
+        if (quiereOrdenarPorTamanio == true) {
 
-            Arrays.sort(lista, new Comparator<File>() {
+            Arrays.sort(listaDeFicherosParaListar, new Comparator<File>() {
                 @Override
-                public int compare(File fichero1, File fichero2) {
-                    if (fichero1.length() < fichero2.length()) {
+                public int compare(File fichero1Comparado, File fichero2Comparado) {
+                    if (fichero1Comparado.length() < fichero2Comparado.length()) {
                         return 1;
-                    } else if (fichero1.length() > fichero2.length()) {
+                    } else if (fichero1Comparado.length() > fichero2Comparado.length()) {
                         return -1;
                     } else {
                         return 0;
@@ -68,96 +70,103 @@ public class OperacionesFicheros {
 
             });
         }
-        if (soloDirectorios == true) {
+        if (quiereSoloDirectorios == true) {
 
-            for (int i = 0; i < lista.length; i++) {
-                if (lista[i].isDirectory() == true) {
-                    System.out.println(lista[i].toString());
-                    System.out.println(lista[i].length());
+            for (int i = 0; i < listaDeFicherosParaListar.length; i++) {
+                if (listaDeFicherosParaListar[i].isDirectory() == true) {
+                    System.out.println(listaDeFicherosParaListar[i].toString());
+                    System.out.println(listaDeFicherosParaListar[i].length());
                 }
             }
         } else {
-            for (int i = 0; i < lista.length; i++) {
+            for (int i = 0; i < listaDeFicherosParaListar.length; i++) {
 
-                System.out.println(lista[i].toString());
-                System.out.println(lista[i].length());
+                System.out.println(listaDeFicherosParaListar[i].toString());
+                System.out.println(listaDeFicherosParaListar[i].length());
             }
         }
-
-        /* 
-iv.Crear dos  excepciones personalizadas  
-        Carpeta Vacia y NoEsUnDirectorioNoSePuedeListar v Probar el correcto funcionamiento desde un método main().Generar Javadoc.
-         */
-        return lista;
+        return listaDeFicherosParaListar;
     }
 
-    public int crearDirectorio(File rutaOrigen, ArrayList<String> listaDirectorios) {
-        int contadorCreados = 0;
-        if (rutaOrigen.exists() == false) {
+    /**
+     *
+     * @param rutaOrigenDondeCrearLosDirectorios
+     * @param listaDirectoriosQueSeQuierenCrear
+     * @return
+     */
+    public int crearDirectorio(File rutaOrigenDondeCrearLosDirectorios, ArrayList<String> listaDirectoriosQueSeQuierenCrear) {
+        int contadorDirectoriosCreados = 0;
+        if (rutaOrigenDondeCrearLosDirectorios.exists() == false) {
             throw new IllegalArgumentException("La ruta no existe");
         }
-        for (String listaDirectorio : listaDirectorios) {
-            File nuevoDirectorio = new File(rutaOrigen + "/" + listaDirectorio.toString());
-            if (nuevoDirectorio.exists()) {
-                throw new IllegalArgumentException("El directorio " + listaDirectorio + " ya existe");
+        for (String directorioParaCrear : listaDirectoriosQueSeQuierenCrear) {
+            File nuevoDirectorioQueSeQuiereCrear = new File(rutaOrigenDondeCrearLosDirectorios + "/" + directorioParaCrear.toString());
+            if (nuevoDirectorioQueSeQuiereCrear.exists()) {
+                throw new IllegalArgumentException("El directorio " + directorioParaCrear + " ya existe");
             }
-            nuevoDirectorio.mkdir();
-            contadorCreados++;
+            nuevoDirectorioQueSeQuiereCrear.mkdir();
+            contadorDirectoriosCreados++;
         }
-        return contadorCreados;
+        return contadorDirectoriosCreados;
     }
 
     //EJERCICIO 1.C
     //iv.Generar  Javadoc
-    public int cambiarExtensionFicheros(String ruta, String extensionAntigua, String extensionNueva) throws ExcepcionPersonalizada {
-        File file = new File(ruta);
-        int ficheroCambiado = 0;
-        File[] listaFicheros;
-        listaFicheros = file.listFiles();
-        for (int i = 0; i < listaFicheros.length; i++) {
+/**
+ * 
+ * @param rutaDeLosFicherosQueQuieresCambiarLaExtension
+ * @param extensionActualDeLosFicheros
+ * @param extensionQueSeQuierePonerALosFicheros
+ * @return
+ * @throws ExcepcionPersonalizada 
+ */
+    public int cambiarExtensionFicheros(String rutaDeLosFicherosQueQuieresCambiarLaExtension, String extensionActualDeLosFicheros, String extensionQueSeQuierePonerALosFicheros) throws ExcepcionPersonalizada {
+        File rutaConvertidoAFile = new File(rutaDeLosFicherosQueQuieresCambiarLaExtension);
+        int cantidadDeFicherosCambiados = 0;
+        File[] listaDeFicherosDeLaRuta = rutaConvertidoAFile.listFiles();
+        for (int ficheroLeido = 0; ficheroLeido < listaDeFicherosDeLaRuta.length; ficheroLeido++) {
 
-            if (listaFicheros[i].getName().endsWith(extensionAntigua)) {
+            if (listaDeFicherosDeLaRuta[ficheroLeido].getName().endsWith(extensionActualDeLosFicheros)) {
 
-                String nombreDelFichero = listaFicheros[i].getName().substring(0, listaFicheros[i].getName().lastIndexOf('.'));
-                nombreDelFichero += "." + extensionNueva;
-                for (int j = 0; j < listaFicheros.length; j++) {
+                String stringNombreDelFicheroParaCambiarExtension = listaDeFicherosDeLaRuta[ficheroLeido].getName().substring(0, listaDeFicherosDeLaRuta[ficheroLeido].getName().lastIndexOf('.'));
+                stringNombreDelFicheroParaCambiarExtension += "." + extensionQueSeQuierePonerALosFicheros;
+                for (int contadorFicheroLeidoParaComprobarQueNoSeCambia = 0; contadorFicheroLeidoParaComprobarQueNoSeCambia < listaDeFicherosDeLaRuta.length; contadorFicheroLeidoParaComprobarQueNoSeCambia++) {
 
-                    if (listaFicheros[j].getName().equals(nombreDelFichero)) {
+                    if (listaDeFicherosDeLaRuta[contadorFicheroLeidoParaComprobarQueNoSeCambia].getName().equals(stringNombreDelFicheroParaCambiarExtension)) {
                         throw new ExcepcionPersonalizada("Ya existe el archivo con ese nombre");
                     }
                 }
-                nombreDelFichero += "." + extensionNueva;
-                listaFicheros[i].renameTo(new File(listaFicheros[i].getParentFile(), nombreDelFichero));
-                ficheroCambiado++;
+                stringNombreDelFicheroParaCambiarExtension += "." + extensionQueSeQuierePonerALosFicheros;
+                listaDeFicherosDeLaRuta[ficheroLeido].renameTo(new File(listaDeFicherosDeLaRuta[ficheroLeido].getParentFile(), stringNombreDelFicheroParaCambiarExtension));
+                cantidadDeFicherosCambiados++;
             }
         }
-        System.out.println(file.listFiles());
-        return ficheroCambiado;
+        System.out.println(rutaConvertidoAFile.listFiles());
+        return cantidadDeFicherosCambiados;
     }
 
-    public int cambiarExtensionFicheros(File file, String extensionAntigua, String extensionNueva) throws ExcepcionPersonalizada {
-        int ficheroCambiado = 0;
-        File[] listaFicheros;
-        listaFicheros = file.listFiles();
+    public int cambiarExtensionFicheros(File rutaDelosFicherosQueQuieresCambiarLaExtension, String extensionActualDeLosFicheros, String extensionQueSeQuierePonerALosFicheros) throws ExcepcionPersonalizada {
+        int cantidadDeFicherosCambiados = 0;
+        File[] listaFicheros = rutaDelosFicherosQueQuieresCambiarLaExtension.listFiles();
         for (int i = 0; i < listaFicheros.length; i++) {
 
-            if (listaFicheros[i].getName().endsWith(extensionAntigua)) {
+            if (listaFicheros[i].getName().endsWith(extensionActualDeLosFicheros)) {
 
                 String nombreDelFichero = listaFicheros[i].getName().substring(0, listaFicheros[i].getName().lastIndexOf('.'));
-                nombreDelFichero += "." + extensionNueva;
+                nombreDelFichero += "." + extensionQueSeQuierePonerALosFicheros;
                 for (int j = 0; j < listaFicheros.length; j++) {
 
                     if (listaFicheros[j].getName().equals(nombreDelFichero)) {
                         throw new ExcepcionPersonalizada("Ya existe el archivo con ese nombre");
                     }
                 }
-                nombreDelFichero += "." + extensionNueva;
+                nombreDelFichero += "." + extensionQueSeQuierePonerALosFicheros;
                 listaFicheros[i].renameTo(new File(listaFicheros[i].getParentFile(), nombreDelFichero));
-                ficheroCambiado++;
+                cantidadDeFicherosCambiados++;
             }
         }
-        System.out.println(file.listFiles());
-        return ficheroCambiado;
+        System.out.println(rutaDelosFicherosQueQuieresCambiarLaExtension.listFiles());
+        return cantidadDeFicherosCambiados;
     }
 
     //Ejercicio 2

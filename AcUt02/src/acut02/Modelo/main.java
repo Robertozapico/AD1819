@@ -73,7 +73,7 @@ try {
             //System.out.println(logicaQuijote.contarLineas("archivo.csv"));
             //System.out.println(logicaQuijote.buscarPalabra("quijote.txt","quijote"));
             //System.out.println(logicaQuijote.escribirLineasAlReves("quijote.txt","quijotealreves.txt"));
-            logicaQuijote.contarCantidadPalabras("quijote.txt");
+            logicaQuijote.contarCantidadPalabrasDeUnFichero("quijote.txt");
            //System.out.println(logicaQuijote.separarEnCapitulos("quijote.txt"));
         } catch (IOException ex) {
            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
