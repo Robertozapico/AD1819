@@ -112,14 +112,14 @@ public class OperacionesFicheros {
 
     //EJERCICIO 1.C
     //iv.Generar  Javadoc
-/**
- * 
- * @param rutaDeLosFicherosQueQuieresCambiarLaExtension
- * @param extensionActualDeLosFicheros
- * @param extensionQueSeQuierePonerALosFicheros
- * @return
- * @throws ExcepcionPersonalizada 
- */
+    /**
+     *
+     * @param rutaDeLosFicherosQueQuieresCambiarLaExtension
+     * @param extensionActualDeLosFicheros
+     * @param extensionQueSeQuierePonerALosFicheros
+     * @return
+     * @throws ExcepcionPersonalizada
+     */
     public int cambiarExtensionFicheros(String rutaDeLosFicherosQueQuieresCambiarLaExtension, String extensionActualDeLosFicheros, String extensionQueSeQuierePonerALosFicheros) throws ExcepcionPersonalizada {
         File rutaConvertidoAFile = new File(rutaDeLosFicherosQueQuieresCambiarLaExtension);
         int cantidadDeFicherosCambiados = 0;
@@ -145,6 +145,14 @@ public class OperacionesFicheros {
         return cantidadDeFicherosCambiados;
     }
 
+    /**
+     *
+     * @param rutaDelosFicherosQueQuieresCambiarLaExtension
+     * @param extensionActualDeLosFicheros
+     * @param extensionQueSeQuierePonerALosFicheros
+     * @return
+     * @throws ExcepcionPersonalizada
+     */
     public int cambiarExtensionFicheros(File rutaDelosFicherosQueQuieresCambiarLaExtension, String extensionActualDeLosFicheros, String extensionQueSeQuierePonerALosFicheros) throws ExcepcionPersonalizada {
         int cantidadDeFicherosCambiados = 0;
         File[] listaFicheros = rutaDelosFicherosQueQuieresCambiarLaExtension.listFiles();
@@ -170,12 +178,17 @@ public class OperacionesFicheros {
     }
 
     //Ejercicio 2
-    public int fibonacci(int n) {
-        if (n > 1) {
-            return fibonacci(n - 1) + fibonacci(n - 2);
-        } else if (n == 1) {
+    /**
+     *
+     * @param numero
+     * @return
+     */
+    public int fibonacci(int numero) {
+        if (numero > 1) {
+            return fibonacci(numero - 1) + fibonacci(numero - 2);
+        } else if (numero == 1) {
             return 1;
-        } else if (n == 0) {
+        } else if (numero == 0) {
             return 0;
         } else {
             System.out.println("Debes introducir un dato superior o igual a 1");
@@ -185,56 +198,70 @@ public class OperacionesFicheros {
     //Factorial  
 
     //Recursividad
-    public void listarDirectorio(String ruta) {
-        File rutaDirectorio = new File(ruta);
-        File[] ficheros = null;
-        ficheros = rutaDirectorio.listFiles();
-        int x;
-        for (x = 0; x < ficheros.length; x++) {
-            System.out.println(" " + ficheros[x].getName());
+    /**
+     *
+     * @param rutaDelDirectorioQueSeQuiereListar
+     * @return
+     */
+    public File[] listarDirectorioDeFormaRecursiva(String rutaDelDirectorioQueSeQuiereListar) {
+        File rutaDelDirectorioHechaFile = new File(rutaDelDirectorioQueSeQuiereListar);
+        File[] ficherosDelDirectorio = rutaDelDirectorioHechaFile.listFiles();
+        int contadorDelFicheroLeido;
+        for (contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDelDirectorio.length; contadorDelFicheroLeido++) {
+            System.out.println(" " + ficherosDelDirectorio[contadorDelFicheroLeido].getName());
         }
-        if (ficheros[x].isDirectory()) {
-            String nuevo_separador;
-            nuevo_separador = " ";
-            listarDirectorio(ruta + ficheros[x]);
+        if (ficherosDelDirectorio[contadorDelFicheroLeido].isDirectory()) {
+            listarDirectorioDeFormaRecursiva(rutaDelDirectorioQueSeQuiereListar + ficherosDelDirectorio[contadorDelFicheroLeido]);
         }
-        //return rutaDirectorio;
+        return ficherosDelDirectorio;
     }
 
-    public void listarArchivosRecursivamente(String ruta) {
-        File rutaFicheros = new File(ruta);
-        File[] ficheros = rutaFicheros.listFiles();
-        for (int i = 0; i < ficheros.length; i++) {
-            if (ficheros[i].isDirectory() == false) {
+    /**
+     *
+     * @param rutaQueSeQuiereListar
+     * @return
+     */
+    public File[] listarArchivosRecursivamente(String rutaQueSeQuiereListar) {
+        File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
+        File[] ficherosDeLaRutaAListar = rutaQueSeQuiereListarHechaFile.listFiles();
+        for (int contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDeLaRutaAListar.length; contadorDelFicheroLeido++) {
+            if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
                 String guion = "-";
-                for (int j = 0; j < ficheros[i].getParent().length(); j++) {
+                for (int contadorDireferenciaEstructura = 0; contadorDireferenciaEstructura < ficherosDeLaRutaAListar[contadorDelFicheroLeido].getParent().length(); contadorDireferenciaEstructura++) {
                     guion += "-";
                 }
-                System.out.println("\n" + "./" + guion + "/" + ficheros[i].getName());
+                System.out.println("\n" + "./" + guion + "/" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
             } else {
-                System.out.println(ficheros[i].getAbsolutePath());
-                listarArchivosRecursivamente(ficheros[i].getAbsolutePath());
+                System.out.println(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+                listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
             }
         }
+        return ficherosDeLaRutaAListar;
     }
 
-    public ArrayList<File> listarFicheros(FilenameFilter filtro) {
+    /**
+     * lista los ficheros
+     *
+     * @param filtro el filtro que se mete desde la clase de filtros
+     * @param rutaQueSeQuiereListar la ruta del archivo que se quiere listar
+     * @return
+     */
+    public ArrayList<File> listarFicheros(FilenameFilter filtro, String rutaQueSeQuiereListar) {
         //File file = new File("/home/alumnop/Documentos");
-        File file = new File("C:/Prueba");
+        File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
+        //File file = new File("C:/Prueba");
         ArrayList<File> listaFicherosFiltrados = new ArrayList<File>();
-        File[] listaFicheros;
-        listaFicheros = file.listFiles();
-        for (int i = 0; i < listaFicheros.length; i++) {
-            if (filtro.accept(file, listaFicheros[i].getName())) {
-                File[] listaFicherosFiltro = file.listFiles(filtro);
-                for (File file1 : listaFicherosFiltro) {
-                    listaFicherosFiltrados.add(file1);
+        File[] listaFicherosDeLaRuta;
+        listaFicherosDeLaRuta = rutaQueSeQuiereListarHechaFile.listFiles();
+        for (int i = 0; i < listaFicherosDeLaRuta.length; i++) {
+            if (filtro.accept(rutaQueSeQuiereListarHechaFile, listaFicherosDeLaRuta[i].getName())) {
+                File[] listaFicherosFiltro = rutaQueSeQuiereListarHechaFile.listFiles(filtro);
+                for (File ficheroDeLaLista : listaFicherosFiltro) {
+                    listaFicherosFiltrados.add(ficheroDeLaLista);
                 }
                 return listaFicherosFiltrados;
             }
         }
         return listaFicherosFiltrados;
     }
-    /*
-    vii.Generar  Javadoc. */
 }

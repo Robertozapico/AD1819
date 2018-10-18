@@ -18,12 +18,10 @@ import java.util.Map;
  */
 public class Cifrado {
 //Ejercicio 3
-    //FALTA GENERAR JAVADOC
 
     private FileInputStream FicheroALeer = null;
     private FileOutputStream FicheroAGrabar = null;
     private Map<String, Integer> distribucionLetras = new HashMap<>();
-//Controlar solo para alfabeto español
 //variables mas descriptivas
 
     /**
@@ -72,7 +70,5 @@ public class Cifrado {
         System.out.println(distribucionLetras.toString());
         return caracteresCifrados;
     }
-    
-    
 
 }
