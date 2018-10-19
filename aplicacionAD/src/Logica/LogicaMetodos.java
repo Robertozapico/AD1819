@@ -56,6 +56,30 @@ public class LogicaMetodos {
         return ficherosDeLaUnidad;
     }
 
+    public File[] listarArchivosRecursivamente(String rutaQueSeQuiereListar) {
+        File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
+        File[] ficherosDeLaRutaAListar = rutaQueSeQuiereListarHechaFile.listFiles();
+        for (int contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDeLaRutaAListar.length; contadorDelFicheroLeido++) {
+            if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
+                String guion = "-";
+                for (int contadorDireferenciaEstructura = 0; contadorDireferenciaEstructura < ficherosDeLaRutaAListar[contadorDelFicheroLeido].getParent().length(); contadorDireferenciaEstructura++) {
+                    guion += "-";
+                }
+                System.out.println("\n" + "./" + guion + "/" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
+            } else {
+                
+                System.out.println(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+                listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+            }
+        }
+        return ficherosDeLaRutaAListar;
+    }
+
+    public int eliminarDirectoriosVacios() {
+
+        return 1;
+    }
+
     /*
     Sugiere  eliminar  directoriosvacíos.
     •Sugiere  eliminar  ficherosde  unas  determinadas  categorías.
