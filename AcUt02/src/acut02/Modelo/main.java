@@ -27,10 +27,10 @@ public class main {
         Cifrado cifrar = new Cifrado();
         QuijoteLogica logicaQuijote = new QuijoteLogica();
         //Filtros
-        //prueba de que el ejercicio 1.A funciona entero, falta javadoc
+        //prueba de que el ejercicio 1.A funciona entero
         //of.ListarFicheros("/home/alumnop/Carpetavacia/docu.txt", true, true);
 
-        //prueba de que el ejercicio 1.B funciona entero, falta javadoc
+        //prueba de que el ejercicio 1.B funciona entero
         /*ArrayList<String> listaDirectorios = new ArrayList<String>();
         
         listaDirectorios.add("Nueva");
@@ -50,11 +50,14 @@ public class main {
         }
          */
         //of.ListarFicheros("", true, true);
-        //of.listarArchivosRecursivamente("/");
+        //of.listarArchivosRecursivamente("/home/alumnop/Carpetavacia");
+        of.borrar("/home/alumnop/Carpetavacia/");
+        
+
 //Filtros
-Filtros filtro = new Filtros();
+//Filtros filtro = new Filtros();
 //System.out.println(of.listarFicheros(filtro.filtroGif()));
-of.listarFicherosConFiltroRecursivamente(filtro.filtroGif(), "/home/alumnop/Documentos");
+//of.listarFicherosConFiltroRecursivamente(filtro.filtroGif(), "/home/alumnop/Documentos");
 
 
 

@@ -224,19 +224,43 @@ public class OperacionesFicheros {
     public File[] listarArchivosRecursivamente(String rutaQueSeQuiereListar) {
         File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
         File[] ficherosDeLaRutaAListar = rutaQueSeQuiereListarHechaFile.listFiles();
+
         for (int contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDeLaRutaAListar.length; contadorDelFicheroLeido++) {
             if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
-                String guion = "-";
+                /*String guion = "-";
                 for (int contadorDireferenciaEstructura = 0; contadorDireferenciaEstructura < ficherosDeLaRutaAListar[contadorDelFicheroLeido].getParent().length(); contadorDireferenciaEstructura++) {
                     guion += "-";
-                }
-                System.out.println("\n" + "./" + guion + "/" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
+                }*/
+                System.out.println("\n" + "./" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getParent() + "/" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
             } else {
+
                 System.out.println(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+
                 listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+
             }
+
         }
+
         return ficherosDeLaRutaAListar;
+    }
+
+    public boolean borrar(String rutaQueSeQuiereListar) {
+        File[] ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
+        System.out.println("-----------------------------");
+        for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
+            System.out.println(ficherosDeLaRutaAListar[i].toString());
+            if(ficherosDeLaRutaAListar[i].isDirectory())
+            ficherosDeLaRutaAListar[i].delete();
+        }
+        ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
+        System.out.println("Carpetas Eliminadas");
+        for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
+            System.out.println(ficherosDeLaRutaAListar[i].toString());
+
+        }
+
+        return true;
     }
 
     /**
@@ -264,26 +288,27 @@ public class OperacionesFicheros {
         }
         return listaFicherosFiltrados;
     }
-/**
- * 
- * @param filtro
- * @param rutaQueSeQuiereListar
- * @return 
- */
+
+    /**
+     *
+     * @param filtro
+     * @param rutaQueSeQuiereListar
+     * @return
+     */
     public ArrayList<File> listarFicherosConFiltroRecursivamente(FilenameFilter filtro, String rutaQueSeQuiereListar) {
 
         File[] listaFicherosFiltrados = listarArchivosRecursivamente(rutaQueSeQuiereListar);
 
-        
         File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
         ArrayList<File> listaFicherosConFiltro = new ArrayList<File>();
-        
+
         for (int i = 0; i < listaFicherosFiltrados.length; i++) {
             if (filtro.accept(rutaQueSeQuiereListarHechaFile, listaFicherosFiltrados[i].getName())) {
                 File[] listaFicherosFiltro = rutaQueSeQuiereListarHechaFile.listFiles(filtro);
                 for (File ficheroDeLaLista : listaFicherosFiltro) {
-                    if(!listaFicherosConFiltro.contains(ficheroDeLaLista))
-                    listaFicherosConFiltro.add(ficheroDeLaLista);
+                    if (!listaFicherosConFiltro.contains(ficheroDeLaLista)) {
+                        listaFicherosConFiltro.add(ficheroDeLaLista);
+                    }
                 }
             }
         }
