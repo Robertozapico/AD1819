@@ -52,9 +52,10 @@ public class main {
         //of.ListarFicheros("", true, true);
         //of.listarArchivosRecursivamente("/");
 //Filtros
-//Filtros filtro = new Filtros();
+Filtros filtro = new Filtros();
 //System.out.println(of.listarFicheros(filtro.filtroGif()));
-//System.out.println(of.listarFicheros(filtro.filtroPorFechaDeModificacion()));
+of.listarFicherosConFiltroRecursivamente(filtro.filtroGif(), "/home/alumnop/Documentos");
+
 
 
 //Cifrado
@@ -68,16 +69,16 @@ Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         
 
 //QUIJOTE
-try {
+//try {
             //System.out.println(logicaQuijote.contarCantidadLetras("archivo.csv"));
             //System.out.println(logicaQuijote.contarLineas("archivo.csv"));
             //System.out.println(logicaQuijote.buscarPalabra("quijote.txt","quijote"));
             //System.out.println(logicaQuijote.escribirLineasAlReves("quijote.txt","quijotealreves.txt"));
-            logicaQuijote.contarCantidadPalabrasDeUnFichero("quijote.txt");
+  //          logicaQuijote.contarCantidadPalabrasDeUnFichero("quijote.txt");
            //System.out.println(logicaQuijote.separarEnCapitulos("quijote.txt"));
-        } catch (IOException ex) {
-           Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      //  } catch (IOException ex) {
+    //       Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        //}
     }
 
 }

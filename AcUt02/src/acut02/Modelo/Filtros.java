@@ -33,6 +33,7 @@ public class Filtros {
         return filtroGif;
     }
 
+
     /**
      *
      * @return

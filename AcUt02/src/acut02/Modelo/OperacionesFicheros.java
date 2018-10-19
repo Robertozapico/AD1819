@@ -264,4 +264,33 @@ public class OperacionesFicheros {
         }
         return listaFicherosFiltrados;
     }
+/**
+ * 
+ * @param filtro
+ * @param rutaQueSeQuiereListar
+ * @return 
+ */
+    public ArrayList<File> listarFicherosConFiltroRecursivamente(FilenameFilter filtro, String rutaQueSeQuiereListar) {
+
+        File[] listaFicherosFiltrados = listarArchivosRecursivamente(rutaQueSeQuiereListar);
+
+        
+        File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
+        ArrayList<File> listaFicherosConFiltro = new ArrayList<File>();
+        
+        for (int i = 0; i < listaFicherosFiltrados.length; i++) {
+            if (filtro.accept(rutaQueSeQuiereListarHechaFile, listaFicherosFiltrados[i].getName())) {
+                File[] listaFicherosFiltro = rutaQueSeQuiereListarHechaFile.listFiles(filtro);
+                for (File ficheroDeLaLista : listaFicherosFiltro) {
+                    if(!listaFicherosConFiltro.contains(ficheroDeLaLista))
+                    listaFicherosConFiltro.add(ficheroDeLaLista);
+                }
+            }
+        }
+        System.out.println("Ficheros filtrados:");
+        System.out.println(listaFicherosConFiltro);
+        return listaFicherosConFiltro;
+
+    }
+
 }
