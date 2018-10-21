@@ -224,42 +224,49 @@ public class OperacionesFicheros {
     public File[] listarArchivosRecursivamente(String rutaQueSeQuiereListar) {
         File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
         File[] ficherosDeLaRutaAListar = rutaQueSeQuiereListarHechaFile.listFiles();
-
-        for (int contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDeLaRutaAListar.length; contadorDelFicheroLeido++) {
-            if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
-                /*String guion = "-";
+        if (ficherosDeLaRutaAListar != null) {
+            for (int contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDeLaRutaAListar.length; contadorDelFicheroLeido++) {
+                if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
+                    /*String guion = "-";
                 for (int contadorDireferenciaEstructura = 0; contadorDireferenciaEstructura < ficherosDeLaRutaAListar[contadorDelFicheroLeido].getParent().length(); contadorDireferenciaEstructura++) {
                     guion += "-";
                 }*/
-                System.out.println("\n" + "./" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getParent() + "/" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
-            } else {
+                    System.out.println("\n" + "./" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getParent() + "/" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
+                } else {
 
-                System.out.println(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+                    System.out.println(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
 
-                listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+                    listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+
+                }
 
             }
-
         }
-
         return ficherosDeLaRutaAListar;
     }
 
     public boolean borrar(String rutaQueSeQuiereListar) {
         File[] ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
+        ArrayList ficherosBorrados = new ArrayList();
         System.out.println("-----------------------------");
-        for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
-            System.out.println(ficherosDeLaRutaAListar[i].toString());
-            if(ficherosDeLaRutaAListar[i].isDirectory())
-            ficherosDeLaRutaAListar[i].delete();
-        }
-        ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
-        System.out.println("Carpetas Eliminadas");
+        if (ficherosDeLaRutaAListar != null) {
+            for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
+                System.out.println(ficherosDeLaRutaAListar[i].toString());
+                if (ficherosDeLaRutaAListar[i].isDirectory()) {
+                    ficherosBorrados.add(ficherosDeLaRutaAListar[i].getName());
+                    ficherosDeLaRutaAListar[i].delete();
+                }
+            }
+            ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
+            System.out.println("Carpetas Eliminadas");
+            System.out.println(ficherosBorrados.toString());
+            /*
         for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
             System.out.println(ficherosDeLaRutaAListar[i].toString());
 
         }
-
+             */
+        }
         return true;
     }
 

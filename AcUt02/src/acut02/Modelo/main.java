@@ -82,6 +82,9 @@ Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
       //  } catch (IOException ex) {
     //       Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         //}
+        
+        
+        of.borrar("C:\\Prueba\\");
     }
 
 }
