@@ -43,6 +43,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jComboBoxUnidad = new javax.swing.JComboBox<>();
         jButtonEspacioLibre = new javax.swing.JButton();
         jButtonEscanear = new javax.swing.JButton();
+        jButtonTamanno = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -74,6 +75,13 @@ public class PantallaEscaneo extends javax.swing.JDialog {
             }
         });
 
+        jButtonTamanno.setText("Limpieza de archivos por tamaño");
+        jButtonTamanno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTamannoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -81,6 +89,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonTamanno, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -104,7 +113,9 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addComponent(jButtonEspacioLibre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEscanear)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonTamanno)
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -136,10 +147,15 @@ public class PantallaEscaneo extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonEscanearActionPerformed
 
+    private void jButtonTamannoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTamannoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonTamannoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEscanear;
     private javax.swing.JButton jButtonEspacioLibre;
+    private javax.swing.JButton jButtonTamanno;
     private javax.swing.JComboBox<String> jComboBoxUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

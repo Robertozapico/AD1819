@@ -75,8 +75,13 @@ public class LogicaMetodos {
         return ficherosDeLaRutaAListar;
     }
 
-    public int eliminarDirectoriosVacios() {
-
+    public int eliminarDirectoriosVacios(String rutaParaListar) {
+        File[] listaFicheros = listarArchivosRecursivamente(rutaParaListar);
+        for (int contadorFicheros = 0; contadorFicheros < listaFicheros.length; contadorFicheros++) {
+            System.out.println("Ruta: "+listaFicheros[contadorFicheros].getAbsolutePath());
+            System.out.println("Nombre del directorio: " +listaFicheros[contadorFicheros]);
+            System.out.println("Peso: " +listaFicheros[contadorFicheros].getTotalSpace());
+        }
         return 1;
     }
 
