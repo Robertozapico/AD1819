@@ -210,7 +210,12 @@ public class OperacionesFicheros {
         for (contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDelDirectorio.length; contadorDelFicheroLeido++) {
             System.out.println(" " + ficherosDelDirectorio[contadorDelFicheroLeido].getName());
         }
+        System.out.println("peta con este if");
+        System.out.println(rutaDelDirectorioQueSeQuiereListar);
+        //deberia de mejorar lo del contador
+            System.out.println(ficherosDelDirectorio[contadorDelFicheroLeido]);
         if (ficherosDelDirectorio[contadorDelFicheroLeido].isDirectory()) {
+            
             listarDirectorioDeFormaRecursiva(rutaDelDirectorioQueSeQuiereListar + ficherosDelDirectorio[contadorDelFicheroLeido]);
         }
         return ficherosDelDirectorio;
@@ -247,19 +252,23 @@ public class OperacionesFicheros {
 
     public boolean borrar(String rutaQueSeQuiereListar) {
         File[] ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
+        for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
+        System.out.println("Ficheros recursivamente: " +ficherosDeLaRutaAListar[i]);    
+        }
+        
         ArrayList ficherosBorrados = new ArrayList();
         System.out.println("-----------------------------");
         if (ficherosDeLaRutaAListar != null) {
             for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
-                System.out.println(ficherosDeLaRutaAListar[i].toString());
-                if (ficherosDeLaRutaAListar[i].isDirectory()) {
-                    ficherosBorrados.add(ficherosDeLaRutaAListar[i].getName());
-                    ficherosDeLaRutaAListar[i].delete();
-                }
+                //System.out.println(ficherosDeLaRutaAListar[i].toString());
+                //if (ficherosDeLaRutaAListar[i].isDirectory()) {
+                    //ficherosBorrados.add(ficherosDeLaRutaAListar[i].getName());
+                    //ficherosDeLaRutaAListar[i].delete();
+                //}
             }
             ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
             System.out.println("Carpetas Eliminadas");
-            System.out.println(ficherosBorrados.toString());
+            //System.out.println(ficherosBorrados.toString());
             /*
         for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
             System.out.println(ficherosDeLaRutaAListar[i].toString());

@@ -51,7 +51,7 @@ public class main {
          */
         //of.ListarFicheros("", true, true);
         //of.listarArchivosRecursivamente("/home/alumnop/Carpetavacia");
-        of.borrar("/home/alumnop/Carpetavacia/");
+        //of.borrar("/home/alumnop/Carpetavacia/");
         
 
 //Filtros
@@ -82,9 +82,10 @@ Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
       //  } catch (IOException ex) {
     //       Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         //}
-        
-        
-        of.borrar("C:\\Prueba\\");
+            //esta mierda no funciona bien
+        of.listarDirectorioDeFormaRecursiva("/home/alumnop/Carpetavacia");
+        //of.listarArchivosRecursivamente("/home/alumnop/Carpetavacia");
+        //of.borrar("/home/alumnop/Carpetavacia");
     }
 
 }
