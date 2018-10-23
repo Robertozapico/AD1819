@@ -5,7 +5,10 @@
  */
 package Logica;
 
-import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -15,15 +18,19 @@ import javax.swing.JOptionPane;
  */
 public class PantallaEscaneo extends javax.swing.JDialog {
 
-    LogicaMetodos logicaMetodos = new LogicaMetodos();
+    private LogicaMetodos logicaMetodos = new LogicaMetodos();
+    private GestionCsv gestionCsv = new GestionCsv();
+    
 
     /**
      * Creates new form PantallaEscaneo
+     *
+     * @param parent
+     * @param modal
      */
     public PantallaEscaneo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
         DefaultComboBoxModel unidades = new DefaultComboBoxModel(logicaMetodos.obtenerParticiones());
         jComboBoxUnidad.setModel(unidades);
     }
@@ -97,9 +104,9 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBoxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButtonTamanno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonEscanear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonEspacioLibre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))
-                    .addComponent(jButtonTamanno))
+                        .addComponent(jButtonEspacioLibre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)))
                 .addContainerGap(116, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -145,12 +152,20 @@ public class PantallaEscaneo extends javax.swing.JDialog {
 
     private void jButtonEscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscanearActionPerformed
 
-        logicaMetodos.escanearUnidad(jComboBoxUnidad.getSelectedItem().toString());
+        try {
+            gestionCsv.grabarFicheroCSV("FileScan.csv", logicaMetodos.escanearUnidad(jComboBoxUnidad.getSelectedItem().toString()));
+            System.out.println("Listado de archivos guardados en \"FileScan.csv\"");
+        } catch (ParseException ex) {
+            Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }//GEN-LAST:event_jButtonEscanearActionPerformed
 
     private void jButtonTamannoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTamannoActionPerformed
-        LimpiezaPorTamanio pantallaLimpiezaTamanio = new LimpiezaPorTamanio(this,true);
+        LimpiezaPorTamanio pantallaLimpiezaTamanio = new LimpiezaPorTamanio(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
         pantallaLimpiezaTamanio.setVisible(true);
     }//GEN-LAST:event_jButtonTamannoActionPerformed
 

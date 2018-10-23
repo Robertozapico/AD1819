@@ -6,6 +6,8 @@
 package Logica;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,6 +15,9 @@ import java.io.File;
  */
 public class LogicaMetodos {
 
+    private List<File> coleccionFicheros = new ArrayList<File>();
+
+    ;
     /**
      *
      * @return
@@ -45,14 +50,20 @@ public class LogicaMetodos {
         int ficheroCogido;
         if (ficherosDeLaUnidad != null) {
             for (ficheroCogido = 0; ficheroCogido < ficherosDeLaUnidad.length; ficheroCogido++) {
-                if (ficherosDeLaUnidad[ficheroCogido].isDirectory()) {
-
-                    escanearUnidad(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                if (!coleccionFicheros.contains(ficherosDeLaUnidad[ficheroCogido])) {
+                    if (ficherosDeLaUnidad[ficheroCogido].isDirectory()) {
+                        coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
+                        System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                        escanearUnidad(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                    } else {
+                        System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                        coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
+                    }
                 }
-                System.out.println(ficherosDeLaUnidad[ficheroCogido].getName());
             }
         }
         System.out.println("-------------------------------------------");
+        ficherosDeLaUnidad = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
         return ficherosDeLaUnidad;
     }
 
@@ -67,7 +78,7 @@ public class LogicaMetodos {
                 }
                 System.out.println("\n" + "./" + guion + "/" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
             } else {
-                
+
                 System.out.println(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
                 listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
             }
@@ -78,13 +89,38 @@ public class LogicaMetodos {
     public int eliminarDirectoriosVacios(String rutaParaListar) {
         File[] listaFicheros = listarArchivosRecursivamente(rutaParaListar);
         for (int contadorFicheros = 0; contadorFicheros < listaFicheros.length; contadorFicheros++) {
-            System.out.println("Ruta: "+listaFicheros[contadorFicheros].getAbsolutePath());
-            System.out.println("Nombre del directorio: " +listaFicheros[contadorFicheros]);
-            System.out.println("Peso: " +listaFicheros[contadorFicheros].getTotalSpace());
+            System.out.println("Ruta: " + listaFicheros[contadorFicheros].getAbsolutePath());
+            System.out.println("Nombre del directorio: " + listaFicheros[contadorFicheros]);
+            System.out.println("Peso: " + listaFicheros[contadorFicheros].getTotalSpace());
         }
         return 1;
     }
 
+    public File[] escanearFicherosPorTamanio(int opcion, String rutaEscaneada) {
+        List<File> coleccionFicherosParaBorrar = new ArrayList<File>();
+        File[] ficherosEscaneados;
+        File[] ficherosDeLaUnidad = escanearUnidad(rutaEscaneada);
+        double pesoMaximo = 0;
+        double pesoMinimo = 0;
+        double pesoFichero = 0;
+        if (opcion == 0) {
+            pesoMaximo = 700;
+            pesoMinimo = 0;
+        } else if (opcion == 1) {
+            pesoMaximo = (10 * 1024);
+            pesoMinimo = 700;
+        }
+        for (File fichero : ficherosDeLaUnidad) {
+            pesoFichero = (fichero.length() / 1024) / 1024;
+            if (pesoFichero <= pesoMaximo && pesoFichero >= pesoMinimo) {
+                coleccionFicherosParaBorrar.add(fichero);
+            } else if (opcion == 3) {
+                coleccionFicherosParaBorrar.add(fichero);
+            }
+        }
+        ficherosEscaneados = coleccionFicherosParaBorrar.toArray(new File[coleccionFicherosParaBorrar.size()]);
+        return ficherosEscaneados;
+    }
     /*
     Sugiere  eliminar  directoriosvacíos.
     •Sugiere  eliminar  ficherosde  unas  determinadas  categorías.
