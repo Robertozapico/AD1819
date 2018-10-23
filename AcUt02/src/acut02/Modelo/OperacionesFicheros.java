@@ -10,6 +10,7 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,14 @@ import java.util.logging.Logger;
 public class OperacionesFicheros {
 //http://bit.ly/JJCMAD2018
     //FALTA GENERAR JAVADOC
+
+    File[] ficherosDelDirectorio;
     //Ejercicio 1 y 2
+    private List<File> coleccionFicheros;
+
+    public OperacionesFicheros() {
+        coleccionFicheros = new ArrayList<File>();
+    }
 
     //Ejercicio 1.A
     /**
@@ -198,26 +206,27 @@ public class OperacionesFicheros {
     //Factorial  
 
     //Recursividad
+    /*
     /**
      *
      * @param rutaDelDirectorioQueSeQuiereListar
      * @return
      */
     public File[] listarDirectorioDeFormaRecursiva(String rutaDelDirectorioQueSeQuiereListar) {
+        File[] ficherosDelDirectorio = null;
         File rutaDelDirectorioHechaFile = new File(rutaDelDirectorioQueSeQuiereListar);
-        File[] ficherosDelDirectorio = rutaDelDirectorioHechaFile.listFiles();
-        int contadorDelFicheroLeido;
-        for (contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDelDirectorio.length; contadorDelFicheroLeido++) {
-            System.out.println(" " + ficherosDelDirectorio[contadorDelFicheroLeido].getName());
+        ficherosDelDirectorio = rutaDelDirectorioHechaFile.listFiles();
+        if (ficherosDelDirectorio != null) {
+            for (int i = 0; i < ficherosDelDirectorio.length; i++) {
+                if (ficherosDelDirectorio[i].isDirectory()) {
+                    //System.out.println(ficherosDelDirectorio[i].toString());
+                    coleccionFicheros.add(ficherosDelDirectorio[i]);
+                    listarDirectorioDeFormaRecursiva(ficherosDelDirectorio[i].getAbsolutePath());
+
+                }
+            }
         }
-        System.out.println("peta con este if");
-        System.out.println(rutaDelDirectorioQueSeQuiereListar);
-        //deberia de mejorar lo del contador
-            System.out.println(ficherosDelDirectorio[contadorDelFicheroLeido]);
-        if (ficherosDelDirectorio[contadorDelFicheroLeido].isDirectory()) {
-            
-            listarDirectorioDeFormaRecursiva(rutaDelDirectorioQueSeQuiereListar + ficherosDelDirectorio[contadorDelFicheroLeido]);
-        }
+        ficherosDelDirectorio = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
         return ficherosDelDirectorio;
     }
 
@@ -253,17 +262,17 @@ public class OperacionesFicheros {
     public boolean borrar(String rutaQueSeQuiereListar) {
         File[] ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);
         for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
-        System.out.println("Ficheros recursivamente: " +ficherosDeLaRutaAListar[i]);    
+            System.out.println("Ficheros recursivamente: " + ficherosDeLaRutaAListar[i]);
         }
-        
+
         ArrayList ficherosBorrados = new ArrayList();
         System.out.println("-----------------------------");
         if (ficherosDeLaRutaAListar != null) {
             for (int i = 0; i < ficherosDeLaRutaAListar.length; i++) {
                 //System.out.println(ficherosDeLaRutaAListar[i].toString());
                 //if (ficherosDeLaRutaAListar[i].isDirectory()) {
-                    //ficherosBorrados.add(ficherosDeLaRutaAListar[i].getName());
-                    //ficherosDeLaRutaAListar[i].delete();
+                //ficherosBorrados.add(ficherosDeLaRutaAListar[i].getName());
+                //ficherosDeLaRutaAListar[i].delete();
                 //}
             }
             ficherosDeLaRutaAListar = listarArchivosRecursivamente(rutaQueSeQuiereListar);

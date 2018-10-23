@@ -82,10 +82,9 @@ Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
       //  } catch (IOException ex) {
     //       Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         //}
-            //esta mierda no funciona bien
-        of.listarDirectorioDeFormaRecursiva("/home/alumnop/Carpetavacia");
-        //of.listarArchivosRecursivamente("/home/alumnop/Carpetavacia");
-        //of.borrar("/home/alumnop/Carpetavacia");
+            
+            System.out.println(of.listarDirectorioDeFormaRecursiva("/home/alumnop/Carpetavacia"));
+
     }
 
 }
