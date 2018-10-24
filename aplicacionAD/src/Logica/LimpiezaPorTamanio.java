@@ -18,6 +18,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
     private File[] ficherosEscaneados;
     private LogicaMetodos logicaMetodos;
     private String rutaSeleccionada;
+    private int opcionEscogida;
 
     /**
      * Creates new form LimpiezaPorTamanio
@@ -34,12 +35,12 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
         for (File fichero : ficherosEscaneados) {
 
-            String[] a = new String[3];
-            a[0] = fichero.getName();
-            a[1] = fichero.getAbsolutePath();
-            a[2] = Long.toString(fichero.length() / 1048576);
+            String[] columnasInformacionDeFichero = new String[3];
+            columnasInformacionDeFichero[0] = fichero.getName();
+            columnasInformacionDeFichero[1] = fichero.getAbsolutePath();
+            columnasInformacionDeFichero[2] = Long.toString(fichero.length() / 1048576);
 
-            dtm.addRow(a);
+            dtm.addRow(columnasInformacionDeFichero);
         }
         jTableFichero.setModel(dtm);
 
@@ -60,10 +61,10 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFichero = new javax.swing.JTable();
         jComboBoxTamanios = new javax.swing.JComboBox<>();
-        jToggleButtonEscanearTamanios = new javax.swing.JToggleButton();
         jToggleButtonBorradoAbsoluto = new javax.swing.JToggleButton();
-        jToggleButtonBorrarSeleccionados = new javax.swing.JToggleButton();
         jToggleButtonCerrar = new javax.swing.JToggleButton();
+        jButtonEscanear = new javax.swing.JButton();
+        jButtonBorrarSeleccionados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -96,13 +97,6 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
             }
         });
 
-        jToggleButtonEscanearTamanios.setText("Escanear");
-        jToggleButtonEscanearTamanios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonEscanearTamaniosActionPerformed(evt);
-            }
-        });
-
         jToggleButtonBorradoAbsoluto.setText("Borrar todo");
         jToggleButtonBorradoAbsoluto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,17 +104,24 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
             }
         });
 
-        jToggleButtonBorrarSeleccionados.setText("Borrar seleccionados");
-        jToggleButtonBorrarSeleccionados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonBorrarSeleccionadosActionPerformed(evt);
-            }
-        });
-
         jToggleButtonCerrar.setText("Cerrar");
         jToggleButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButtonCerrarActionPerformed(evt);
+            }
+        });
+
+        jButtonEscanear.setText("Escanear");
+        jButtonEscanear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEscanearActionPerformed(evt);
+            }
+        });
+
+        jButtonBorrarSeleccionados.setText("Borrar seleccionados");
+        jButtonBorrarSeleccionados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarSeleccionadosActionPerformed(evt);
             }
         });
 
@@ -132,25 +133,27 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelTamanio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxTamanios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButtonEscanearTamanios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(89, 89, 89))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(jLabelLimpieza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(95, 95, 95)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jToggleButtonBorrarSeleccionados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonBorradoAbsoluto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButtonCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(96, 96, 96))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelTamanio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBoxTamanios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonEscanear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(75, 75, 75))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(96, 96, 96)
+                                .addComponent(jLabelLimpieza, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(95, 95, 95)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(123, 123, 123)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jToggleButtonBorradoAbsoluto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToggleButtonCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonBorrarSeleccionados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(96, 96, 96))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,16 +164,16 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTamanio)
                     .addComponent(jComboBoxTamanios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButtonEscanearTamanios))
+                    .addComponent(jButtonEscanear))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                 .addGap(32, 32, 32)
                 .addComponent(jToggleButtonBorradoAbsoluto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButtonBorrarSeleccionados)
-                .addGap(18, 18, 18)
+                .addComponent(jButtonBorrarSeleccionados)
+                .addGap(11, 11, 11)
                 .addComponent(jToggleButtonCerrar)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,34 +194,44 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTamaniosActionPerformed
 
-    private void jToggleButtonEscanearTamaniosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEscanearTamaniosActionPerformed
-        ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(jComboBoxTamanios.getSelectedIndex(), rutaSeleccionada);
-        System.out.println("Escaneo Completado");
-        rellenarTablaFicherosABorrar();
-    }//GEN-LAST:event_jToggleButtonEscanearTamaniosActionPerformed
-
     private void jToggleButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCerrarActionPerformed
         dispose();
     }//GEN-LAST:event_jToggleButtonCerrarActionPerformed
 
     private void jToggleButtonBorradoAbsolutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBorradoAbsolutoActionPerformed
-        logicaMetodos.borradoDeFicheros(ficherosEscaneados);
+
+        logicaMetodos.borradoDeFicheros(ficherosEscaneados, "FicherosBorrados.csv");
+        ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
+        System.out.println("------------------------------");
+        System.out.println("Ficheros borrados");
+        rellenarTablaFicherosABorrar();
     }//GEN-LAST:event_jToggleButtonBorradoAbsolutoActionPerformed
 
-    private void jToggleButtonBorrarSeleccionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBorrarSeleccionadosActionPerformed
+    private void jButtonEscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscanearActionPerformed
+        opcionEscogida = jComboBoxTamanios.getSelectedIndex();
+        ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(jComboBoxTamanios.getSelectedIndex(), rutaSeleccionada);
+        System.out.println("Escaneo Completado");
+        rellenarTablaFicherosABorrar();
+    }//GEN-LAST:event_jButtonEscanearActionPerformed
+
+    private void jButtonBorrarSeleccionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarSeleccionadosActionPerformed
 
         int[] intFicherosSeleccionados = jTableFichero.getSelectedRows();
         File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
-        for (int ficherosSeleccionado : intFicherosSeleccionados) {
-        ficherosSeleccionados[ficherosSeleccionado]=ficherosEscaneados[ficherosSeleccionado];
-//Corredor corredorAModificar = logicaMetodos.getCorredores().get(corredorSeleccionado);
+        for (int contadorFicherosArray = 0; contadorFicherosArray < ficherosSeleccionados.length; contadorFicherosArray++) {
+            ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[contadorFicherosArray];
         }
-        System.out.println(ficherosSeleccionados);
-        //logicaMetodos.borradoDeFicheros(ficherosSeleccionados);
-    }//GEN-LAST:event_jToggleButtonBorrarSeleccionadosActionPerformed
+        logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
+        ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
+        System.out.println("------------------------------");
+        System.out.println("Ficheros borrados");
+        rellenarTablaFicherosABorrar();
+    }//GEN-LAST:event_jButtonBorrarSeleccionadosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBorrarSeleccionados;
+    private javax.swing.JButton jButtonEscanear;
     private javax.swing.JComboBox<String> jComboBoxTamanios;
     private javax.swing.JLabel jLabelLimpieza;
     private javax.swing.JLabel jLabelTamanio;
@@ -226,8 +239,6 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableFichero;
     private javax.swing.JToggleButton jToggleButtonBorradoAbsoluto;
-    private javax.swing.JToggleButton jToggleButtonBorrarSeleccionados;
     private javax.swing.JToggleButton jToggleButtonCerrar;
-    private javax.swing.JToggleButton jToggleButtonEscanearTamanios;
     // End of variables declaration//GEN-END:variables
 }

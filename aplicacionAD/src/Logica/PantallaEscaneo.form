@@ -46,23 +46,32 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel1" alignment="0" min="-2" pref="274" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jComboBoxUnidad" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel1" alignment="0" min="-2" pref="274" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxUnidad" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="116" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jToggleButton1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButtonLimpiezaTipo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButtonTamanno" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButtonEscanear" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jButtonEspacioLibre" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jToggleButton1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonLimpiezaTipo" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonTamanno" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonEscanear" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonEspacioLibre" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jButtonCerrar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="116" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -89,7 +98,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonCerrar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -182,6 +194,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpieza de archivos duplicados"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonCerrar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cerrar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCerrarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
