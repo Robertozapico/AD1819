@@ -6,8 +6,12 @@
 package Logica;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,8 +20,8 @@ import java.util.List;
 public class LogicaMetodos {
 
     private List<File> coleccionFicheros = new ArrayList<File>();
+    private GestionCsv gestionDeFicheroCsv = new GestionCsv();
 
-    ;
     /**
      *
      * @return
@@ -107,6 +111,7 @@ public class LogicaMetodos {
             pesoMaximo = 700;
             pesoMinimo = 0;
         } else if (opcion == 1) {
+            //poner D detras del 1024
             pesoMaximo = (10 * 1024);
             pesoMinimo = 700;
         }
@@ -120,6 +125,23 @@ public class LogicaMetodos {
         }
         ficherosEscaneados = coleccionFicherosParaBorrar.toArray(new File[coleccionFicherosParaBorrar.size()]);
         return ficherosEscaneados;
+    }
+
+    public int borradoDeFicheros(File[] ficherosEscogidos) {
+        int contadorFicherosBorrados = 0;
+        try {
+            gestionDeFicheroCsv.grabarFicheroCSV("FicherosBorrados.csv", ficherosEscogidos);
+        } catch (ParseException ex) {
+            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (File fichero : ficherosEscogidos) {
+
+            fichero.delete();
+            contadorFicherosBorrados++;
+        }
+        return contadorFicherosBorrados;
     }
     /*
     Sugiere  eliminar  directoriosvacíos.

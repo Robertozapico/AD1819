@@ -61,8 +61,8 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         jTableFichero = new javax.swing.JTable();
         jComboBoxTamanios = new javax.swing.JComboBox<>();
         jToggleButtonEscanearTamanios = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
+        jToggleButtonBorradoAbsoluto = new javax.swing.JToggleButton();
+        jToggleButtonBorrarSeleccionados = new javax.swing.JToggleButton();
         jToggleButtonCerrar = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -103,14 +103,19 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
             }
         });
 
-        jToggleButton2.setText("Borrar todo");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButtonBorradoAbsoluto.setText("Borrar todo");
+        jToggleButtonBorradoAbsoluto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
+                jToggleButtonBorradoAbsolutoActionPerformed(evt);
             }
         });
 
-        jToggleButton3.setText("Borrar seleccionados");
+        jToggleButtonBorrarSeleccionados.setText("Borrar seleccionados");
+        jToggleButtonBorrarSeleccionados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonBorrarSeleccionadosActionPerformed(evt);
+            }
+        });
 
         jToggleButtonCerrar.setText("Cerrar");
         jToggleButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -142,8 +147,8 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButtonBorrarSeleccionados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jToggleButtonBorradoAbsoluto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToggleButtonCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(96, 96, 96))
         );
@@ -160,9 +165,9 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                 .addGap(32, 32, 32)
-                .addComponent(jToggleButton2)
+                .addComponent(jToggleButtonBorradoAbsoluto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton3)
+                .addComponent(jToggleButtonBorrarSeleccionados)
                 .addGap(18, 18, 18)
                 .addComponent(jToggleButtonCerrar)
                 .addContainerGap())
@@ -187,19 +192,30 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
     }//GEN-LAST:event_jComboBoxTamaniosActionPerformed
 
     private void jToggleButtonEscanearTamaniosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonEscanearTamaniosActionPerformed
-        
         ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(jComboBoxTamanios.getSelectedIndex(), rutaSeleccionada);
         System.out.println("Escaneo Completado");
         rellenarTablaFicherosABorrar();
     }//GEN-LAST:event_jToggleButtonEscanearTamaniosActionPerformed
 
     private void jToggleButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCerrarActionPerformed
-        dispose();        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jToggleButtonCerrarActionPerformed
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+    private void jToggleButtonBorradoAbsolutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBorradoAbsolutoActionPerformed
+        logicaMetodos.borradoDeFicheros(ficherosEscaneados);
+    }//GEN-LAST:event_jToggleButtonBorradoAbsolutoActionPerformed
+
+    private void jToggleButtonBorrarSeleccionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBorrarSeleccionadosActionPerformed
+
+        int[] intFicherosSeleccionados = jTableFichero.getSelectedRows();
+        File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
+        for (int ficherosSeleccionado : intFicherosSeleccionados) {
+        ficherosSeleccionados[ficherosSeleccionado]=ficherosEscaneados[ficherosSeleccionado];
+//Corredor corredorAModificar = logicaMetodos.getCorredores().get(corredorSeleccionado);
+        }
+        System.out.println(ficherosSeleccionados);
+        //logicaMetodos.borradoDeFicheros(ficherosSeleccionados);
+    }//GEN-LAST:event_jToggleButtonBorrarSeleccionadosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -209,8 +225,8 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableFichero;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton jToggleButtonBorradoAbsoluto;
+    private javax.swing.JToggleButton jToggleButtonBorrarSeleccionados;
     private javax.swing.JToggleButton jToggleButtonCerrar;
     private javax.swing.JToggleButton jToggleButtonEscanearTamanios;
     // End of variables declaration//GEN-END:variables
