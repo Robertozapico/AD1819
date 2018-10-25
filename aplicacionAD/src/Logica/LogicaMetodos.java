@@ -58,16 +58,16 @@ public class LogicaMetodos {
                 if (!coleccionFicheros.contains(ficherosDeLaUnidad[ficheroCogido])) {
                     if (ficherosDeLaUnidad[ficheroCogido].isDirectory()) {
                         coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
-                        System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                        //System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
                         escanearUnidad(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
                     } else {
-                        System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
+                        //System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
                         coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
                     }
                 }
             }
         }
-        System.out.println("-------------------------------------------");
+        //System.out.println("-------------------------------------------");
         ficherosDeLaUnidad = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
         return ficherosDeLaUnidad;
     }
@@ -163,14 +163,14 @@ public class LogicaMetodos {
         File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
         ArrayList<File> listaFicherosConFiltro = new ArrayList<File>();
         for (int contadorFicheros = 0; contadorFicheros < listaFicherosFiltrados.length; contadorFicheros++) {
-            System.out.println(listaFicherosFiltrados[contadorFicheros]);
+            //System.out.println(listaFicherosFiltrados[contadorFicheros]);
             if (filtroEscogido.accept(listaFicherosFiltrados[contadorFicheros], listaFicherosFiltrados[contadorFicheros].getName())) {
                 if (!listaFicherosConFiltro.contains(listaFicherosFiltrados[contadorFicheros])) {
                     listaFicherosConFiltro.add(listaFicherosFiltrados[contadorFicheros]);
                 }
             }
         }
-        System.out.println(listaFicherosConFiltro);
+        //System.out.println(listaFicherosConFiltro);
         return listaFicherosConFiltro;
     }
     /*
