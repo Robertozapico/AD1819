@@ -7,6 +7,7 @@ package Logica;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Date;
 
 /**
  *
@@ -62,5 +63,24 @@ public class Filtros {
             }
         };
         return filtroDeTexto;
+    }
+
+    public FilenameFilter filtroPorFechaDeModificacion(Long totalHoras) {
+        FilenameFilter filtroFecha = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                Date fechaHoy = new Date();
+                Long timeActual = fechaHoy.getTime();
+                System.out.println(file.lastModified() + "," + (timeActual - (1000 * 3600 * totalHoras)));
+                Date fechatresmeses = new Date(timeActual - (1000 * 3600 * totalHoras));
+                System.out.println(fechatresmeses);
+                if (file.lastModified() > (timeActual - (1000 * 3600 * totalHoras))) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        return filtroFecha;
     }
 }

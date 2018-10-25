@@ -39,7 +39,6 @@ public class LogicaMetodos {
      */
     public int espacioLibreDisponible(String unidad) {
         File unidadSeleccionada = new File(unidad);
-
         int espacioDisponibleDeLaUnidad = (int) (unidadSeleccionada.getFreeSpace() / 1073741824);
         return espacioDisponibleDeLaUnidad;
     }
@@ -58,20 +57,16 @@ public class LogicaMetodos {
                 if (!coleccionFicheros.contains(ficherosDeLaUnidad[ficheroCogido])) {
                     if (ficherosDeLaUnidad[ficheroCogido].isDirectory()) {
                         coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
-                        //System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
                         escanearUnidad(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
                     } else {
-                        //System.out.println(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
                         coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
                     }
                 }
             }
         }
-        //System.out.println("-------------------------------------------");
         ficherosDeLaUnidad = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
         return ficherosDeLaUnidad;
     }
-//proceso
 
     public File[] listarArchivosRecursivamente(String rutaQueSeQuiereListar) {
         File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
@@ -79,7 +74,6 @@ public class LogicaMetodos {
         if (ficherosDeLaRutaAListar != null) {
             for (int contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDeLaRutaAListar.length; contadorDelFicheroLeido++) {
                 if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
-                    //System.out.println("\n" + "./" + ficherosDeLaRutaAListar[contadorDelFicheroLeido].getName());
                     coleccionFicheros.add(ficherosDeLaRutaAListar[contadorDelFicheroLeido]);
                 } else {
                     //coleccionFicheros.add(ficherosDeLaRutaAListar[contadorDelFicheroLeido]);
@@ -140,7 +134,6 @@ public class LogicaMetodos {
             Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (File fichero : ficherosEscogidos) {
-
             fichero.delete();
             contadorFicherosBorrados++;
         }
@@ -160,23 +153,41 @@ public class LogicaMetodos {
             filtroEscogido = filtro.filtroTexto();
         }
         File[] listaFicherosFiltrados = listarArchivosRecursivamente(rutaQueSeQuiereListar);
-        File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
         ArrayList<File> listaFicherosConFiltro = new ArrayList<File>();
         for (int contadorFicheros = 0; contadorFicheros < listaFicherosFiltrados.length; contadorFicheros++) {
-            //System.out.println(listaFicherosFiltrados[contadorFicheros]);
             if (filtroEscogido.accept(listaFicherosFiltrados[contadorFicheros], listaFicherosFiltrados[contadorFicheros].getName())) {
                 if (!listaFicherosConFiltro.contains(listaFicherosFiltrados[contadorFicheros])) {
                     listaFicherosConFiltro.add(listaFicherosFiltrados[contadorFicheros]);
                 }
             }
         }
-        //System.out.println(listaFicherosConFiltro);
         return listaFicherosConFiltro;
     }
+
+    public ArrayList<File> listarFicherosPorFechaRecursivamente(int tipo, String rutaQueSeQuiereListar) {
+        Filtros filtro = new Filtros();
+        FilenameFilter filtroEscogido = null;
+        if (tipo == 0) {
+            filtroEscogido = filtro.filtroPorFechaDeModificacion(2184L);
+        } else if (tipo == 1) {
+            filtroEscogido = filtro.filtroPorFechaDeModificacion(4368L);
+        } else if (tipo == 2) {
+            filtroEscogido = filtro.filtroPorFechaDeModificacion(8784L);
+        }
+        File[] listaFicherosFiltrados = listarArchivosRecursivamente(rutaQueSeQuiereListar);
+        ArrayList<File> listaFicherosConFiltro = new ArrayList<File>();
+        for (int contadorFicheros = 0; contadorFicheros < listaFicherosFiltrados.length; contadorFicheros++) {
+            if (filtroEscogido.accept(listaFicherosFiltrados[contadorFicheros], listaFicherosFiltrados[contadorFicheros].getName())) {
+                if (!listaFicherosConFiltro.contains(listaFicherosFiltrados[contadorFicheros])) {
+                    listaFicherosConFiltro.add(listaFicherosFiltrados[contadorFicheros]);
+                }
+            }
+        }
+        return listaFicherosConFiltro;
+    }
+
     /*
     Sugiere  eliminar  directoriosvacíos.
-    •Sugiere  eliminar  ficherosde  unas  determinadas  categorías.
-    •Sugiere  eliminar  ficheros  antiguos.
     •Busca  ficheros  duplicados
      */
 }

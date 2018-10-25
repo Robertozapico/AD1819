@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class LimpiezaPorTipo extends javax.swing.JDialog {
 //FALTA COMPROBAR EL BORRAR TODO
     //AÑADIR TANTO EN ESTE COMO EN LIMPIEZA POR TAMAÑO UNA VENTANA CON SI-CANCELAR CUANDO SE DE CLIC A BORRAR
+
     private File[] ficherosEscaneados;
     private LogicaMetodos logicaMetodos;
     private String rutaSeleccionada;
@@ -220,36 +221,40 @@ public class LimpiezaPorTipo extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCerrarActionPerformed
 
     private void jButtonBorrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarTodoActionPerformed
-        List<File> coleccionFicheros = new ArrayList<File>();
-        logicaMetodos.borradoDeFicheros(ficherosEscaneados, "FicherosBorrados.csv");
-        System.out.println("------------------------------");
-        JOptionPane.showMessageDialog(this, "Ficheros borrados");
-        coleccionFicheros = logicaMetodos.listarFicherosConFiltroRecursivamente(opcionEscogida, rutaSeleccionada);
-        ficherosEscaneados = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
-        rellenarTablaFicherosPorTipo();
+        int valor = JOptionPane.showConfirmDialog(this, "¿Desea eliminar todos los ficheros?", "Eliminar ficheros", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            List<File> coleccionFicheros = new ArrayList<File>();
+            logicaMetodos.borradoDeFicheros(ficherosEscaneados, "FicherosBorrados.csv");
+            System.out.println("------------------------------");
+            JOptionPane.showMessageDialog(this, "Ficheros borrados");
+            coleccionFicheros = logicaMetodos.listarFicherosConFiltroRecursivamente(opcionEscogida, rutaSeleccionada);
+            ficherosEscaneados = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
+            rellenarTablaFicherosPorTipo();
+        }
     }//GEN-LAST:event_jButtonBorrarTodoActionPerformed
 
     private void jButtonBorrarSeleccionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarSeleccionadosActionPerformed
-        
-        List<File> coleccionFicheros = new ArrayList<File>();
-        int[] intFicherosSeleccionados = jTableFicheros.getSelectedRows();
-        File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
-        for (int contadorFicherosArray = 0; contadorFicherosArray < ficherosSeleccionados.length; contadorFicherosArray++) {
-            ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[contadorFicherosArray];
-        }
-        logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
+        int valor = JOptionPane.showConfirmDialog(this, "¿Desea eliminar los ficheros seleccionados?", "Eliminar ficheros seleccionados", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            List<File> coleccionFicheros = new ArrayList<File>();
+            int[] intFicherosSeleccionados = jTableFicheros.getSelectedRows();
+            File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
+            for (int contadorFicherosArray = 0; contadorFicherosArray < ficherosSeleccionados.length; contadorFicherosArray++) {
+                ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[intFicherosSeleccionados[contadorFicherosArray]];
+            }
+            logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
 
-        System.out.println("------------------------------");
-        JOptionPane.showMessageDialog(this, "Ficheros borrados");
-        coleccionFicheros = logicaMetodos.listarFicherosConFiltroRecursivamente(opcionEscogida, rutaSeleccionada);
-        ficherosEscaneados = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
-        rellenarTablaFicherosPorTipo();
+            System.out.println("------------------------------");
+            JOptionPane.showMessageDialog(this, "Ficheros borrados");
+            coleccionFicheros = logicaMetodos.listarFicherosConFiltroRecursivamente(opcionEscogida, rutaSeleccionada);
+            ficherosEscaneados = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
+            rellenarTablaFicherosPorTipo();
+        }
     }//GEN-LAST:event_jButtonBorrarSeleccionadosActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBorrarSeleccionados;
     private javax.swing.JButton jButtonBorrarTodo;

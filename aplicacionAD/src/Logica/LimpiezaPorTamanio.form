@@ -68,9 +68,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jToggleButtonBorradoAbsoluto" max="32767" attributes="0"/>
                               <Component id="jToggleButtonCerrar" max="32767" attributes="0"/>
                               <Component id="jButtonBorrarSeleccionados" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonBorradoAbsoluto" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
                       </Group>
@@ -92,7 +92,7 @@
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="114" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="jToggleButtonBorradoAbsoluto" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonBorradoAbsoluto" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonBorrarSeleccionados" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
@@ -116,6 +116,9 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelTamanio">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="12" style="1"/>
+            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
@@ -181,14 +184,6 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JToggleButton" name="jToggleButtonBorradoAbsoluto">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Borrar todo"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonBorradoAbsolutoActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JToggleButton" name="jToggleButtonCerrar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cerrar"/>
@@ -211,6 +206,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorrarSeleccionadosActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonBorradoAbsoluto">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Borrar todo"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorradoAbsolutoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

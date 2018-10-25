@@ -7,6 +7,7 @@ package Logica;
 
 import java.awt.Dialog;
 import java.io.File;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -62,10 +63,10 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFichero = new javax.swing.JTable();
         jComboBoxTamanios = new javax.swing.JComboBox<>();
-        jToggleButtonBorradoAbsoluto = new javax.swing.JToggleButton();
         jToggleButtonCerrar = new javax.swing.JToggleButton();
         jButtonEscanear = new javax.swing.JButton();
         jButtonBorrarSeleccionados = new javax.swing.JButton();
+        jButtonBorradoAbsoluto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,6 +76,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         jLabelLimpieza.setForeground(new java.awt.Color(102, 102, 102));
         jLabelLimpieza.setText("Limpieza por Tamaño");
 
+        jLabelTamanio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabelTamanio.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTamanio.setText("Tamaño:");
 
@@ -98,13 +100,6 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
             }
         });
 
-        jToggleButtonBorradoAbsoluto.setText("Borrar todo");
-        jToggleButtonBorradoAbsoluto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonBorradoAbsolutoActionPerformed(evt);
-            }
-        });
-
         jToggleButtonCerrar.setText("Cerrar");
         jToggleButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,6 +118,13 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         jButtonBorrarSeleccionados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarSeleccionadosActionPerformed(evt);
+            }
+        });
+
+        jButtonBorradoAbsoluto.setText("Borrar todo");
+        jButtonBorradoAbsoluto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorradoAbsolutoActionPerformed(evt);
             }
         });
 
@@ -151,9 +153,9 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(123, 123, 123)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToggleButtonBorradoAbsoluto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jToggleButtonCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonBorrarSeleccionados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonBorrarSeleccionados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonBorradoAbsoluto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(96, 96, 96))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,7 +171,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                 .addGap(32, 32, 32)
-                .addComponent(jToggleButtonBorradoAbsoluto)
+                .addComponent(jButtonBorradoAbsoluto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonBorrarSeleccionados)
                 .addGap(11, 11, 11)
@@ -199,16 +201,8 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jToggleButtonCerrarActionPerformed
 
-    private void jToggleButtonBorradoAbsolutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBorradoAbsolutoActionPerformed
-
-        logicaMetodos.borradoDeFicheros(ficherosEscaneados, "FicherosBorrados.csv");
-        ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
-        System.out.println("------------------------------");
-        JOptionPane.showMessageDialog(this, "Ficheros borrados");
-        rellenarTablaFicherosABorrar();
-    }//GEN-LAST:event_jToggleButtonBorradoAbsolutoActionPerformed
-
     private void jButtonEscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscanearActionPerformed
+        
         opcionEscogida = jComboBoxTamanios.getSelectedIndex();
         ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(jComboBoxTamanios.getSelectedIndex(), rutaSeleccionada);
         JOptionPane.showMessageDialog(this, "Escaneo completado");
@@ -220,8 +214,9 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         if (valor == JOptionPane.YES_OPTION) {
             int[] intFicherosSeleccionados = jTableFichero.getSelectedRows();
             File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
+            System.out.println("longitud: " + intFicherosSeleccionados.length);
             for (int contadorFicherosArray = 0; contadorFicherosArray < ficherosSeleccionados.length; contadorFicherosArray++) {
-                ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[contadorFicherosArray];
+                ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[intFicherosSeleccionados[contadorFicherosArray]];
             }
             logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
             ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
@@ -231,8 +226,20 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonBorrarSeleccionadosActionPerformed
 
+    private void jButtonBorradoAbsolutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorradoAbsolutoActionPerformed
+        int valor = JOptionPane.showConfirmDialog(this, "¿Desea eliminar todos los ficheros?", "Eliminar ficheros", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            logicaMetodos.borradoDeFicheros(ficherosEscaneados, "FicherosBorrados.csv");
+            ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
+            System.out.println("------------------------------");
+            JOptionPane.showMessageDialog(this, "Ficheros borrados");
+            rellenarTablaFicherosABorrar();
+        }
+    }//GEN-LAST:event_jButtonBorradoAbsolutoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBorradoAbsoluto;
     private javax.swing.JButton jButtonBorrarSeleccionados;
     private javax.swing.JButton jButtonEscanear;
     private javax.swing.JComboBox<String> jComboBoxTamanios;
@@ -241,7 +248,6 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableFichero;
-    private javax.swing.JToggleButton jToggleButtonBorradoAbsoluto;
     private javax.swing.JToggleButton jToggleButtonCerrar;
     // End of variables declaration//GEN-END:variables
 }

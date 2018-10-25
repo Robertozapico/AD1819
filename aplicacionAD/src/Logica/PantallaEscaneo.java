@@ -20,7 +20,6 @@ public class PantallaEscaneo extends javax.swing.JDialog {
 
     private LogicaMetodos logicaMetodos = new LogicaMetodos();
     private GestionCsv gestionCsv = new GestionCsv();
-    
 
     /**
      * Creates new form PantallaEscaneo
@@ -52,10 +51,10 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jButtonEscanear = new javax.swing.JButton();
         jButtonTamanno = new javax.swing.JButton();
         jButtonLimpiezaTipo = new javax.swing.JButton();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButtonCerrar = new javax.swing.JButton();
+        jButtonLimpiezaArchivosAntiguos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -103,13 +102,6 @@ public class PantallaEscaneo extends javax.swing.JDialog {
             }
         });
 
-        jToggleButton1.setText("Limpieza de archivos antiguos");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
         jButton2.setText("Limpieza de directorios vacios");
 
         jButton3.setText("Limpieza de archivos duplicados");
@@ -118,6 +110,13 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCerrarActionPerformed(evt);
+            }
+        });
+
+        jButtonLimpiezaArchivosAntiguos.setText("Limpieza de archivos antiguos");
+        jButtonLimpiezaArchivosAntiguos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiezaArchivosAntiguosActionPerformed(evt);
             }
         });
 
@@ -135,17 +134,17 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBoxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(116, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButtonLimpiezaArchivosAntiguos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonLimpiezaTipo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonTamanno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonEscanear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonEspacioLibre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                         .addComponent(jButtonCerrar)
                         .addGap(38, 38, 38))))
         );
@@ -167,7 +166,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonLimpiezaTipo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1)
+                .addComponent(jButtonLimpiezaArchivosAntiguos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -219,10 +218,6 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         pantallaLimpiezaTamanio.setVisible(true);
     }//GEN-LAST:event_jButtonTamannoActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     private void jButtonLimpiezaTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiezaTipoActionPerformed
         LimpiezaPorTipo limpiezaPorTipo = new LimpiezaPorTipo(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
         limpiezaPorTipo.setVisible(true);
@@ -232,6 +227,11 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButtonCerrarActionPerformed
 
+    private void jButtonLimpiezaArchivosAntiguosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiezaArchivosAntiguosActionPerformed
+        LimpiezaPorFecha limpiezaPorFecha = new LimpiezaPorFecha(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
+        limpiezaPorFecha.setVisible(true);
+    }//GEN-LAST:event_jButtonLimpiezaArchivosAntiguosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
@@ -239,12 +239,12 @@ public class PantallaEscaneo extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonEscanear;
     private javax.swing.JButton jButtonEspacioLibre;
+    private javax.swing.JButton jButtonLimpiezaArchivosAntiguos;
     private javax.swing.JButton jButtonLimpiezaTipo;
     private javax.swing.JButton jButtonTamanno;
     private javax.swing.JComboBox<String> jComboBoxUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
