@@ -18,6 +18,9 @@ import java.util.Scanner;
  */
 public class Filtros {
 
+    
+    
+    
     /**
      *
      * @return
@@ -146,7 +149,7 @@ public class Filtros {
      * @return
      */
     public FilenameFilter filtroPorModificacionEnLasUltimas24h() {
-        FilenameFilter filtroCarpetas = new FilenameFilter() {
+        FilenameFilter filtroDia = new FilenameFilter() {
             @Override
             public boolean accept(File file, String name) {
                 File ficheroAFiltrar = new File(file + "/" + name);
@@ -156,7 +159,7 @@ public class Filtros {
                 return fechaPasada.before(fechaDeUltimaModificacionDelFichero);
             }
         };
-        return filtroCarpetas;
+        return filtroDia;
     }
 
     /**
@@ -167,7 +170,7 @@ public class Filtros {
      * @return
      */
     public FilenameFilter filtroPorFechaDeModificacion(int totalHoras, int totalMinutos, int totalsegundos) {
-        FilenameFilter filtroCarpetas = new FilenameFilter() {
+        FilenameFilter filtroDias = new FilenameFilter() {
             @Override
             public boolean accept(File file, String name) {
                 File ficheroCarpeta = new File(file + "/" + name);
@@ -184,7 +187,7 @@ public class Filtros {
 
             }
         };
-        return filtroCarpetas;
+        return filtroDias;
     }
 
     /**
