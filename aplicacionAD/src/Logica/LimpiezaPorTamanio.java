@@ -7,6 +7,7 @@ package Logica;
 
 import java.awt.Dialog;
 import java.io.File;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -203,29 +204,31 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         logicaMetodos.borradoDeFicheros(ficherosEscaneados, "FicherosBorrados.csv");
         ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
         System.out.println("------------------------------");
-        System.out.println("Ficheros borrados");
+        JOptionPane.showMessageDialog(this, "Ficheros borrados");
         rellenarTablaFicherosABorrar();
     }//GEN-LAST:event_jToggleButtonBorradoAbsolutoActionPerformed
 
     private void jButtonEscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscanearActionPerformed
         opcionEscogida = jComboBoxTamanios.getSelectedIndex();
         ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(jComboBoxTamanios.getSelectedIndex(), rutaSeleccionada);
-        System.out.println("Escaneo Completado");
+        JOptionPane.showMessageDialog(this, "Escaneo completado");
         rellenarTablaFicherosABorrar();
     }//GEN-LAST:event_jButtonEscanearActionPerformed
 
     private void jButtonBorrarSeleccionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarSeleccionadosActionPerformed
-
-        int[] intFicherosSeleccionados = jTableFichero.getSelectedRows();
-        File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
-        for (int contadorFicherosArray = 0; contadorFicherosArray < ficherosSeleccionados.length; contadorFicherosArray++) {
-            ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[contadorFicherosArray];
+        int valor = JOptionPane.showConfirmDialog(this, "¿Desea eliminar los ficheros seleccionados?", "Eliminar ficheros seleccionados", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            int[] intFicherosSeleccionados = jTableFichero.getSelectedRows();
+            File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
+            for (int contadorFicherosArray = 0; contadorFicherosArray < ficherosSeleccionados.length; contadorFicherosArray++) {
+                ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[contadorFicherosArray];
+            }
+            logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
+            ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
+            System.out.println("------------------------------");
+            JOptionPane.showMessageDialog(this, "Ficheros borrados");
+            rellenarTablaFicherosABorrar();
         }
-        logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
-        ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
-        System.out.println("------------------------------");
-        System.out.println("Ficheros borrados");
-        rellenarTablaFicherosABorrar();
     }//GEN-LAST:event_jButtonBorrarSeleccionadosActionPerformed
 
 

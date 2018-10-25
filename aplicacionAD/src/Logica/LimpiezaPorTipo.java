@@ -9,6 +9,7 @@ import java.awt.Dialog;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -77,6 +78,8 @@ public class LimpiezaPorTipo extends javax.swing.JDialog {
         jButtonBorrarSeleccionados = new javax.swing.JButton();
         jButtonBorrarTodo = new javax.swing.JButton();
         jButtonCerrar = new javax.swing.JButton();
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
@@ -204,7 +207,7 @@ public class LimpiezaPorTipo extends javax.swing.JDialog {
         List<File> coleccionFicheros = new ArrayList<File>();
         coleccionFicheros = logicaMetodos.listarFicherosConFiltroRecursivamente(jComboBoxTipoFicheros.getSelectedIndex(), rutaSeleccionada);
         ficherosEscaneados = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
-        System.out.println("Escaneo Completado");
+        JOptionPane.showMessageDialog(this, "Escaneo completado");
         rellenarTablaFicherosPorTipo();
     }//GEN-LAST:event_jButtonEscanearActionPerformed
 
@@ -220,13 +223,14 @@ public class LimpiezaPorTipo extends javax.swing.JDialog {
         List<File> coleccionFicheros = new ArrayList<File>();
         logicaMetodos.borradoDeFicheros(ficherosEscaneados, "FicherosBorrados.csv");
         System.out.println("------------------------------");
-        System.out.println("Ficheros borrados");
+        JOptionPane.showMessageDialog(this, "Ficheros borrados");
         coleccionFicheros = logicaMetodos.listarFicherosConFiltroRecursivamente(opcionEscogida, rutaSeleccionada);
         ficherosEscaneados = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
         rellenarTablaFicherosPorTipo();
     }//GEN-LAST:event_jButtonBorrarTodoActionPerformed
 
     private void jButtonBorrarSeleccionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarSeleccionadosActionPerformed
+        
         List<File> coleccionFicheros = new ArrayList<File>();
         int[] intFicherosSeleccionados = jTableFicheros.getSelectedRows();
         File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
@@ -236,7 +240,7 @@ public class LimpiezaPorTipo extends javax.swing.JDialog {
         logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
 
         System.out.println("------------------------------");
-        System.out.println("Ficheros borrados");
+        JOptionPane.showMessageDialog(this, "Ficheros borrados");
         coleccionFicheros = logicaMetodos.listarFicherosConFiltroRecursivamente(opcionEscogida, rutaSeleccionada);
         ficherosEscaneados = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
         rellenarTablaFicherosPorTipo();
