@@ -83,4 +83,14 @@ public class Filtros {
         };
         return filtroFecha;
     }
+    /*
+    public FilenameFilter filtroDirectoriosVacios() {
+        FilenameFilter filtroDirectorioVacios = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                return file.isDirectory();
+            }
+        };
+        return filtroDirectorioVacios;
+    }*/
 }

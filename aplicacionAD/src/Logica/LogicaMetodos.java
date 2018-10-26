@@ -186,6 +186,38 @@ public class LogicaMetodos {
         return listaFicherosConFiltro;
     }
 
+    public int borradoDeDirectoriosVacios(File[] directoriosBorrados, String nombreFichero) {
+        int contadorDirectoriosBorrados = 0;
+        try {
+            gestionDeFicheroCsv.grabarFicheroCSV(nombreFichero, directoriosBorrados);
+        } catch (ParseException ex) {
+            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (File fichero : directoriosBorrados) {
+            if (fichero.isDirectory()) {
+                fichero.delete();
+                contadorDirectoriosBorrados++;
+            }
+        }
+        return contadorDirectoriosBorrados;
+    }
+
+    public ArrayList<File> compararDuplicados(File[] ficherosDuplicados, String nombreFichero) {
+        ArrayList<File> listaFicherosDuplicados = new ArrayList<File>();
+        for (File ficherosDuplicado : ficherosDuplicados) {
+            for (File otroFicherosDuplicado : ficherosDuplicados) {
+                if (ficherosDuplicado.getName().equals(otroFicherosDuplicado.getName())
+                        && ficherosDuplicado.lastModified() == otroFicherosDuplicado.lastModified()
+                        && ficherosDuplicado.length() == otroFicherosDuplicado.length()) {
+                    listaFicherosDuplicados.add(ficherosDuplicado);
+                }
+            }
+        }
+        return listaFicherosDuplicados;
+    }
+
     /*
     Sugiere  eliminar  directoriosvacíos.
     •Busca  ficheros  duplicados

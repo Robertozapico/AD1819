@@ -60,8 +60,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="jButtonLimpiezaArchivosAntiguos" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonLimpiezaDuplicados" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonDirectoriosVacios" alignment="0" max="32767" attributes="0"/>
                               <Component id="jButtonLimpiezaTipo" alignment="0" max="32767" attributes="0"/>
                               <Component id="jButtonTamanno" alignment="0" max="32767" attributes="0"/>
                               <Component id="jButtonEscanear" alignment="0" max="32767" attributes="0"/>
@@ -96,10 +96,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonLimpiezaArchivosAntiguos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonDirectoriosVacios" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonLimpiezaDuplicados" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonCerrar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -177,15 +177,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiezaTipoActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="jButtonDirectoriosVacios">
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpieza de directorios vacios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonDirectoriosVaciosActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="jButtonLimpiezaDuplicados">
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpieza de archivos duplicados"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiezaDuplicadosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonCerrar">
           <Properties>

@@ -51,8 +51,8 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jButtonEscanear = new javax.swing.JButton();
         jButtonTamanno = new javax.swing.JButton();
         jButtonLimpiezaTipo = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonDirectoriosVacios = new javax.swing.JButton();
+        jButtonLimpiezaDuplicados = new javax.swing.JButton();
         jButtonCerrar = new javax.swing.JButton();
         jButtonLimpiezaArchivosAntiguos = new javax.swing.JButton();
 
@@ -102,9 +102,19 @@ public class PantallaEscaneo extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("Limpieza de directorios vacios");
+        jButtonDirectoriosVacios.setText("Limpieza de directorios vacios");
+        jButtonDirectoriosVacios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDirectoriosVaciosActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Limpieza de archivos duplicados");
+        jButtonLimpiezaDuplicados.setText("Limpieza de archivos duplicados");
+        jButtonLimpiezaDuplicados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiezaDuplicadosActionPerformed(evt);
+            }
+        });
 
         jButtonCerrar.setText("Cerrar");
         jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
@@ -138,8 +148,8 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButtonLimpiezaArchivosAntiguos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonLimpiezaDuplicados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonDirectoriosVacios, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonLimpiezaTipo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonTamanno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonEscanear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -168,10 +178,10 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonLimpiezaArchivosAntiguos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jButtonDirectoriosVacios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
+                    .addComponent(jButtonLimpiezaDuplicados)
                     .addComponent(jButtonCerrar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -232,14 +242,27 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         limpiezaPorFecha.setVisible(true);
     }//GEN-LAST:event_jButtonLimpiezaArchivosAntiguosActionPerformed
 
+    private void jButtonDirectoriosVaciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDirectoriosVaciosActionPerformed
+        int valor = JOptionPane.showConfirmDialog(this, "¿Desea eliminar los directorios vacios?", "Eliminar directorios vacios", JOptionPane.YES_NO_OPTION);
+        if (valor == JOptionPane.YES_OPTION) {
+            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.escanearUnidad(jComboBoxUnidad.getSelectedItem().toString()), "Directorios_borrados.csv");
+//COMPROBAR ESTE METODO
+        }
+    }//GEN-LAST:event_jButtonDirectoriosVaciosActionPerformed
+
+    private void jButtonLimpiezaDuplicadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiezaDuplicadosActionPerformed
+        LimpiezaArchivosDuplicados limpiezaArchivosDuplicados = new LimpiezaArchivosDuplicados(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
+        limpiezaArchivosDuplicados.setVisible(true);
+    }//GEN-LAST:event_jButtonLimpiezaDuplicadosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonCerrar;
+    private javax.swing.JButton jButtonDirectoriosVacios;
     private javax.swing.JButton jButtonEscanear;
     private javax.swing.JButton jButtonEspacioLibre;
     private javax.swing.JButton jButtonLimpiezaArchivosAntiguos;
+    private javax.swing.JButton jButtonLimpiezaDuplicados;
     private javax.swing.JButton jButtonLimpiezaTipo;
     private javax.swing.JButton jButtonTamanno;
     private javax.swing.JComboBox<String> jComboBoxUnidad;
