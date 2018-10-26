@@ -55,6 +55,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jButtonLimpiezaDuplicados = new javax.swing.JButton();
         jButtonCerrar = new javax.swing.JButton();
         jButtonLimpiezaArchivosAntiguos = new javax.swing.JButton();
+        jLabelExplicacionGlobal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -130,6 +131,10 @@ public class PantallaEscaneo extends javax.swing.JDialog {
             }
         });
 
+        jLabelExplicacionGlobal.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabelExplicacionGlobal.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelExplicacionGlobal.setText("Escoge la unidad que quieres limpiar y que opción quieres utilizar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,7 +161,10 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                             .addComponent(jButtonEspacioLibre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                         .addComponent(jButtonCerrar)
-                        .addGap(38, 38, 38))))
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelExplicacionGlobal)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +175,9 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelExplicacionGlobal)
+                .addGap(9, 9, 9)
                 .addComponent(jButtonEspacioLibre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonEscanear)
@@ -183,7 +193,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonLimpiezaDuplicados)
                     .addComponent(jButtonCerrar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -268,6 +278,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelExplicacionGlobal;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
