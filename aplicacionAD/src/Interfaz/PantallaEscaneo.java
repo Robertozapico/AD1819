@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Interfaz;
 
+import Controlador.LogicaMetodos;
+import Controlador.GestionCsv;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -222,7 +224,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
     private void jButtonEscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscanearActionPerformed
 
         try {
-            gestionCsv.grabarFicheroCSV("FileScan.csv", logicaMetodos.escanearUnidad(jComboBoxUnidad.getSelectedItem().toString()));
+            gestionCsv.grabarFicheroCSV("FileScan.csv", logicaMetodos.listarArchivosRecursivamente(jComboBoxUnidad.getSelectedItem().toString()));
             System.out.println("Listado de archivos guardados en \"FileScan.csv\"");
         } catch (ParseException ex) {
             Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,8 +257,11 @@ public class PantallaEscaneo extends javax.swing.JDialog {
     private void jButtonDirectoriosVaciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDirectoriosVaciosActionPerformed
         int valor = JOptionPane.showConfirmDialog(this, "¿Desea eliminar los directorios vacios?", "Eliminar directorios vacios", JOptionPane.YES_NO_OPTION);
         if (valor == JOptionPane.YES_OPTION) {
-            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.escanearUnidad(jComboBoxUnidad.getSelectedItem().toString()), "Directorios_borrados.csv");
-//COMPROBAR ESTE METODO
+
+            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.listarArchivosRecursivamente(jComboBoxUnidad.getSelectedItem().toString()));
+            //Se vuelve a utilizar el metodo para comprobar que borra todos
+            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.listarArchivosRecursivamente(jComboBoxUnidad.getSelectedItem().toString()));
+            JOptionPane.showMessageDialog(this, "Borrados con exito los directorios vacios.");
         }
     }//GEN-LAST:event_jButtonDirectoriosVaciosActionPerformed
 

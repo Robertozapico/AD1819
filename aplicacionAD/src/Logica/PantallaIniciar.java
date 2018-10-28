@@ -5,6 +5,8 @@
  */
 package Logica;
 
+import Interfaz.PantallaEscaneo;
+
 /**
  *
  * @author zapia

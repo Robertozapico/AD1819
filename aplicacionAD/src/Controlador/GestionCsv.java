@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Controlador;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 /**
  *
@@ -20,15 +17,19 @@ import java.text.SimpleDateFormat;
  */
 public class GestionCsv {
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/aa");
-
-    private FileReader fr = null;
     private FileWriter ficheroGuardado = null;
-    private BufferedReader registro = null;
     private BufferedWriter ficheroBufferGuardado = null;
 
+
+/**
+ * Metodo para guardar el nombre de un fichero y su ruta en un fichero csv.
+ * @param nombreDelFichero nombre que se le quiere dar al fichero csv donde se va a guardar la información
+ * @param listaDeFicheros la lista de ficheros de la que se va a guardar su información
+ * @return el número de ficheros que han sido grabados
+ * @throws ParseException
+ * @throws IOException 
+ */
     public int grabarFicheroCSV(String nombreDelFichero, File[] listaDeFicheros) throws ParseException, IOException {
-        
         ficheroGuardado = new FileWriter(nombreDelFichero);
         ficheroBufferGuardado = new BufferedWriter(ficheroGuardado);
         int numeroFicherosGrabados = 0;
@@ -43,8 +44,4 @@ public class GestionCsv {
         return numeroFicherosGrabados;
     }
 
-    public void cerrarFicheroLectura() throws IOException {
-        registro.close();
-        fr.close();
-    }
 }

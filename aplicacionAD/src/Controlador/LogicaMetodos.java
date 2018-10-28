@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Controlador;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -24,6 +24,7 @@ public class LogicaMetodos {
     private GestionCsv gestionDeFicheroCsv = new GestionCsv();
 
     /**
+     * Obtiene las particiones de un sistema
      *
      * @return
      */
@@ -33,6 +34,7 @@ public class LogicaMetodos {
     }
 
     /**
+     * Obtiene el espacio libre de una unidad.
      *
      * @param unidad
      * @return
@@ -44,63 +46,42 @@ public class LogicaMetodos {
     }
 
     /**
+     * Lista los ficheros de una unidad con recursividad
      *
-     * @param rutaEscaneada
+     * @param rutaQueSeQuiereListar
      * @return
      */
-    public File[] escanearUnidad(String rutaEscaneada) {
-        File unidadSeleccionada = new File(rutaEscaneada);
-        File[] ficherosDeLaUnidad = unidadSeleccionada.listFiles();
-        int ficheroCogido;
-        if (ficherosDeLaUnidad != null) {
-            for (ficheroCogido = 0; ficheroCogido < ficherosDeLaUnidad.length; ficheroCogido++) {
-                if (!coleccionFicheros.contains(ficherosDeLaUnidad[ficheroCogido])) {
-                    if (ficherosDeLaUnidad[ficheroCogido].isDirectory()) {
-                        coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
-                        escanearUnidad(ficherosDeLaUnidad[ficheroCogido].getAbsolutePath());
-                    } else {
-                        coleccionFicheros.add(ficherosDeLaUnidad[ficheroCogido]);
-                    }
-                }
-            }
-        }
-        ficherosDeLaUnidad = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
-        return ficherosDeLaUnidad;
-    }
-
     public File[] listarArchivosRecursivamente(String rutaQueSeQuiereListar) {
         File rutaQueSeQuiereListarHechaFile = new File(rutaQueSeQuiereListar);
         File[] ficherosDeLaRutaAListar = rutaQueSeQuiereListarHechaFile.listFiles();
         if (ficherosDeLaRutaAListar != null) {
             for (int contadorDelFicheroLeido = 0; contadorDelFicheroLeido < ficherosDeLaRutaAListar.length; contadorDelFicheroLeido++) {
-                if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
-                    coleccionFicheros.add(ficherosDeLaRutaAListar[contadorDelFicheroLeido]);
-                } else {
-                    //coleccionFicheros.add(ficherosDeLaRutaAListar[contadorDelFicheroLeido]);
-                    //System.out.println(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
-                    listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+                if (!coleccionFicheros.contains(ficherosDeLaRutaAListar[contadorDelFicheroLeido])) {
+                    if (ficherosDeLaRutaAListar[contadorDelFicheroLeido].isDirectory() == false) {
+                        coleccionFicheros.add(ficherosDeLaRutaAListar[contadorDelFicheroLeido]);
+                    } else {
+                        coleccionFicheros.add(ficherosDeLaRutaAListar[contadorDelFicheroLeido]);
+                        listarArchivosRecursivamente(ficherosDeLaRutaAListar[contadorDelFicheroLeido].getAbsolutePath());
+                    }
                 }
             }
         }
         ficherosDeLaRutaAListar = coleccionFicheros.toArray(new File[coleccionFicheros.size()]);
         return ficherosDeLaRutaAListar;
     }
-//en proceso
 
-    public int eliminarDirectoriosVacios(String rutaParaListar) {
-        File[] listaFicheros = listarArchivosRecursivamente(rutaParaListar);
-        for (int contadorFicheros = 0; contadorFicheros < listaFicheros.length; contadorFicheros++) {
-            System.out.println("Ruta: " + listaFicheros[contadorFicheros].getAbsolutePath());
-            System.out.println("Nombre del directorio: " + listaFicheros[contadorFicheros]);
-            System.out.println("Peso: " + listaFicheros[contadorFicheros].getTotalSpace());
-        }
-        return 1;
-    }
-
+    /**
+     * Escanea los ficheros de una unidad y los devuelve dependiendo del peso
+     * mínimo y máximo.
+     *
+     * @param opcion para escoger un peso máximo y una mínimo
+     * @param rutaEscaneada de los ficheros que se quieren listar
+     * @return los ficheros en base del tamaño escogido
+     */
     public File[] escanearFicherosPorTamanio(int opcion, String rutaEscaneada) {
         List<File> coleccionFicherosParaBorrar = new ArrayList<File>();
         File[] ficherosEscaneados;
-        File[] ficherosDeLaUnidad = escanearUnidad(rutaEscaneada);
+        File[] ficherosDeLaUnidad = listarArchivosRecursivamente(rutaEscaneada);
         double pesoMaximo = 0;
         double pesoMinimo = 0;
         double pesoFichero = 0;
@@ -124,6 +105,15 @@ public class LogicaMetodos {
         return ficherosEscaneados;
     }
 
+    /**
+     * Borra ficheros y guarda los ficheros que han sido borrados en un archivo
+     * csv como registro
+     *
+     * @param ficherosEscogidos que van a ser borrados
+     * @param nombreFichero del archivo csv donde se va a guardar el registro de
+     * ficheros borrados
+     * @return la cantidad de ficheros que han sido eliminados
+     */
     public int borradoDeFicheros(File[] ficherosEscogidos, String nombreFichero) {
         int contadorFicherosBorrados = 0;
         try {
@@ -140,6 +130,16 @@ public class LogicaMetodos {
         return contadorFicherosBorrados;
     }
 
+    /**
+     * Lista los ficheros de una ruta con recursividad aplicando un filtro según
+     * el tipo de archivo
+     *
+     * @param tipo de archivo que se quiere filtrar, 0 para imagenes, 1 para
+     * video, 2 para audio y 3 para texto
+     * @param rutaQueSeQuiereListar ruta de la cual se van a listar los ficheros
+     * filtrados
+     * @return la lista de los ficheros filtrados
+     */
     public ArrayList<File> listarFicherosConFiltroRecursivamente(int tipo, String rutaQueSeQuiereListar) {
         Filtros filtro = new Filtros();
         FilenameFilter filtroEscogido = null;
@@ -164,14 +164,22 @@ public class LogicaMetodos {
         return listaFicherosConFiltro;
     }
 
-    public ArrayList<File> listarFicherosPorFechaRecursivamente(int tipo, String rutaQueSeQuiereListar) {
+    /**
+     * Lista ficheros recursivamente previos a una fecha escogida
+     *
+     * @param opcionFechaMinima opción de la fecha, 0 para menos de 3 meses, 1
+     * para menos de 6 meses y 2 para menos de 1 año
+     * @param rutaQueSeQuiereListar ruta de los ficheros que se quieren listar
+     * @return la lista de ficheros filtrados
+     */
+    public ArrayList<File> listarFicherosPorFechaRecursivamente(int opcionFechaMinima, String rutaQueSeQuiereListar) {
         Filtros filtro = new Filtros();
         FilenameFilter filtroEscogido = null;
-        if (tipo == 0) {
+        if (opcionFechaMinima == 0) {
             filtroEscogido = filtro.filtroPorFechaDeModificacion(2184L);
-        } else if (tipo == 1) {
+        } else if (opcionFechaMinima == 1) {
             filtroEscogido = filtro.filtroPorFechaDeModificacion(4368L);
-        } else if (tipo == 2) {
+        } else if (opcionFechaMinima == 2) {
             filtroEscogido = filtro.filtroPorFechaDeModificacion(8784L);
         }
         File[] listaFicherosFiltrados = listarArchivosRecursivamente(rutaQueSeQuiereListar);
@@ -186,40 +194,46 @@ public class LogicaMetodos {
         return listaFicherosConFiltro;
     }
 
-    public int borradoDeDirectoriosVacios(File[] directoriosBorrados, String nombreFichero) {
-        int contadorDirectoriosBorrados = 0;
-        try {
-            gestionDeFicheroCsv.grabarFicheroCSV(nombreFichero, directoriosBorrados);
-        } catch (ParseException ex) {
-            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    /**
+     * Borra directorios vacios
+     *
+     * @param directoriosBorrados lista de los directorios
+     * @return
+     */
+    public boolean borradoDeDirectoriosVacios(File[] directoriosBorrados) {
         for (File fichero : directoriosBorrados) {
             if (fichero.isDirectory()) {
+                System.out.println(fichero);
                 fichero.delete();
-                contadorDirectoriosBorrados++;
             }
         }
-        return contadorDirectoriosBorrados;
+        return true;
     }
 
-    public ArrayList<File> compararDuplicados(File[] ficherosDuplicados, String nombreFichero) {
+    /**
+     * Compara los ficheros duplicados de una ruta
+     *
+     * @param rutaSeleccionada que se quiere comprobar
+     * @return lista con los ficheros duplicados
+     */
+    public ArrayList<File> compararDuplicados(String rutaSeleccionada) {
+        File[] ficherosDuplicados = listarArchivosRecursivamente(rutaSeleccionada);
         ArrayList<File> listaFicherosDuplicados = new ArrayList<File>();
-        for (File ficherosDuplicado : ficherosDuplicados) {
-            for (File otroFicherosDuplicado : ficherosDuplicados) {
-                if (ficherosDuplicado.getName().equals(otroFicherosDuplicado.getName())
-                        && ficherosDuplicado.lastModified() == otroFicherosDuplicado.lastModified()
-                        && ficherosDuplicado.length() == otroFicherosDuplicado.length()) {
-                    listaFicherosDuplicados.add(ficherosDuplicado);
+        for (int contadorDeFicherosDuplicados = 0; contadorDeFicherosDuplicados < ficherosDuplicados.length; contadorDeFicherosDuplicados++) {
+            if (!ficherosDuplicados[contadorDeFicherosDuplicados].isDirectory()) {
+                for (int contadorDeListaParaComprobar = 0; contadorDeListaParaComprobar < ficherosDuplicados.length; contadorDeListaParaComprobar++) {
+
+                    if (ficherosDuplicados[contadorDeFicherosDuplicados].getName().equals(ficherosDuplicados[contadorDeListaParaComprobar].getName())
+                            && !ficherosDuplicados[contadorDeFicherosDuplicados].getAbsolutePath().equals(ficherosDuplicados[contadorDeListaParaComprobar].getAbsolutePath())
+                            && ficherosDuplicados[contadorDeFicherosDuplicados].lastModified() == ficherosDuplicados[contadorDeListaParaComprobar].lastModified()
+                            && ficherosDuplicados[contadorDeFicherosDuplicados].length() == ficherosDuplicados[contadorDeListaParaComprobar].length()) {
+                        if (!listaFicherosDuplicados.contains(ficherosDuplicados[contadorDeListaParaComprobar]) && !ficherosDuplicados[contadorDeListaParaComprobar].isDirectory()) {
+                            listaFicherosDuplicados.add(ficherosDuplicados[contadorDeListaParaComprobar]);
+                        }
+                    }
                 }
             }
         }
         return listaFicherosDuplicados;
     }
-
-    /*
-    Sugiere  eliminar  directoriosvacíos.
-    •Busca  ficheros  duplicados
-     */
 }

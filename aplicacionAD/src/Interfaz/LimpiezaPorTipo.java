@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Interfaz;
 
+import Controlador.LogicaMetodos;
 import java.awt.Dialog;
 import java.io.File;
 import java.util.ArrayList;
@@ -57,7 +58,6 @@ public class LimpiezaPorTipo extends javax.swing.JDialog {
             dtm.addRow(columnasInformacionDeFichero);
         }
         jTableFicheros.setModel(dtm);
-
     }
 
     /**

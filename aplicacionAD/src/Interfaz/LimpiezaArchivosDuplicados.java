@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package Interfaz;
 
+import Controlador.LogicaMetodos;
 import java.awt.Dialog;
 import java.io.File;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +21,7 @@ public class LimpiezaArchivosDuplicados extends javax.swing.JDialog {
     private File[] ficherosEscaneados;
     private LogicaMetodos logicaMetodos;
     private String rutaSeleccionada;
+    List<File> coleccionFicherosEscaneados;
 
     /**
      * Creates new form LimpiezaArchivosDuplicados
@@ -27,15 +30,25 @@ public class LimpiezaArchivosDuplicados extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
-
+/**
+ * 
+ * @param owner
+ * @param modal
+ * @param logicaMetodos
+ * @param rutaSeleccionada 
+ */
     public LimpiezaArchivosDuplicados(Dialog owner, boolean modal, LogicaMetodos logicaMetodos, String rutaSeleccionada) {
         super(owner, modal);
         initComponents();
         this.logicaMetodos = logicaMetodos;
         this.rutaSeleccionada = rutaSeleccionada;
-        ficherosEscaneados=logicaMetodos.listarArchivosRecursivamente(rutaSeleccionada);
+        coleccionFicherosEscaneados = logicaMetodos.compararDuplicados(rutaSeleccionada);
+        ficherosEscaneados = coleccionFicherosEscaneados.toArray(new File[coleccionFicherosEscaneados.size()]);
+        rellenarTablaFicherosABorrar();
     }
-
+/**
+ * Rellena la tabla de ficheros a borrar.
+ */
     private void rellenarTablaFicherosABorrar() {
         String[] columnas = {"Fichero", "Ruta", "Peso(MB)"};
         DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
@@ -49,7 +62,6 @@ public class LimpiezaArchivosDuplicados extends javax.swing.JDialog {
             dtm.addRow(columnasInformacionDeFichero);
         }
         jTableDuplicados.setModel(dtm);
-
     }
 
     /**
@@ -111,16 +123,17 @@ public class LimpiezaArchivosDuplicados extends javax.swing.JDialog {
                 .addComponent(jScrollPane1)
                 .addGap(47, 47, 47))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(165, 165, 165)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jButtonSeleccionados)
-                            .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(182, 182, 182))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(110, 110, 110))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(110, 110, 110))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonSeleccionados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(182, 182, 182))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,13 +172,12 @@ public class LimpiezaArchivosDuplicados extends javax.swing.JDialog {
         if (valor == JOptionPane.YES_OPTION) {
             int[] intFicherosSeleccionados = jTableDuplicados.getSelectedRows();
             File[] ficherosSeleccionados = new File[intFicherosSeleccionados.length];
-            System.out.println("longitud: " + intFicherosSeleccionados.length);
             for (int contadorFicherosArray = 0; contadorFicherosArray < ficherosSeleccionados.length; contadorFicherosArray++) {
                 ficherosSeleccionados[contadorFicherosArray] = ficherosEscaneados[intFicherosSeleccionados[contadorFicherosArray]];
             }
             logicaMetodos.borradoDeFicheros(ficherosSeleccionados, "FicherosBorrados.csv");
-            ficherosEscaneados = logicaMetodos.listarArchivosRecursivamente(rutaSeleccionada);
-            System.out.println("------------------------------");
+            coleccionFicherosEscaneados = logicaMetodos.compararDuplicados(rutaSeleccionada);
+            ficherosEscaneados = coleccionFicherosEscaneados.toArray(new File[coleccionFicherosEscaneados.size()]);
             JOptionPane.showMessageDialog(this, "Ficheros borrados");
             rellenarTablaFicherosABorrar();
         }
