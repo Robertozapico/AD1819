@@ -5,7 +5,12 @@
  */
 package Controlador;
 
+import Interfaz.PantallaEscaneo;
+import java.awt.Component;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.ParseException;
@@ -13,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -235,5 +243,68 @@ public class LogicaMetodos {
             }
         }
         return listaFicherosDuplicados;
+    }
+
+    /**
+     * Muestra un dialogo para seleccionar una carpeta
+     *
+     * @param pantalla
+     * @return
+     */
+    public File escogerDirectorio(Component pantalla) {
+        File ficheroEscogido = null;
+        JFileChooser escogeSoloCarpetas = new JFileChooser();
+        escogeSoloCarpetas.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int carpetaEscogida = escogeSoloCarpetas.showOpenDialog(pantalla);
+        if (carpetaEscogida == JFileChooser.APPROVE_OPTION) {
+            ficheroEscogido = escogeSoloCarpetas.getSelectedFile();
+        }
+        return ficheroEscogido;
+    }
+
+    /**
+     * Metodo para comprimir los archivos y carpetas no vacias de una ruta.
+     * 
+     * @param carpetaDestino Donde se guardara el archivo .zip
+     * @param nombreZip Nombre que recibirá el archivo .zip
+     * @param carpetaAComprimir Carpeta que se desea comprimir
+     * @return
+     * @throws IOException 
+     */
+    public boolean comprimirCarpeta(File carpetaDestino, String nombreZip, File carpetaAComprimir) throws IOException {
+        ZipOutputStream archivoZip = null;
+        FileInputStream archivoQueLee = null;
+        // ruta completa donde están los archivos a comprimir
+        File carpetaComprimir = new File(carpetaAComprimir.getAbsolutePath());
+        // valida si existe el directorio
+        if (carpetaComprimir.exists()) {
+            // lista los archivos que hay dentro del directorio
+            File[] ficheros = listarArchivosRecursivamente(carpetaAComprimir.getAbsolutePath());
+            System.out.println("Número de ficheros encontrados: " + ficheros.length);
+            archivoZip = new ZipOutputStream(new FileOutputStream(nombreZip + ".zip"));
+            for (int contadorDeFicheros = 0; contadorDeFicheros < ficheros.length; contadorDeFicheros++) {
+                System.out.println("Nombre del fichero: " + ficheros[contadorDeFicheros].getName());
+                System.out.println("Ruta absoluta: " + ficheros[contadorDeFicheros].getAbsolutePath());
+                if (!ficheros[contadorDeFicheros].isDirectory()) {
+                    System.out.println("Comprimiendo.....");
+                    //obtiene el archivo para irlo comprimiendo
+                    int leer;
+                    byte[] buffer = new byte[4096];
+                    ZipEntry entrada = new ZipEntry(ficheros[contadorDeFicheros].getAbsolutePath());
+                    archivoQueLee = new FileInputStream(ficheros[contadorDeFicheros]);
+                    archivoZip.putNextEntry(entrada);
+                    while (0 < (leer = archivoQueLee.read(buffer))) {
+                        archivoZip.write(buffer, 0, leer);
+                    }
+                }
+            }
+            archivoQueLee.close();
+            archivoZip.close();
+            System.out.println("Directorio de salida: " + carpetaDestino);
+            return true;
+        } else {
+            System.out.println("No se encontró el directorio..");
+            return false;
+        }
     }
 }

@@ -7,11 +7,14 @@ package Interfaz;
 
 import Controlador.LogicaMetodos;
 import Controlador.GestionCsv;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,6 +37,12 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         initComponents();
         DefaultComboBoxModel unidades = new DefaultComboBoxModel(logicaMetodos.obtenerParticiones());
         jComboBoxUnidad.setModel(unidades);
+
+        ImageIcon myImage = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Interfaz/img/hdimg.png")));
+        Image img1 = myImage.getImage();
+        Image img2 = img1.getScaledInstance(jLabelDisk.getWidth(), jLabelDisk.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon i = new ImageIcon(img2);
+        jLabelDisk.setIcon(i);
     }
 
     /**
@@ -58,6 +67,8 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jButtonCerrar = new javax.swing.JButton();
         jButtonLimpiezaArchivosAntiguos = new javax.swing.JButton();
         jLabelExplicacionGlobal = new javax.swing.JLabel();
+        jLabelDisk = new javax.swing.JLabel();
+        jButtonComprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -137,6 +148,13 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jLabelExplicacionGlobal.setForeground(new java.awt.Color(153, 153, 153));
         jLabelExplicacionGlobal.setText("Escoge la unidad que quieres limpiar y que opción quieres utilizar");
 
+        jButtonComprimir.setText("Comprimir carpeta");
+        jButtonComprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonComprimirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -153,6 +171,9 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                                 .addComponent(jComboBoxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelExplicacionGlobal)
+                        .addGap(0, 114, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButtonLimpiezaArchivosAntiguos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonLimpiezaDuplicados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -161,12 +182,20 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                             .addComponent(jButtonTamanno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonEscanear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonEspacioLibre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
-                        .addComponent(jButtonCerrar)
-                        .addGap(38, 38, 38))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelExplicacionGlobal)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonCerrar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButtonComprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabelDisk, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGap(38, 38, 38))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,22 +209,27 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelExplicacionGlobal)
                 .addGap(9, 9, 9)
-                .addComponent(jButtonEspacioLibre)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonEspacioLibre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEscanear)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonTamanno)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonLimpiezaTipo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonLimpiezaArchivosAntiguos))
+                    .addComponent(jLabelDisk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonEscanear)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonTamanno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLimpiezaTipo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLimpiezaArchivosAntiguos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonDirectoriosVacios)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonDirectoriosVacios)
+                    .addComponent(jButtonComprimir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonLimpiezaDuplicados)
                     .addComponent(jButtonCerrar))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -218,11 +252,9 @@ public class PantallaEscaneo extends javax.swing.JDialog {
 
     private void jButtonEspacioLibreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEspacioLibreActionPerformed
         JOptionPane.showMessageDialog(this, logicaMetodos.espacioLibreDisponible(jComboBoxUnidad.getSelectedItem().toString()) + " GB disponibles");
-
     }//GEN-LAST:event_jButtonEspacioLibreActionPerformed
 
     private void jButtonEscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscanearActionPerformed
-
         try {
             gestionCsv.grabarFicheroCSV("FileScan.csv", logicaMetodos.listarArchivosRecursivamente(jComboBoxUnidad.getSelectedItem().toString()));
             System.out.println("Listado de archivos guardados en \"FileScan.csv\"");
@@ -231,8 +263,6 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         } catch (IOException ex) {
             Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_jButtonEscanearActionPerformed
 
     private void jButtonTamannoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTamannoActionPerformed
@@ -270,9 +300,15 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         limpiezaArchivosDuplicados.setVisible(true);
     }//GEN-LAST:event_jButtonLimpiezaDuplicadosActionPerformed
 
+    private void jButtonComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprimirActionPerformed
+        ComprimirCarpetas comprimirCarpetas = new ComprimirCarpetas(this, true, logicaMetodos);
+        comprimirCarpetas.setVisible(true);
+    }//GEN-LAST:event_jButtonComprimirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
+    private javax.swing.JButton jButtonComprimir;
     private javax.swing.JButton jButtonDirectoriosVacios;
     private javax.swing.JButton jButtonEscanear;
     private javax.swing.JButton jButtonEspacioLibre;
@@ -283,6 +319,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> jComboBoxUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelDisk;
     private javax.swing.JLabel jLabelExplicacionGlobal;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
