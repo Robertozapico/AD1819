@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -153,7 +154,7 @@ public class ComprimirCarpetas extends javax.swing.JDialog {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonEscogeDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -162,8 +163,9 @@ public class ComprimirCarpetas extends javax.swing.JDialog {
                                 .addComponent(jButtonAccionComprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonCerrar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(94, 94, 94)))
+                .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +179,7 @@ public class ComprimirCarpetas extends javax.swing.JDialog {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -186,7 +188,7 @@ public class ComprimirCarpetas extends javax.swing.JDialog {
                     .addComponent(jTextFieldNombreZip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAccionComprimir)
                     .addComponent(jButtonCerrar))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addGap(83, 83, 83))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,10 +222,11 @@ public class ComprimirCarpetas extends javax.swing.JDialog {
 
     private void jButtonAccionComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAccionComprimirActionPerformed
         try {
-                    logicaMetodos.comprimirCarpeta(carpetaDestino, carpetaDestino.getAbsolutePath()+"\\"+jTextFieldNombreZip.getText(), carpetaEscogidaParaComprimir);
+                    logicaMetodos.comprimirCarpeta(carpetaDestino, carpetaDestino.getAbsolutePath()+"/"+jTextFieldNombreZip.getText(), carpetaEscogidaParaComprimir);
         } catch (Exception ex) {
             Logger.getLogger(ComprimirCarpetas.class.getName()).log(Level.SEVERE, null, ex);
         }
+        JOptionPane.showMessageDialog(this, "Carpeta comprimida con éxito");
     }//GEN-LAST:event_jButtonAccionComprimirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -284,14 +284,14 @@ public class LogicaMetodos {
             archivoZip = new ZipOutputStream(new FileOutputStream(nombreZip + ".zip"));
             for (int contadorDeFicheros = 0; contadorDeFicheros < ficheros.length; contadorDeFicheros++) {
                 System.out.println("Nombre del fichero: " + ficheros[contadorDeFicheros].getName());
-                System.out.println("Ruta absoluta: " + ficheros[contadorDeFicheros].getAbsolutePath());
+                //System.out.println("Ruta absoluta: " + ficheros[contadorDeFicheros].getAbsolutePath());
                 if (!ficheros[contadorDeFicheros].isDirectory()) {
                     System.out.println("Comprimiendo.....");
-                    //obtiene el archivo para irlo comprimiendo
+                    //obtiene el archivo para comprimirlo
                     int leer;
                     byte[] buffer = new byte[4096];
                     ZipEntry entrada = new ZipEntry(ficheros[contadorDeFicheros].getAbsolutePath());
-                    archivoQueLee = new FileInputStream(ficheros[contadorDeFicheros]);
+                    archivoQueLee = new FileInputStream(ficheros[contadorDeFicheros].getAbsolutePath());
                     archivoZip.putNextEntry(entrada);
                     while (0 < (leer = archivoQueLee.read(buffer))) {
                         archivoZip.write(buffer, 0, leer);
@@ -303,7 +303,7 @@ public class LogicaMetodos {
             System.out.println("Directorio de salida: " + carpetaDestino);
             return true;
         } else {
-            System.out.println("No se encontró el directorio..");
+            System.out.println("No se encontró el directorio.");
             return false;
         }
     }
