@@ -94,12 +94,12 @@ public class LogicaMetodos {
         double pesoMinimo = 0;
         double pesoFichero = 0;
         if (opcion == 0) {
-            pesoMaximo = 700;
+            pesoMaximo = 1024;
             pesoMinimo = 0;
         } else if (opcion == 1) {
             //poner D detras del 1024
             pesoMaximo = (10 * 1024);
-            pesoMinimo = 700;
+            pesoMinimo = 1024;
         }
         for (File fichero : ficherosDeLaUnidad) {
             pesoFichero = (fichero.length() / 1024) / 1024;
@@ -280,13 +280,13 @@ public class LogicaMetodos {
         if (carpetaComprimir.exists()) {
             // lista los archivos que hay dentro del directorio
             File[] ficheros = listarArchivosRecursivamente(carpetaAComprimir.getAbsolutePath());
-            System.out.println("Número de ficheros encontrados: " + ficheros.length);
+            System.err.println("Número de ficheros encontrados: " + ficheros.length);
             archivoZip = new ZipOutputStream(new FileOutputStream(nombreZip + ".zip"));
             for (int contadorDeFicheros = 0; contadorDeFicheros < ficheros.length; contadorDeFicheros++) {
-                System.out.println("Nombre del fichero: " + ficheros[contadorDeFicheros].getName());
+                System.err.println("Nombre del fichero: " + ficheros[contadorDeFicheros].getName());
                 //System.out.println("Ruta absoluta: " + ficheros[contadorDeFicheros].getAbsolutePath());
                 if (!ficheros[contadorDeFicheros].isDirectory()) {
-                    System.out.println("Comprimiendo.....");
+                    System.err.println("Comprimiendo.....");
                     //obtiene el archivo para comprimirlo
                     int leer;
                     byte[] buffer = new byte[4096];

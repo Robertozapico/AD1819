@@ -222,7 +222,7 @@ public class ComprimirCarpetas extends javax.swing.JDialog {
 
     private void jButtonAccionComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAccionComprimirActionPerformed
         try {
-                    logicaMetodos.comprimirCarpeta(carpetaDestino, carpetaDestino.getAbsolutePath()+"/"+jTextFieldNombreZip.getText(), carpetaEscogidaParaComprimir);
+            logicaMetodos.comprimirCarpeta(carpetaDestino, carpetaDestino.getAbsolutePath() + "/" + jTextFieldNombreZip.getText(), carpetaEscogidaParaComprimir);
         } catch (Exception ex) {
             Logger.getLogger(ComprimirCarpetas.class.getName()).log(Level.SEVERE, null, ex);
         }

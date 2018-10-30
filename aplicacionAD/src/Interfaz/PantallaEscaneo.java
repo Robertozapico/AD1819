@@ -9,6 +9,7 @@ import Controlador.LogicaMetodos;
 import Controlador.GestionCsv;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -25,6 +26,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
 
     private LogicaMetodos logicaMetodos = new LogicaMetodos();
     private GestionCsv gestionCsv = new GestionCsv();
+    private File rutaEscogida;
 
     /**
      * Creates new form PantallaEscaneo
@@ -36,7 +38,6 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         DefaultComboBoxModel unidades = new DefaultComboBoxModel(logicaMetodos.obtenerParticiones());
-        jComboBoxUnidad.setModel(unidades);
 
         ImageIcon myImage = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Interfaz/img/hdimg.png")));
         Image img1 = myImage.getImage();
@@ -57,7 +58,6 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBoxUnidad = new javax.swing.JComboBox<>();
         jButtonEspacioLibre = new javax.swing.JButton();
         jButtonEscanear = new javax.swing.JButton();
         jButtonTamanno = new javax.swing.JButton();
@@ -69,6 +69,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         jLabelExplicacionGlobal = new javax.swing.JLabel();
         jLabelDisk = new javax.swing.JLabel();
         jButtonComprimir = new javax.swing.JButton();
+        jButtonEscogeCarpeta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -80,13 +81,6 @@ public class PantallaEscaneo extends javax.swing.JDialog {
 
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setText("Unidad");
-
-        jComboBoxUnidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxUnidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxUnidadActionPerformed(evt);
-            }
-        });
 
         jButtonEspacioLibre.setText("Ver espacio libre");
         jButtonEspacioLibre.addActionListener(new java.awt.event.ActionListener() {
@@ -155,6 +149,13 @@ public class PantallaEscaneo extends javax.swing.JDialog {
             }
         });
 
+        jButtonEscogeCarpeta.setText("...");
+        jButtonEscogeCarpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEscogeCarpetaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -167,12 +168,12 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBoxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonEscogeCarpeta, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelExplicacionGlobal)
-                        .addGap(0, 114, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jButtonLimpiezaArchivosAntiguos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -205,8 +206,8 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBoxUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButtonEscogeCarpeta))
+                .addGap(11, 11, 11)
                 .addComponent(jLabelExplicacionGlobal)
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -229,7 +230,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonLimpiezaDuplicados)
                     .addComponent(jButtonCerrar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,33 +247,45 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBoxUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxUnidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxUnidadActionPerformed
-
     private void jButtonEspacioLibreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEspacioLibreActionPerformed
-        JOptionPane.showMessageDialog(this, logicaMetodos.espacioLibreDisponible(jComboBoxUnidad.getSelectedItem().toString()) + " GB disponibles");
+        if (rutaEscogida == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionado ninguna ruta", "Selecciona ruta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, logicaMetodos.espacioLibreDisponible(rutaEscogida.toString()) + " GB disponibles");
+        }
     }//GEN-LAST:event_jButtonEspacioLibreActionPerformed
 
     private void jButtonEscanearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscanearActionPerformed
-        try {
-            gestionCsv.grabarFicheroCSV("FileScan.csv", logicaMetodos.listarArchivosRecursivamente(jComboBoxUnidad.getSelectedItem().toString()));
-            System.out.println("Listado de archivos guardados en \"FileScan.csv\"");
-        } catch (ParseException ex) {
-            Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
+        if (rutaEscogida == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionado ninguna ruta", "Selecciona ruta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                gestionCsv.grabarFicheroCSV("FileScan.csv", logicaMetodos.listarArchivosRecursivamente(rutaEscogida.toString()));
+                System.out.println("Listado de archivos guardados en \"FileScan.csv\"");
+            } catch (ParseException ex) {
+                Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButtonEscanearActionPerformed
 
     private void jButtonTamannoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTamannoActionPerformed
-        LimpiezaPorTamanio pantallaLimpiezaTamanio = new LimpiezaPorTamanio(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
-        pantallaLimpiezaTamanio.setVisible(true);
+        if (rutaEscogida == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionado ninguna ruta", "Selecciona ruta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            LimpiezaPorTamanio pantallaLimpiezaTamanio = new LimpiezaPorTamanio(this, true, logicaMetodos, rutaEscogida.toString());
+            pantallaLimpiezaTamanio.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonTamannoActionPerformed
 
     private void jButtonLimpiezaTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiezaTipoActionPerformed
-        LimpiezaPorTipo limpiezaPorTipo = new LimpiezaPorTipo(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
-        limpiezaPorTipo.setVisible(true);
+        if (rutaEscogida == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionado ninguna ruta", "Selecciona ruta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            LimpiezaPorTipo limpiezaPorTipo = new LimpiezaPorTipo(this, true, logicaMetodos, rutaEscogida.toString());
+            limpiezaPorTipo.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonLimpiezaTipoActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -280,24 +293,32 @@ public class PantallaEscaneo extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCerrarActionPerformed
 
     private void jButtonLimpiezaArchivosAntiguosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiezaArchivosAntiguosActionPerformed
-        LimpiezaPorFecha limpiezaPorFecha = new LimpiezaPorFecha(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
-        limpiezaPorFecha.setVisible(true);
+        if (rutaEscogida == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionado ninguna ruta", "Selecciona ruta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            LimpiezaPorFecha limpiezaPorFecha = new LimpiezaPorFecha(this, true, logicaMetodos, rutaEscogida.toString());
+            limpiezaPorFecha.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonLimpiezaArchivosAntiguosActionPerformed
 
     private void jButtonDirectoriosVaciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDirectoriosVaciosActionPerformed
         int valor = JOptionPane.showConfirmDialog(this, "¿Desea eliminar los directorios vacios?", "Eliminar directorios vacios", JOptionPane.YES_NO_OPTION);
         if (valor == JOptionPane.YES_OPTION) {
 
-            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.listarArchivosRecursivamente(jComboBoxUnidad.getSelectedItem().toString()));
+            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.listarArchivosRecursivamente(rutaEscogida.toString()));
             //Se vuelve a utilizar el metodo para comprobar que borra todos
-            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.listarArchivosRecursivamente(jComboBoxUnidad.getSelectedItem().toString()));
+            logicaMetodos.borradoDeDirectoriosVacios(logicaMetodos.listarArchivosRecursivamente(rutaEscogida.toString()));
             JOptionPane.showMessageDialog(this, "Borrados con exito los directorios vacios.");
         }
     }//GEN-LAST:event_jButtonDirectoriosVaciosActionPerformed
 
     private void jButtonLimpiezaDuplicadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiezaDuplicadosActionPerformed
-        LimpiezaArchivosDuplicados limpiezaArchivosDuplicados = new LimpiezaArchivosDuplicados(this, true, logicaMetodos, jComboBoxUnidad.getSelectedItem().toString());
-        limpiezaArchivosDuplicados.setVisible(true);
+        if (rutaEscogida == null) {
+            JOptionPane.showMessageDialog(this, "No has seleccionado ninguna ruta", "Selecciona ruta", JOptionPane.ERROR_MESSAGE);
+        } else {
+            LimpiezaArchivosDuplicados limpiezaArchivosDuplicados = new LimpiezaArchivosDuplicados(this, true, logicaMetodos, rutaEscogida.toString());
+            limpiezaArchivosDuplicados.setVisible(true);
+        }
     }//GEN-LAST:event_jButtonLimpiezaDuplicadosActionPerformed
 
     private void jButtonComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComprimirActionPerformed
@@ -305,18 +326,23 @@ public class PantallaEscaneo extends javax.swing.JDialog {
         comprimirCarpetas.setVisible(true);
     }//GEN-LAST:event_jButtonComprimirActionPerformed
 
+    private void jButtonEscogeCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEscogeCarpetaActionPerformed
+
+        rutaEscogida = logicaMetodos.escogerDirectorio(this);
+    }//GEN-LAST:event_jButtonEscogeCarpetaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonComprimir;
     private javax.swing.JButton jButtonDirectoriosVacios;
     private javax.swing.JButton jButtonEscanear;
+    private javax.swing.JButton jButtonEscogeCarpeta;
     private javax.swing.JButton jButtonEspacioLibre;
     private javax.swing.JButton jButtonLimpiezaArchivosAntiguos;
     private javax.swing.JButton jButtonLimpiezaDuplicados;
     private javax.swing.JButton jButtonLimpiezaTipo;
     private javax.swing.JButton jButtonTamanno;
-    private javax.swing.JComboBox<String> jComboBoxUnidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelDisk;

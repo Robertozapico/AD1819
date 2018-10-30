@@ -171,8 +171,8 @@
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
-                <StringItem index="0" value="&lt;700MB"/>
-                <StringItem index="1" value="700MB-10GB"/>
+                <StringItem index="0" value="&lt;1GB"/>
+                <StringItem index="1" value="1-10GB"/>
                 <StringItem index="2" value="&gt;10GB"/>
               </StringArray>
             </Property>

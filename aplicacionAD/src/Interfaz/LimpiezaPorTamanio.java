@@ -94,7 +94,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(jTableFichero);
 
-        jComboBoxTamanios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<700MB", "700MB-10GB", ">10GB" }));
+        jComboBoxTamanios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<1GB", "1-10GB", ">10GB" }));
         jComboBoxTamanios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxTamaniosActionPerformed(evt);

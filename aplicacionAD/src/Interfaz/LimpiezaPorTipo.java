@@ -18,9 +18,6 @@ import javax.swing.table.DefaultTableModel;
  * @author alumnop
  */
 public class LimpiezaPorTipo extends javax.swing.JDialog {
-//FALTA COMPROBAR EL BORRAR TODO
-    //AÑADIR TANTO EN ESTE COMO EN LIMPIEZA POR TAMAÑO UNA VENTANA CON SI-CANCELAR CUANDO SE DE CLIC A BORRAR
-
     private File[] ficherosEscaneados;
     private LogicaMetodos logicaMetodos;
     private String rutaSeleccionada;
