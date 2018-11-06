@@ -77,7 +77,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jTextFieldNombreZip" min="-2" pref="105" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jButtonAccionComprimir" min="-2" pref="93" max="-2" attributes="0"/>
+                                  <Component id="jButtonAccionComprimir" min="-2" pref="132" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jButtonCerrar" min="-2" max="-2" attributes="0"/>
                               </Group>
