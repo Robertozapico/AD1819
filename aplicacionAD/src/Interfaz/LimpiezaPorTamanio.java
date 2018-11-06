@@ -33,7 +33,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         this.rutaSeleccionada = rutaSeleccionada;
     }
 
-    private void rellenarTablaFicherosABorrar() {
+    private void rellenarTablaFicheros() {
         String[] columnas = {"Fichero", "Ruta", "Peso(MB)"};
         DefaultTableModel dtm = new DefaultTableModel(columnas, 0);
         for (File fichero : ficherosEscaneados) {
@@ -207,7 +207,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
         opcionEscogida = jComboBoxTamanios.getSelectedIndex();
         ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(jComboBoxTamanios.getSelectedIndex(), rutaSeleccionada);
         JOptionPane.showMessageDialog(this, "Escaneo completado");
-        rellenarTablaFicherosABorrar();
+        rellenarTablaFicheros();
     }//GEN-LAST:event_jButtonEscanearActionPerformed
 
     private void jButtonBorrarSeleccionadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarSeleccionadosActionPerformed
@@ -223,7 +223,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
             ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
             System.out.println("------------------------------");
             JOptionPane.showMessageDialog(this, "Ficheros borrados");
-            rellenarTablaFicherosABorrar();
+            rellenarTablaFicheros();
         }
     }//GEN-LAST:event_jButtonBorrarSeleccionadosActionPerformed
 
@@ -234,7 +234,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
             ficherosEscaneados = logicaMetodos.escanearFicherosPorTamanio(opcionEscogida, rutaSeleccionada);
             System.out.println("------------------------------");
             JOptionPane.showMessageDialog(this, "Ficheros borrados");
-            rellenarTablaFicherosABorrar();
+            rellenarTablaFicheros();
         }
     }//GEN-LAST:event_jButtonBorradoAbsolutoActionPerformed
 

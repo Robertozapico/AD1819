@@ -260,8 +260,11 @@ public class PantallaEscaneo extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No has seleccionado ninguna ruta", "Selecciona ruta", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
+
                 gestionCsv.grabarFicheroCSV("FileScan.csv", logicaMetodos.listarArchivosRecursivamente(rutaEscogida.toString()));
                 System.out.println("Listado de archivos guardados en \"FileScan.csv\"");
+                Escaneo pantallaFicherosEscaneados = new Escaneo(this, true, logicaMetodos, rutaEscogida.toString());
+                pantallaFicherosEscaneados.setVisible(true);
             } catch (ParseException ex) {
                 Logger.getLogger(PantallaEscaneo.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

@@ -249,9 +249,6 @@ public class LimpiezaPorTipo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonBorrarSeleccionadosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBorrarSeleccionados;
     private javax.swing.JButton jButtonBorrarTodo;
