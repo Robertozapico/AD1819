@@ -18,6 +18,7 @@ public class PantallaIniciar extends javax.swing.JFrame {
      */
     public PantallaIniciar() {
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     /**

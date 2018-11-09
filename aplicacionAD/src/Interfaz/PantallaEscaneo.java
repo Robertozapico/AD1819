@@ -37,6 +37,7 @@ public class PantallaEscaneo extends javax.swing.JDialog {
     public PantallaEscaneo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
         DefaultComboBoxModel unidades = new DefaultComboBoxModel(logicaMetodos.obtenerParticiones());
 
         ImageIcon myImage = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Interfaz/img/hdimg.png")));

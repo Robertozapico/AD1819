@@ -31,12 +31,14 @@ public class ComprimirCarpetas extends javax.swing.JDialog {
     public ComprimirCarpetas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     public ComprimirCarpetas(Dialog owner, boolean modal, LogicaMetodos logicaMetodos) {
         super(owner, modal);
         this.logicaMetodos = logicaMetodos;
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     private void rellenarTablaComprimir() {

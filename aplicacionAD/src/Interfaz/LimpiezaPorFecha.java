@@ -33,11 +33,13 @@ public class LimpiezaPorFecha extends javax.swing.JDialog {
     public LimpiezaPorFecha(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 
     public LimpiezaPorFecha(Dialog owner, boolean modal, LogicaMetodos logicaMetodos, String rutaSeleccionada) {
         super(owner, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
         this.logicaMetodos = logicaMetodos;
         this.rutaSeleccionada = rutaSeleccionada;
     }

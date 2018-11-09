@@ -29,6 +29,7 @@ public class LimpiezaArchivosDuplicados extends javax.swing.JDialog {
     public LimpiezaArchivosDuplicados(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
     }
 /**
  * 
@@ -40,6 +41,7 @@ public class LimpiezaArchivosDuplicados extends javax.swing.JDialog {
     public LimpiezaArchivosDuplicados(Dialog owner, boolean modal, LogicaMetodos logicaMetodos, String rutaSeleccionada) {
         super(owner, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
         this.logicaMetodos = logicaMetodos;
         this.rutaSeleccionada = rutaSeleccionada;
         coleccionFicherosEscaneados = logicaMetodos.compararDuplicados(rutaSeleccionada);

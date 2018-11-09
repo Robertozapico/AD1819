@@ -29,6 +29,7 @@ public class LimpiezaPorTamanio extends javax.swing.JDialog {
     public LimpiezaPorTamanio(Dialog owner, boolean modal, LogicaMetodos logicaMetodos, String rutaSeleccionada) {
         super(owner, modal);
         initComponents();
+        this.setLocationRelativeTo(this);
         this.logicaMetodos = logicaMetodos;
         this.rutaSeleccionada = rutaSeleccionada;
     }
