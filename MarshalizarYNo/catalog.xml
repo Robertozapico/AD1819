@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/Users/victoriarodriguez/NetBeansProjects/JAXB_01/esquemaAgenda.xsd" uri="xml-resources/jaxb/albaranBinding/esquemaAgenda.xsd"/>
+    <system systemId="file:/Users/victoriarodriguez/NetBeansProjects/JAXB_01/albaran.xsd" uri="xml-resources/jaxb/albaranBinging/albaran.xsd"/>
+</catalog>
