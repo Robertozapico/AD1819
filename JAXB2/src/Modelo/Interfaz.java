@@ -23,4 +23,6 @@ public interface Interfaz {
     public int numTotalClientes(Clientes clientes);
     
     public int numTotalClientesDeUnaProvincia(Clientes clientes, int codPostal);
+    
+    public boolean borrarCliente(Clientes cliente, String apellido1, String apellido2);
 }

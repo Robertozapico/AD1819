@@ -24,9 +24,10 @@ public class Main {
         File documentoXML = new File("clientes.xml");
         JAXBElement unMarshal = lm.unmarshalizar(documentoXML, "jaxb.clientes");
         Clientes clientes = (Clientes) unMarshal.getValue();
-        System.out.println(lm.numTotalClientes(clientes));
+        //System.out.println(lm.numTotalClientes(clientes));
         
-        
+        //System.out.println(lm.numTotalClientesDeUnaProvincia(clientes, 33456));
+        lm.borrarCliente(clientes, "Gregorio", "String");
         //lm.marshalizar(unMarshal);
     }
 

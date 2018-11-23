@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBElement;
@@ -13,6 +14,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamSource;
 import jaxb.clientes.Clientes;
+import jaxb.clientes.TipoDireccion;
 
 /**
  *
@@ -60,11 +62,58 @@ public class LogicaMetodos implements Interfaz {
 
     @Override
     public int numTotalClientesDeUnaProvincia(Clientes clientes, int codPostal) {
-        
-        
-        return 1;
+        int numTotal = 0;
+        boolean perteneceALaProvincia = false;
+        codPostal /= 1000;
+        for (Clientes.Cliente cliente : clientes.getCliente()) {
+            for (TipoDireccion direccion : cliente.getDireccion()) {
+                int direccionCliente = direccion.getCp();
+                direccionCliente /= 1000;
+                if (direccionCliente == codPostal) {
+                    perteneceALaProvincia = true;
+                }
+            }
+            if (perteneceALaProvincia == true) {
+                numTotal++;
+                perteneceALaProvincia = false;
+            }
+        }
+        return numTotal;
     }
-    
-    
 
-}
+    @Override
+    public boolean borrarCliente(Clientes clientes, String apellido1, String apellido2) {
+        int clientesBorrados = 0;
+        Iterator<Clientes.Cliente> iteratorCliente;
+        Clientes.Cliente clientillo = null;
+        iteratorCliente = clientes.getCliente().iterator();
+
+        while (iteratorCliente.hasNext()) {
+            //System.out.println("Apellido1: " + iteratorCliente.next().getApellido());
+            clientillo=iteratorCliente.next();
+            
+            //if (clientillo.getApellido().get(0).equals(apellido1) && clientillo.getApellido().get(1).equals(apellido2)) {
+                //System.out.println("Se va a borrar a: " + clientillo.getApellido());
+                //clientes.getCliente().remove(iteratorCliente);
+            //}
+        }
+            /*
+        for (Clientes.Cliente cliente : clientes.getCliente()) {
+        //iteratorCliente=cliente.getApellido().iterator();
+        System.out.println("Apellido1: " + cliente.getApellido().get(0));
+        System.out.println("Apellido2: " + cliente.getApellido().get(1));
+        while (iteratorCliente.hasNext()) {
+        if (cliente.getApellido().get(0).equals(apellido1) && cliente.getApellido().get(1).equals(apellido2)) {
+        clientillo = cliente;
+        System.out.println("Se va a borrar a: " + cliente.getApellido());
+        clientes.getCliente().remove(clientillo);
+        clientesBorrados++;
+        }
+        }
+        }
+        System.out.println("Cantidad de clientes borrados:" + clientesBorrados);*/
+            return true;
+        }
+        
+
+    }
