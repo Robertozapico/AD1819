@@ -89,13 +89,13 @@ public class LogicaMetodos implements Interfaz {
         iteratorCliente = clientes.getCliente().iterator();
 
         while (iteratorCliente.hasNext()) {
-            //System.out.println("Apellido1: " + iteratorCliente.next().getApellido());
             clientillo=iteratorCliente.next();
-            
-            //if (clientillo.getApellido().get(0).equals(apellido1) && clientillo.getApellido().get(1).equals(apellido2)) {
-                //System.out.println("Se va a borrar a: " + clientillo.getApellido());
-                //clientes.getCliente().remove(iteratorCliente);
-            //}
+            System.out.println(clientillo.getApellido());
+            if (clientillo.getApellido().get(0).equals(apellido1) && clientillo.getApellido().get(1).equals(apellido2)) {
+                System.out.println("Se va a borrar a: " + clientillo.getApellido());
+                //FALTA ARREGLAR AQUI
+                clientes.getCliente().remove(iteratorCliente);
+            }
         }
             /*
         for (Clientes.Cliente cliente : clientes.getCliente()) {

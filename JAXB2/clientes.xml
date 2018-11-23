@@ -9,7 +9,7 @@
 			<piso>0</piso>
 			<escalera>c</escalera>
 			<cp>33654</cp>
-			<ciudadclientillo>String</ciudad>
+			<ciudad>String</ciudad>
 		</direccion>
 		<direccion>
 			<calle>String</calle>
