@@ -27,8 +27,16 @@ public class Main {
         //System.out.println(lm.numTotalClientes(clientes));
         
         //System.out.println(lm.numTotalClientesDeUnaProvincia(clientes, 33456));
-        lm.borrarCliente(clientes, "Gregorio", "String");
-        //lm.marshalizar(unMarshal);
+        //lm.borrarCliente(clientes, "Pablo", "String");
+        
+        
+        lm.annadirCliente(clientes, "ACCESO", "DATOS", 978543212, "Jose", "Cervantes", 23, 2, "B", 33421, "Vegas");
+        Clientes.Cliente clienteDireccion = clientes.getCliente().get(0);
+        lm.annadirDireccionAUnCliente(clienteDireccion, "Callecita", 53, 2, "D", 33940, "El Entrego");
+        lm.annadirDireccionAUnCliente(clienteDireccion, "Callecuela", 421, 3, "D", 33940, "El Entrego");
+        lm.borrarDireccionSinCP(clientes);
+        
+        lm.marshalizar(unMarshal);
     }
 
 }

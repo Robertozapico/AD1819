@@ -19,10 +19,16 @@ public interface Interfaz {
     public JAXBElement unmarshalizar(File documentoXML, String nombrePaqueteDeLasClasesGeneradasPorElXML);
 
     public Marshaller marshalizar(JAXBElement esquema);
-    
+
     public int numTotalClientes(Clientes clientes);
-    
+
     public int numTotalClientesDeUnaProvincia(Clientes clientes, int codPostal);
-    
+
     public boolean borrarCliente(Clientes cliente, String apellido1, String apellido2);
+
+    public boolean annadirCliente(Clientes cliente, String apellido1, String apellido2, int telefono, String nombre, String calle, int numero, int piso, String escalera, int cp, String ciudad);
+
+    public boolean annadirDireccionAUnCliente(Clientes.Cliente cliente, String calle, int numero, int piso, String escalera, int cp, String ciudad);
+    
+    public boolean borrarDireccionSinCP(Clientes clientes);
 }

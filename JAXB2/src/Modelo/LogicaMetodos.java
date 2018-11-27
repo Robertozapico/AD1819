@@ -14,6 +14,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamSource;
 import jaxb.clientes.Clientes;
+import jaxb.clientes.Clientes.Cliente.Nombre;
 import jaxb.clientes.TipoDireccion;
 
 /**
@@ -87,33 +88,69 @@ public class LogicaMetodos implements Interfaz {
         Iterator<Clientes.Cliente> iteratorCliente;
         Clientes.Cliente clientillo = null;
         iteratorCliente = clientes.getCliente().iterator();
-
         while (iteratorCliente.hasNext()) {
-            clientillo=iteratorCliente.next();
-            System.out.println(clientillo.getApellido());
+            clientillo = iteratorCliente.next();
+            //System.out.println(clientillo.getApellido());
             if (clientillo.getApellido().get(0).equals(apellido1) && clientillo.getApellido().get(1).equals(apellido2)) {
-                System.out.println("Se va a borrar a: " + clientillo.getApellido());
-                //FALTA ARREGLAR AQUI
-                clientes.getCliente().remove(iteratorCliente);
+                //System.out.println("Se va a borrar a: " + clientillo.getApellido());           
+                iteratorCliente.remove();
+                clientesBorrados++;
             }
         }
-            /*
-        for (Clientes.Cliente cliente : clientes.getCliente()) {
-        //iteratorCliente=cliente.getApellido().iterator();
-        System.out.println("Apellido1: " + cliente.getApellido().get(0));
-        System.out.println("Apellido2: " + cliente.getApellido().get(1));
-        while (iteratorCliente.hasNext()) {
-        if (cliente.getApellido().get(0).equals(apellido1) && cliente.getApellido().get(1).equals(apellido2)) {
-        clientillo = cliente;
-        System.out.println("Se va a borrar a: " + cliente.getApellido());
-        clientes.getCliente().remove(clientillo);
-        clientesBorrados++;
-        }
-        }
-        }
-        System.out.println("Cantidad de clientes borrados:" + clientesBorrados);*/
-            return true;
-        }
-        
-
+        return true;
     }
+
+    @Override
+    public boolean annadirCliente(Clientes cliente, String apellido1, String apellido2, int telefono, String nombre, String calle, int numero, int piso, String escalera, int cp, String ciudad) {
+        Clientes.Cliente clienteNuevo = new Clientes.Cliente();
+        Nombre nombreNuevoCliente = new Nombre();
+        nombreNuevoCliente.setLenguaje(nombre);
+        clienteNuevo.getApellido().add(apellido1);
+        clienteNuevo.getApellido().add(apellido2);
+        clienteNuevo.setNombre(nombreNuevoCliente);
+        clienteNuevo.setTelefono(Integer.toString(telefono));
+
+        TipoDireccion dirNuevoCliente = new TipoDireccion();
+        dirNuevoCliente.setCalle(calle);
+        dirNuevoCliente.setCiudad(ciudad);
+        dirNuevoCliente.setCp(cp);
+        dirNuevoCliente.setEscalera(escalera);
+        dirNuevoCliente.setNumero(Integer.toString(numero));
+        dirNuevoCliente.setPiso(piso);
+        clienteNuevo.getDireccion().add(dirNuevoCliente);
+        cliente.getCliente().add(clienteNuevo);
+        return true;
+    }
+
+    @Override
+    public boolean annadirDireccionAUnCliente(Clientes.Cliente cliente, String calle, int numero, int piso, String escalera, int cp, String ciudad) {
+        TipoDireccion dirNuevoCliente = new TipoDireccion();
+        dirNuevoCliente.setCalle(calle);
+        dirNuevoCliente.setCiudad(ciudad);
+        dirNuevoCliente.setCp(cp);
+        dirNuevoCliente.setEscalera(escalera);
+        dirNuevoCliente.setNumero(Integer.toString(numero));
+        dirNuevoCliente.setPiso(piso);
+        if (cliente.getDireccion().size() < 3) {
+            cliente.getDireccion().add(dirNuevoCliente);
+            return true;
+        } else {
+            System.out.println("El cliente ha alcanzado el número máximo de direcciones");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean borrarDireccionSinCP(Clientes clientes) {
+        for (Clientes.Cliente cliente : clientes.getCliente()) {
+            Iterator<TipoDireccion> iteratorDireccionCliente = cliente.getDireccion().iterator();
+            while (iteratorDireccionCliente.hasNext()) {
+                TipoDireccion Direccion = iteratorDireccionCliente.next();
+                if (Direccion.getCp() == 0) {
+                    iteratorDireccionCliente.remove();
+                }
+            }
+        }
+        return true;
+    }
+}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF8" ?>
 <clientes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="clientes.xsd">
 	<cliente>
-		<apellido>String</apellido>
+		<apellido>Pablo</apellido>
 		<apellido>String</apellido>
 		<direccion>
 			<calle>String</calle>
@@ -54,7 +54,7 @@
 	</cliente>
 	<cliente>
 		<apellido>String</apellido>
-		<apellido>String</apellido>
+		<apellido>Rosmualdo</apellido>
 		<direccion>
 			<calle>String</calle>
 			<numero>String</numero>
