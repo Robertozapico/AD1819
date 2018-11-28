@@ -1,0 +1,30 @@
+[{
+        "titulo": "Sueños IA",
+        "totalPaginas": 210,
+        "precio": 10,
+        "autores": [{
+                "nombre": "Javier",
+                "apellido": "Perez"
+            }, {
+                "nombre": "María",
+                "apellido": "Rodriguez"
+            }],
+        "generos": [{
+                "generos": "novela"
+            }, {
+                "genero": "ficcion"
+            }]
+    }, {
+        "titulo": "JSON para todos",
+        "totalPaginas": 310,
+        "precio": 20,
+        "autores": [{
+                "nombre": "Ana",
+                "apellido": "Cota"
+            }],
+        "generos": [{
+                "generos": "informática"
+            }, {
+                "genero": "JSON"
+            }]
+    }]
