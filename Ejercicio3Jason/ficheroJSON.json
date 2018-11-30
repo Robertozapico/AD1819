@@ -1,0 +1,39 @@
+[{
+        "apellido": "Sanchez",
+        "direccion": [{
+                "calle": "callecita",
+                "numero": 53,
+                "piso": 2,
+                "escalera": "c",
+                "cp": 33940,
+                "ciudad": "El Entrego"
+            }, {
+                "calle": "callina",
+                "numero": 13,
+                "piso": 6,
+                "escalera": "A",
+                "cp": 33940,
+                "ciudad": "El Entrego"
+            }],
+        "telefono": 342123242,
+        "nombre": "Paco"
+    }, {
+        "apellido": "Amaral",
+        "direccion": [{
+                "calle": "titanic",
+                "numero": 52,
+                "piso": 2,
+                "escalera": "c",
+                "cp": 33940,
+                "ciudad": "El Entrego"
+            }, {
+                "calle": "callina",
+                "numero": 85,
+                "piso": 6,
+                "escalera": "A",
+                "cp": 33940,
+                "ciudad": "El Entrego"
+            }],
+        "telefono": 342123242,
+        "nombre": "Juancar"
+    }]
