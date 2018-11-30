@@ -76,7 +76,6 @@ public class jSonMetodos {
         JsonArray arrayJsonLibros = Json.createArrayBuilder().add(libro1)
                 .add(libro2)
                 .build();
-
         FileWriter ficheroSalida = new FileWriter(fichero);
         JsonWriter jsonWriter = Json.createWriter(ficheroSalida);
         jsonWriter.writeArray(arrayJsonLibros);
