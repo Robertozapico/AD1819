@@ -9,9 +9,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
@@ -43,8 +46,12 @@ public class Metodos {
     }*/
     public JsonObject crearClienteJson(String apellido1, String apellido2, String calle, int numero, int piso, char escalera, int cp, String ciudad, int telefono, String nombre) {
         JsonObject cliente = Json.createObjectBuilder()
-                .add("apellido", apellido1)
-                .add("apellido", apellido2)
+                .add("apellidos", Json.createArrayBuilder()
+                        .add(Json.createObjectBuilder()
+                                .add("apellido", apellido1)
+                                .add("apellido", apellido2)
+                        )
+                )
                 .add("direccion", Json.createArrayBuilder()//creamos el corchete
                         .add(Json.createObjectBuilder()
                                 .add("calle", calle)
@@ -61,31 +68,50 @@ public class Metodos {
         return cliente;
     }
 
-    public JsonObject annadirDireccion(JsonObject cliente, String calle, int numero, int piso, char escalera, int cp, String ciudad) {
-
-        for (int n = 0; n < cliente.getJsonArray("direccion").size(); n++) {
-            JsonObject object = cliente.getJsonArray("direccion").getJsonArray(n).getJsonObject(n);
-            // do some stuff....
-        }
-        /*.add(Json.createObjectBuilder()
-                    .add("calle", calle)
-                    .add("numero", numero)
-                    .add("piso", piso)
-                    .add("escalera", escalera)
-                    .add("cp", cp)
-                    .add("ciudad", ciudad)
-        );*/
+    public JsonObject crearClienteJsonConVariasDirecciones(String apellido1, String apellido2, JsonArrayBuilder listadoDeDirecciones, int telefono, String nombre) {
+        JsonObject cliente = Json.createObjectBuilder()
+                .add("apellidos", Json.createArrayBuilder()
+                        .add(Json.createObjectBuilder()
+                                .add("apellido1", apellido1)
+                                .add("apellido2", apellido2)
+                        )
+                )
+                .add("direccion", listadoDeDirecciones//creamos el corchete//}, 
+                )//],
+                .add("telefono", telefono)
+                .add("nombre", nombre)
+                .build();//para cerrarlo:  }]
         return cliente;
     }
 
-    public void crearFicheroJSON(String rutaFichero, JsonObject cliente1, JsonObject cliente2) throws IOException {
+    public JsonObjectBuilder crearDireccion(String calle, int numero, int piso, char escalera, int cp, String ciudad) {
+        JsonObjectBuilder direcciones = Json.createObjectBuilder()
+                .add("calle", calle)
+                .add("numero", numero)
+                .add("piso", piso)
+                .add("escalera", escalera)
+                .add("cp", cp)
+                .add("ciudad", ciudad);
 
-        JsonArray arrayJsonLibros = Json.createArrayBuilder().add(cliente1)
-                .add(cliente2)
+        return direcciones;
+    }
+
+    public JsonArrayBuilder crearListadoDeDirecciones(List<JsonObjectBuilder> listadoDeDirecciones) {
+        JsonArrayBuilder direcciones = Json.createArrayBuilder();
+        for (JsonObjectBuilder listadoDeDireccione : listadoDeDirecciones) {
+            Json.createArrayBuilder().add(listadoDeDireccione);
+        }
+
+        return direcciones;
+    }
+
+    public void crearFicheroJSON(String rutaFichero, JsonObject cliente1) throws IOException {
+
+        JsonArray arrayJson = Json.createArrayBuilder().add(cliente1)
                 .build();
         FileWriter ficheroSalida = new FileWriter(rutaFichero);
         JsonWriter jsonWriter = Json.createWriter(ficheroSalida);
-        jsonWriter.writeArray(arrayJsonLibros);
+        jsonWriter.writeArray(arrayJson);
         ficheroSalida.flush();
         ficheroSalida.close();
 

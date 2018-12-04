@@ -6,10 +6,14 @@
 package ejercicio3jason;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 /**
  *
@@ -22,7 +26,7 @@ public class Ejercicio3Jason {
      */
     public static void main(String[] args) {
         Metodos metodos = new Metodos();
-        
+
         /*JsonObject cliente1 = Json.createObjectBuilder()
                 .add("apellido", "Sanz")
                 .add("apellido", "Sanchez")
@@ -79,10 +83,27 @@ public class Ejercicio3Jason {
         } catch (IOException ex) {
             Logger.getLogger(Ejercicio3Jason.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
-        
-        JsonObject cliente=metodos.crearClienteJson("Paco", "Pacoape", "callecita", 32, 2, 'C', 33940, "El Entrego", 89345345, "nombre");
-        System.out.println(metodos.annadirDireccion(cliente, "prueba", 0, 0, 'A', 0, "Laviana"));
+         */
+        //JsonObject cliente = metodos.crearClienteJson("Paco", "Pacoape", "callecita", 32, 2, 'C', 33940, "El Entrego", 89345345, "nombre");
+        //System.out.println(metodos.crearDireccion("callecita", 32, 2, 'C', 33940, "El Entrego"));
+        //System.out.println(cliente);
+        JsonObjectBuilder direccion1 = metodos.crearDireccion("Madre", 42, 1, 'J', 44312, "La Felguera");
+        JsonObjectBuilder direccion2 = metodos.crearDireccion("mia", 12, 54, 'Q', 42312, "Oviedo");
+        List<JsonObjectBuilder> direcciones = new ArrayList<>();
+        direcciones.add(direccion1);
+        direcciones.add(direccion2);
+        System.out.println(direccion1);
+        System.out.println(direccion2);
+        System.out.println(direcciones);
+        JsonArrayBuilder arrayDeDirecciones = metodos.crearListadoDeDirecciones(direcciones);
+
+        JsonObject cliente1 = metodos.crearClienteJsonConVariasDirecciones("Cecilio", "G", arrayDeDirecciones, 123534534, "Felipez");
+        System.out.println(cliente1);
+        try {
+            metodos.crearFicheroJSON("ficheroJSON.json", cliente1);
+        } catch (IOException ex) {
+            Logger.getLogger(Ejercicio3Jason.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
 }
