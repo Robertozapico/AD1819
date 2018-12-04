@@ -92,13 +92,9 @@ public class Ejercicio3Jason {
         List<JsonObjectBuilder> direcciones = new ArrayList<>();
         direcciones.add(direccion1);
         direcciones.add(direccion2);
-        System.out.println(direccion1);
-        System.out.println(direccion2);
-        System.out.println(direcciones);
         JsonArrayBuilder arrayDeDirecciones = metodos.crearListadoDeDirecciones(direcciones);
 
         JsonObject cliente1 = metodos.crearClienteJsonConVariasDirecciones("Cecilio", "G", arrayDeDirecciones, 123534534, "Felipez");
-        System.out.println(cliente1);
         try {
             metodos.crearFicheroJSON("ficheroJSON.json", cliente1);
         } catch (IOException ex) {

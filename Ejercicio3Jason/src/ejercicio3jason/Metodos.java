@@ -99,7 +99,7 @@ public class Metodos {
     public JsonArrayBuilder crearListadoDeDirecciones(List<JsonObjectBuilder> listadoDeDirecciones) {
         JsonArrayBuilder direcciones = Json.createArrayBuilder();
         for (JsonObjectBuilder listadoDeDireccione : listadoDeDirecciones) {
-            Json.createArrayBuilder().add(listadoDeDireccione);
+            direcciones.add(listadoDeDireccione);
         }
 
         return direcciones;
