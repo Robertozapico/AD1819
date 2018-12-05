@@ -104,9 +104,11 @@ public class LogicaMetodos {
 
     public JsonArrayBuilder crearListadoDeDirecciones(List<TipoDireccion> listadoDeDirecciones) {
         JsonArrayBuilder direcciones = Json.createArrayBuilder();
+        List<JsonObjectBuilder> listaDeDireccionJson = new ArrayList<>();
         for (TipoDireccion listadoDeDireccione : listadoDeDirecciones) {
-            JsonObjectBuilder direccionJsonObject = (JsonObjectBuilder) listadoDeDireccione;
-            direcciones.add(direccionJsonObject);
+            
+            //JsonObjectBuilder direccionJsonObject = (JsonObjectBuilder) listadoDeDireccione;
+            direcciones.add(crearDireccion(listadoDeDireccione.getCalle(), 0, 0, 0, 0, ciudad));
         }
         
         return direcciones;
