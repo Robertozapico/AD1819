@@ -87,7 +87,7 @@ public class Ejercicio3Jason {
         //JsonObject cliente = metodos.crearClienteJson("Paco", "Pacoape", "callecita", 32, 2, 'C', 33940, "El Entrego", 89345345, "nombre");
         //System.out.println(metodos.crearDireccion("callecita", 32, 2, 'C', 33940, "El Entrego"));
         //System.out.println(cliente);
-        JsonObjectBuilder direccion1 = metodos.crearDireccion("Madre", 42, 1, 'J', 44312, "La Felguera");
+        /*JsonObjectBuilder direccion1 = metodos.crearDireccion("Madre", 42, 1, 'J', 44312, "La Felguera");
         JsonObjectBuilder direccion2 = metodos.crearDireccion("mia", 12, 54, 'Q', 42312, "Oviedo");
         List<JsonObjectBuilder> direcciones = new ArrayList<>();
         direcciones.add(direccion1);
@@ -95,8 +95,31 @@ public class Ejercicio3Jason {
         JsonArrayBuilder arrayDeDirecciones = metodos.crearListadoDeDirecciones(direcciones);
 
         JsonObject cliente1 = metodos.crearClienteJsonConVariasDirecciones("Cecilio", "G", arrayDeDirecciones, 123534534, "Felipez");
+         */
+        JsonObjectBuilder direccion1 = metodos.crearDireccion("Madre", 42, 1, 'J', 44312, "La Felguera");
+        JsonObjectBuilder direccion2 = metodos.crearDireccion("mia", 12, 54, 'Q', 42312, "Oviedo");
+        List<JsonObjectBuilder> direcciones = new ArrayList<>();
+        direcciones.add(direccion1);
+        direcciones.add(direccion2);
+        JsonArrayBuilder arrayDeDirecciones = metodos.crearListadoDeDirecciones(direcciones);
+        JsonObject cliente1 = metodos.crearClienteJsonConVariasDirecciones("Cecilio", "G", arrayDeDirecciones, 123534534, "Felipez");
+
+        //
+        JsonObjectBuilder direccion3 = metodos.crearDireccion("PRUEBA", 42, 1, 'J', 44312, "La Felguera");
+        JsonObjectBuilder direccion4 = metodos.crearDireccion("PRUEBA2", 12, 54, 'Q', 42312, "Oviedo");
+        List<JsonObjectBuilder> direcciones2 = new ArrayList<>();
+        direcciones2.add(direccion3);
+        direcciones2.add(direccion4);
+        JsonArrayBuilder arrayDeDirecciones2 = metodos.crearListadoDeDirecciones(direcciones2);
+
+        JsonObject cliente2 = metodos.crearClienteJsonConVariasDirecciones("Ramarazo", "NON", arrayDeDirecciones2, 534534534, "Ilu");
+        List<JsonObject> clientes = new ArrayList<>();
+        clientes.add(cliente2);
+        clientes.add(cliente1);
+        JsonArrayBuilder clientesArray = metodos.crearListadoDeClientes(clientes);
+
         try {
-            metodos.crearFicheroJSON("ficheroJSON.json", cliente1);
+            metodos.crearFicheroJSON("ficheroJSON.json", clientesArray);
         } catch (IOException ex) {
             Logger.getLogger(Ejercicio3Jason.class.getName()).log(Level.SEVERE, null, ex);
         }

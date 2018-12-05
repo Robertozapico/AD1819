@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejercicio3jason;
+package ejercicio3Jason2;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -17,16 +19,18 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonWriter;
 import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamSource;
+import jaxb.clientesBinding.Clientes;
+import jaxb.clientesBinding.TipoDireccion;
 
 /**
  *
  * @author alumnop
  */
-public class Metodos {
-    //Crea  un  fichero  JSON  (jsonWriter)  con  la  estructura  del  XSD  que  añade  un  cliente  con  dos  direcciones.
-/*
+public class LogicaMetodos {
+
     private JAXBElement jaxbElement = null;
     private javax.xml.bind.JAXBContext jaxbCtx = null;
     private Marshaller m = null;
@@ -43,30 +47,31 @@ public class Metodos {
             java.util.logging.Logger.getLogger("global").log(java.util.logging.Level.SEVERE, null, ex); //NOI18N
         }
         return jaxbElement;
-    }*/
+    }
 
-    public JsonObject crearClienteJson(String apellido1, String apellido2, String calle, int numero, int piso, char escalera, int cp, String ciudad, int telefono, String nombre) {
-        JsonObject cliente = Json.createObjectBuilder()
-                .add("apellidos", Json.createArrayBuilder()
-                        .add(Json.createObjectBuilder()
-                                .add("apellido", apellido1)
-                                .add("apellido", apellido2)
-                        )
-                )
-                .add("direccion", Json.createArrayBuilder()//creamos el corchete
-                        .add(Json.createObjectBuilder()
-                                .add("calle", calle)
-                                .add("numero", numero)
-                                .add("piso", piso)
-                                .add("escalera", escalera)
-                                .add("cp", cp)
-                                .add("ciudad", ciudad)
-                        )//}, 
-                )//],
-                .add("telefono", telefono)
-                .add("nombre", nombre)
-                .build();//para cerrarlo:  }]
-        return cliente;
+    public Marshaller marshalizar(JAXBElement esquema) {
+        try {
+            m = jaxbCtx.createMarshaller();
+
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            m.marshal(jaxbElement, System.out);
+        } catch (JAXBException ex) {
+            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return m;
+    }
+
+    public void crearFicheroJSON(String rutaFichero, JsonArrayBuilder clientes) throws IOException {
+
+        JsonArray arrayJson = clientes
+                .build();
+        FileWriter ficheroSalida = new FileWriter(rutaFichero);
+        JsonWriter jsonWriter = Json.createWriter(ficheroSalida);
+        jsonWriter.writeArray(arrayJson);
+        ficheroSalida.flush();
+        ficheroSalida.close();
+
     }
 
     public JsonObject crearClienteJsonConVariasDirecciones(String apellido1, String apellido2, JsonArrayBuilder listadoDeDirecciones, int telefono, String nombre) {
@@ -97,25 +102,14 @@ public class Metodos {
         return direcciones;
     }
 
-    public JsonArrayBuilder crearListadoDeDirecciones(List<JsonObjectBuilder> listadoDeDirecciones) {
+    public JsonArrayBuilder crearListadoDeDirecciones(List<TipoDireccion> listadoDeDirecciones) {
         JsonArrayBuilder direcciones = Json.createArrayBuilder();
-        for (JsonObjectBuilder listadoDeDireccione : listadoDeDirecciones) {
-            direcciones.add(listadoDeDireccione);
+        for (TipoDireccion listadoDeDireccione : listadoDeDirecciones) {
+            JsonObjectBuilder direccionJsonObject = (JsonObjectBuilder) listadoDeDireccione;
+            direcciones.add(direccionJsonObject);
         }
-
+        
         return direcciones;
-    }
-
-    public void crearFicheroJSON(String rutaFichero, JsonArrayBuilder clientes) throws IOException {
-
-        JsonArray arrayJson = clientes
-                .build();
-        FileWriter ficheroSalida = new FileWriter(rutaFichero);
-        JsonWriter jsonWriter = Json.createWriter(ficheroSalida);
-        jsonWriter.writeArray(arrayJson);
-        ficheroSalida.flush();
-        ficheroSalida.close();
-
     }
 
     public JsonArrayBuilder crearListadoDeClientes(List<JsonObject> listadoDeClientes) {
@@ -127,4 +121,20 @@ public class Metodos {
         return clientes;
     }
 
+    public void volcarFicheroXMLAJson(String rutaFichero, JAXBElement esquema) throws IOException {
+        Clientes clientes = (Clientes) esquema.getValue();
+        List<JsonObject> clientesJsonObject = new ArrayList<>();
+        for (Clientes.Cliente cliente : clientes.getCliente()) {
+            JsonArrayBuilder listadoDeDirecciones = crearListadoDeDirecciones(cliente.getDireccion());
+
+            JsonObject clienteJson = crearClienteJsonConVariasDirecciones(cliente.getApellido().get(0), cliente.getApellido().get(1), listadoDeDirecciones, Integer.parseInt(cliente.getTelefono()), cliente.getNombre());
+            clientesJsonObject.add(clienteJson);
+            /*cliente clientesJsonObject
+            .add(cliente);
+            JsonArrayBuilder clientesArray = metodos.crearListadoDeClientes(clientes);
+            System.out.println(cliente);*/
+        }
+        JsonArrayBuilder clientesArray = crearListadoDeClientes(clientesJsonObject);
+        crearFicheroJSON("ficheroJSON.json", clientesArray);
+    }
 }
