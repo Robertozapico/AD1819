@@ -22,7 +22,7 @@ public class NewMain {
         LogicaMetodos lm = new LogicaMetodos();
         File documentoXML = new File("clientes.xml");
         JAXBElement unMarshal = lm.unmarshalizar(documentoXML, "jaxb.clientesBinding");
-        //lm.marshalizar(unMarshal);
+        lm.marshalizar(unMarshal);
         lm.volcarFicheroXMLAJson("", unMarshal);
     }
 

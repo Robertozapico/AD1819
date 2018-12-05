@@ -106,11 +106,8 @@ public class LogicaMetodos {
         JsonArrayBuilder direcciones = Json.createArrayBuilder();
         List<JsonObjectBuilder> listaDeDireccionJson = new ArrayList<>();
         for (TipoDireccion listadoDeDireccione : listadoDeDirecciones) {
-            
-            //JsonObjectBuilder direccionJsonObject = (JsonObjectBuilder) listadoDeDireccione;
-            direcciones.add(crearDireccion(listadoDeDireccione.getCalle(), 0, 0, 0, 0, ciudad));
+            direcciones.add(crearDireccion(listadoDeDireccione.getCalle(), Integer.parseInt(listadoDeDireccione.getNumero()), listadoDeDireccione.getPiso(), listadoDeDireccione.getEscalera().charAt(0), listadoDeDireccione.getCp(), listadoDeDireccione.getCiudad()));
         }
-        
         return direcciones;
     }
 
@@ -128,15 +125,10 @@ public class LogicaMetodos {
         List<JsonObject> clientesJsonObject = new ArrayList<>();
         for (Clientes.Cliente cliente : clientes.getCliente()) {
             JsonArrayBuilder listadoDeDirecciones = crearListadoDeDirecciones(cliente.getDireccion());
-
             JsonObject clienteJson = crearClienteJsonConVariasDirecciones(cliente.getApellido().get(0), cliente.getApellido().get(1), listadoDeDirecciones, Integer.parseInt(cliente.getTelefono()), cliente.getNombre());
             clientesJsonObject.add(clienteJson);
-            /*cliente clientesJsonObject
-            .add(cliente);
-            JsonArrayBuilder clientesArray = metodos.crearListadoDeClientes(clientes);
-            System.out.println(cliente);*/
         }
         JsonArrayBuilder clientesArray = crearListadoDeClientes(clientesJsonObject);
-        crearFicheroJSON("ficheroJSON.json", clientesArray);
+        crearFicheroJSON("ficheroJSON2.json", clientesArray);
     }
 }
