@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/home/alumnop/Documentos/Proyectos/AD1819/Examen22017/../../../../Descargas/diccionario.xsd" uri="xml-resources/jaxb/diccionarioBinding/diccionario.xsd"/>
+</catalog>
