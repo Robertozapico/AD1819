@@ -1,0 +1,11 @@
+{
+    "libros": [{
+            "isbn": "isbn",
+            "titulo": "nombrelibro",
+            "autor": "nombreautor",
+            "numeroPaginas": 300,
+            "fechaPublicacion": "1700-07-15",
+            "prestadoSiNo": "No",
+            "fechaDevolucion": "2018-02-12"
+        }]
+}
