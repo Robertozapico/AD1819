@@ -1,0 +1,15 @@
+[{
+        "nombre": "Roberto",
+        "apellidos": [{
+                "apellido1": "Zapico",
+                "apellido2": "Blanco"
+            }],
+        "telefono": 54355120
+    }, {
+        "nombre": "String",
+        "apellidos": [{
+                "apellido1": "String",
+                "apellido2": "String"
+            }],
+        "telefono": 0
+    }]

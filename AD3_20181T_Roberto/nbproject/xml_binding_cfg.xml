@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<schemas xmlns='http://xml.netbeans.org/schema/JAXBWizConfig' destdir='build/generated-sources/jaxb' projectName='AD3_20181T_Roberto' version='1.0'>
+	<schema type='-xmlschema' package='jaxb.bibliotecaBinding' name='bibliotecaBinding'>
+		<xjc-options>
+		</xjc-options>
+		<schema-sources>
+			<schema-source location='xml-resources/jaxb/bibliotecaBinding/biblioteca.xsd' origLocation='biblioteca.xsd'/>
+		</schema-sources>
+		<bindings>
+		</bindings>
+		<catalog/>
+	</schema>
+</schemas>
