@@ -6,6 +6,7 @@
 package eval2ejer2;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,8 +42,8 @@ public class Eval2Ejer2 {
         otro método),  también los puede devolver ordenados por nombre si el usuario lo dese*/
 
         Statement stmt = connection.createStatement();
-        String bar, beer;
-        float price;
+        stmt.executeUpdate("INSERT INTO Pintor VALUES " +
+                            "('4231', 'Chimuelo', '1993-2-2', 'Oleo', 63453)") ;
 
         ResultSet rs = stmt.executeQuery("SELECT * FROM Pintor");
         System.out.println(rs.getString("Nombre"));
