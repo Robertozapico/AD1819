@@ -13,7 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +56,8 @@ public class LogicaMetodos {
         String fechaNacimiento = anioNacimiento + "-" + mesNacimiento + "-" + diaNacimiento;
         try {
             stmt = connection.createStatement();
-            stmt.executeUpdate("INSERT INTO Pintor VALUES(" + idPintor + ", '" + nombre + "', '" + fechaNacimiento + "', '" + estilo + "')");
+            String consulta = "INSERT INTO Pintor VALUES(" + idPintor + ", '" + nombre + "', '" + fechaNacimiento + "', '" + estilo + "')";
+            stmt.executeUpdate(consulta);
         } catch (SQLException ex) {
             Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -65,12 +68,15 @@ public class LogicaMetodos {
     //Ejercicio A
     public ArrayList obtenerPintoresOrdenados(boolean ordenados) {
         List<Pintor> pintores = new ArrayList<Pintor>();
+        String consulta;
         try {
             stmt = connection.createStatement();
             if (ordenados) {
-                rs = stmt.executeQuery("SELECT * FROM Pintor ORDER BY nombre");
+                consulta = "SELECT * FROM Pintor ORDER BY nombre";
+                rs = stmt.executeQuery(consulta);
             } else {
-                rs = stmt.executeQuery("SELECT * FROM Pintor");
+                consulta = "SELECT * FROM Pintor";
+                rs = stmt.executeQuery(consulta);
             }
             while (rs.next()) {
                 //System.out.println(rs.getString("nombre"));
@@ -93,7 +99,8 @@ public class LogicaMetodos {
         PreparedStatement ps = null;
         try {
             //stmt = connection.createStatement();
-            ps = connection.prepareStatement("DELETE FROM Pintor WHERE nombre='" + nombre + "'");
+            String consulta = "DELETE FROM Pintor WHERE nombre='" + nombre + "'";
+            ps = connection.prepareStatement(consulta);
 
             //rs = stmt.executeQuery("DELETE FROM Pintor WHERE id_Pintor=7");
             filasAfectadas = ps.executeUpdate();
@@ -109,7 +116,8 @@ public class LogicaMetodos {
         PreparedStatement ps = null;
         try {
             //stmt = connection.createStatement();
-            ps = connection.prepareStatement("DELETE FROM Pintor WHERE id_Pintor=" + id);
+            String consulta = "DELETE FROM Pintor WHERE id_Pintor=" + id;
+            ps = connection.prepareStatement(consulta);
             //rs = stmt.executeQuery("DELETE FROM Pintor WHERE id_Pintor=7");
             filasAfectadas = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -120,14 +128,17 @@ public class LogicaMetodos {
     }
 
     //1-D
-    public ArrayList obtenerPintoresAnyo(int diaNacimiento, int mesNacimiento, int anioNacimiento) {
+    public ArrayList obtenerPintoresAnyo(int anioNacimiento) {
         List<Pintor> pintores = new ArrayList<Pintor>();
         PreparedStatement ps = null;
-        String fechaNacimiento = anioNacimiento + "-" + mesNacimiento + "-" + diaNacimiento;
+        String fechaNacimientoMin = anioNacimiento + "-01-01";
+        String fechaNacimientoMax = anioNacimiento + "-12-31";
         try {
             stmt = connection.createStatement();
-            ps = connection.prepareStatement("SELECT * FROM Pintor WHERE anio_nacimiento='" + fechaNacimiento + "'");
-            rs=ps.executeQuery();
+            
+            String consulta = "SELECT * FROM Pintor WHERE anio_nacimiento between'" + fechaNacimientoMin + "' AND '"+fechaNacimientoMax+"'";
+            ps = connection.prepareStatement(consulta);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id_Pintor");
                 String nombrePintor = rs.getString("nombre");
@@ -142,4 +153,28 @@ public class LogicaMetodos {
 
         return (ArrayList) pintores;
     }
-}
+
+    /*Retorna todos los cuadros seguidos del  nombre del autor.  
+    (Devolver un ResultSet que contengatodos títulos y los nombres de los pintores y visualizarlo en otro método),  
+    también los puede devolver ordenados por titulo si el usuario lo desea.*/
+   /* public void obtenerInfoCuadros(boolean ordenado) {
+        Map<Integer, Pintor> cuadros = new HashMap<Integer, Pintor>();
+        PreparedStatement ps = null;
+
+        try {
+            stmt = connection.createStatement();
+            String consulta = "SELECT * FROM pintores.Pintor where Pintor.id_Pintor=(SELECT id_autor from pintores.Cuadro)";
+            ps = connection.prepareStatement(consulta);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id_Pintor");
+                String nombrePintor = rs.getString("nombre");
+                Date fechaNacimientoDate = rs.getDate("anio_nacimiento");
+                String estiloPintor = rs.getString("estilo");
+                Pintor pintor = new Pintor(id, nombrePintor, fechaNacimientoDate, estiloPintor);
+                pintores.add(pintor);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+    }

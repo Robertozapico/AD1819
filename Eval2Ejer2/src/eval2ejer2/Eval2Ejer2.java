@@ -33,7 +33,7 @@ public class Eval2Ejer2 {
         //Elimina un pintor, elimina un pintor a partir de su y id o de su nombre.
         //BDMetodos.eliminarPintorId(7);
         //BDMetodos.eliminarPintorNombre("Aurelio");
-        System.out.println(BDMetodos.obtenerPintoresAnyo(25, 03, 1993));
+        System.out.println(BDMetodos.obtenerPintoresAnyo(1992));
     }
 
 }
