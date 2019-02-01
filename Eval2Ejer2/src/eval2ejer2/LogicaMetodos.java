@@ -135,8 +135,8 @@ public class LogicaMetodos {
         String fechaNacimientoMax = anioNacimiento + "-12-31";
         try {
             stmt = connection.createStatement();
-            
-            String consulta = "SELECT * FROM Pintor WHERE anio_nacimiento between'" + fechaNacimientoMin + "' AND '"+fechaNacimientoMax+"'";
+
+            String consulta = "SELECT * FROM Pintor WHERE anio_nacimiento between'" + fechaNacimientoMin + "' AND '" + fechaNacimientoMax + "'";
             ps = connection.prepareStatement(consulta);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -154,27 +154,64 @@ public class LogicaMetodos {
         return (ArrayList) pintores;
     }
 
-    /*Retorna todos los cuadros seguidos del  nombre del autor.  
-    (Devolver un ResultSet que contengatodos títulos y los nombres de los pintores y visualizarlo en otro método),  
-    también los puede devolver ordenados por titulo si el usuario lo desea.*/
-   /* public void obtenerInfoCuadros(boolean ordenado) {
-        Map<Integer, Pintor> cuadros = new HashMap<Integer, Pintor>();
-        PreparedStatement ps = null;
-
+    //1-E
+    public HashMap<Integer, String> obtenerCuadrosPintores(boolean ordenados) {
+        Map<Integer, String> cuadrosPintor = new HashMap<Integer, String>();
+        String consulta;
         try {
+            PreparedStatement ps = null;
             stmt = connection.createStatement();
-            String consulta = "SELECT * FROM pintores.Pintor where Pintor.id_Pintor=(SELECT id_autor from pintores.Cuadro)";
+            if (ordenados) {
+                consulta = "SELECT Cuadro.id_cuadro, Cuadro.titulo, Pintor.nombre\n"
+                        + "FROM Cuadro\n"
+                        + "INNER JOIN Pintor ON Pintor.id_Pintor = Cuadro.Pintor_id_Pintor ORDER BY Cuadro.titulo;";
+            } else {
+                consulta = "SELECT Cuadro.id_cuadro, Cuadro.titulo, Pintor.nombre\n"
+                        + "FROM Cuadro\n"
+                        + "INNER JOIN Pintor ON Pintor.id_Pintor = Cuadro.Pintor_id_Pintor;";
+            }
             ps = connection.prepareStatement(consulta);
             rs = ps.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id_Pintor");
-                String nombrePintor = rs.getString("nombre");
-                Date fechaNacimientoDate = rs.getDate("anio_nacimiento");
-                String estiloPintor = rs.getString("estilo");
-                Pintor pintor = new Pintor(id, nombrePintor, fechaNacimientoDate, estiloPintor);
-                pintores.add(pintor);
+                String infoCuadro = "Nombre titulo: " + rs.getString("titulo") + ", Nombre del pintor: " + rs.getString("nombre");
+                cuadrosPintor.put(rs.getInt("id_cuadro"), infoCuadro);
             }
         } catch (SQLException ex) {
             Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
+        return (HashMap<Integer, String>) cuadrosPintor;
     }
+
+    /*Retorna todos los cuadros de un determinado pintor por nombre, (usar PreparedStatement).*/
+    //1.F
+    public ArrayList obtenerCuadrosPintor(String nombrePintor) {
+        List cuadrosPintor = new ArrayList();
+        String consulta;
+        try {
+            PreparedStatement ps = null;
+            stmt = connection.createStatement();
+                consulta = "SELECT Cuadro.titulo\n"
+                        + "FROM Cuadro\n"
+                        + "WHERE Cuadro.Pintor_id_Pintor = (Select Pintor.id_Pintor from Pintor where Pintor.nombre='"+nombrePintor+"');";
+            ps = connection.prepareStatement(consulta);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                cuadrosPintor.add(rs.getString("titulo"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (ArrayList) cuadrosPintor;
+    }
+
+    /*SELECT * FROM Usuario;
+SELECT * FROM Comentarios;
+SELECT Comentarios.Comentario, Usuario.nombre, Cuadro.titulo, Pintor.nombre
+FROM Comentarios
+INNER JOIN Usuario ON Usuario.id_usuario = Comentarios.Usuario_id_usuario
+INNER JOIN Cuadro ON Cuadro.id_cuadro = Comentarios.Cuadro_id_cuadro
+INNER JOIN Pintor ON Cuadro.Pintor_id_Pintor = Pintor.id_Pintor
+WHERE Comentarios.ComentarioFecha BETWEEN "2018-01-01" AND sysdate()
+ORDER BY Comentarios.ComentarioFecha DESC;*/
+}

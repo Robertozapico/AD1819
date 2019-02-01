@@ -34,6 +34,8 @@ public class Eval2Ejer2 {
         //BDMetodos.eliminarPintorId(7);
         //BDMetodos.eliminarPintorNombre("Aurelio");
         System.out.println(BDMetodos.obtenerPintoresAnyo(1992));
+        System.out.println(BDMetodos.obtenerCuadrosPintores(true));
+        System.out.println(BDMetodos.obtenerCuadrosPintor("aaaaa"));
     }
 
 }
