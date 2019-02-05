@@ -36,6 +36,8 @@ public class Eval2Ejer2 {
         System.out.println(BDMetodos.obtenerPintoresAnyo(1992));
         System.out.println(BDMetodos.obtenerCuadrosPintores(true));
         System.out.println(BDMetodos.obtenerCuadrosPintor("aaaaa"));
+        
+        System.out.println(BDMetodos.obtenerComentariosConInfo(30));
     }
 
 }

@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -190,14 +192,14 @@ public class LogicaMetodos {
         try {
             PreparedStatement ps = null;
             stmt = connection.createStatement();
-                consulta = "SELECT Cuadro.titulo\n"
-                        + "FROM Cuadro\n"
-                        + "WHERE Cuadro.Pintor_id_Pintor = (Select Pintor.id_Pintor from Pintor where Pintor.nombre='"+nombrePintor+"');";
+            consulta = "SELECT Cuadro.titulo\n"
+                    + "FROM Cuadro\n"
+                    + "WHERE Cuadro.Pintor_id_Pintor = (Select Pintor.id_Pintor from Pintor where Pintor.nombre='" + nombrePintor + "');";
             ps = connection.prepareStatement(consulta);
             rs = ps.executeQuery();
             while (rs.next()) {
                 cuadrosPintor.add(rs.getString("titulo"));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(LogicaMetodos.class.getName()).log(Level.SEVERE, null, ex);
@@ -205,13 +207,36 @@ public class LogicaMetodos {
         return (ArrayList) cuadrosPintor;
     }
 
-    /*SELECT * FROM Usuario;
-SELECT * FROM Comentarios;
-SELECT Comentarios.Comentario, Usuario.nombre, Cuadro.titulo, Pintor.nombre
-FROM Comentarios
-INNER JOIN Usuario ON Usuario.id_usuario = Comentarios.Usuario_id_usuario
-INNER JOIN Cuadro ON Cuadro.id_cuadro = Comentarios.Cuadro_id_cuadro
-INNER JOIN Pintor ON Cuadro.Pintor_id_Pintor = Pintor.id_Pintor
-WHERE Comentarios.ComentarioFecha BETWEEN "2018-01-01" AND sysdate()
-ORDER BY Comentarios.ComentarioFecha DESC;*/
+    //Retorna todos los comentarios seguidos del autor, cuadro y pintor de los últimos n días ordenados de mas a menos recientes.
+    public ArrayList obtenerComentariosConInfo(int nDias) throws SQLException {
+        List comentario = new ArrayList();
+        GregorianCalendar fechita = new GregorianCalendar();
+        PreparedStatement ps = null;
+        int diasNegativos = 0-nDias;
+        fechita.add(Calendar.DATE, diasNegativos);
+        //System.out.println(fechita.getTime().getTime());
+        Date fechaSQL = new Date(fechita.getTime().getTime());
+        //System.out.println(fechaSQL);
+        String fecha = "\"" + fechaSQL + "\"";
+        String consulta = "SELECT Comentarios.Comentario, Usuario.nombre, Cuadro.titulo, Pintor.nombre\n"
+                + "FROM Comentarios\n"
+                + "INNER JOIN Usuario ON Usuario.id_usuario = Comentarios.Usuario_id_usuario\n"
+                + "INNER JOIN Cuadro ON Cuadro.id_cuadro = Comentarios.Cuadro_id_cuadro\n"
+                + "INNER JOIN Pintor ON Cuadro.Pintor_id_Pintor = Pintor.id_Pintor\n"
+                + "WHERE Comentarios.ComentarioFecha BETWEEN " + fecha + " AND sysdate()\n"
+                + "ORDER BY Comentarios.ComentarioFecha DESC";
+        ps = connection.prepareStatement(consulta);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            //System.out.println("COMENTARIO:");
+            //System.out.println(rs.getString("Comentario"));
+            String comentarioString = rs.getString("Comentario")+", ";
+            comentarioString += rs.getString("nombre")+", ";
+            comentarioString += rs.getString("titulo")+", ";
+            comentarioString += rs.getString("Pintor.nombre");
+            comentario.add(comentarioString);
+        }
+        return (ArrayList) comentario;
+    }
+
 }
