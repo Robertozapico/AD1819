@@ -26,9 +26,11 @@ public class Contacto implements Serializable {
     
     
     private long id;
+    @Column(name="nombre")
     private String nombre;
     @Column(name="e_mail")
     private String email;
+    @Column(name="tlfn")
     private String telefono;
 
     public Contacto() {
