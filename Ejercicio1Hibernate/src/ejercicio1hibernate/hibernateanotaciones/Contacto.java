@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ejercicio1hibernate;
+package ejercicio1hibernate.hibernateanotaciones;
 
 import java.io.Serializable;
 import javax.persistence.Column;

@@ -5,6 +5,7 @@
  */
 package ejercicio1hibernate;
 
+import ejercicio1hibernate.hibernateanotaciones.Contacto;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

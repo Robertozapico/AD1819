@@ -5,6 +5,7 @@
  */
 package ejercicio1hibernate;
 
+import ejercicio1hibernate.hibernateanotaciones.Contacto;
 import java.util.Date;
 
 /**
@@ -24,7 +25,9 @@ public class Ejercicio1Hibernate {
         contacto.setEmail("prueba@gmail.com");
         contacto.setTelefono("5435345");
         
+        
         logica.guardaContacto(contacto);
+        //logica.guardaContacto(contacto);
 
         /*logica.guardaActor(actor);
         

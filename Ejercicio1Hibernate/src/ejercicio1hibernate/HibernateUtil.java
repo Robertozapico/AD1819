@@ -1,5 +1,6 @@
 package ejercicio1hibernate;
 
+
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory; 
 import org.hibernate.cfg.AnnotationConfiguration;
