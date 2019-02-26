@@ -1,5 +1,6 @@
 package ej02unidiranotaciones;
 
+import java.util.List;
 import mapeo.Direccion;
 import mapeo.Persona;
 import objetoDao.ContactoDao;
@@ -16,25 +17,29 @@ public class Ej02UniDirAnotaciones {
      */
     public static void main(String[] args) {
         ContactoDao contactoDao = new ContactoDao();
-        
-        
-    Persona persona2 = new Persona();
-    persona2.setNombre("Roberto");
-    
-    Direccion direccion2 = new Direccion();
-    direccion2.setCalle("Calle 2");
-    direccion2.setCodigoPostal("54321");
-    persona2.setDireccion(direccion2);
 
-    contactoDao.guardarPersona(persona2);
-    persona2.setId(2);
-    //persona2.setNombre("Zapico");
-    //contactoDao.actualizaContacto(persona2);
-    //contactoDao.eliminarDireccion(direccion2);
-    contactoDao.eliminaContacto(persona2);
+        Persona persona2 = new Persona();
+        persona2.setNombre("Roberto");
 
-    
-    
+        Direccion direccion2 = new Direccion();
+        direccion2.setCalle("Calle 2");
+        direccion2.setCodigoPostal("54321");
+        persona2.setDireccion(direccion2);
+
+        contactoDao.guardarPersona(persona2);
+        persona2.setId(2);
+        //persona2.setNombre("Zapico");
+        //contactoDao.actualizaContacto(persona2);
+        //contactoDao.eliminarDireccion(direccion2);
+        //contactoDao.eliminaContacto(persona2);
+        Persona persona1 = contactoDao.obtenPersona(2);
+        System.out.println(persona1.getNombre());
+        
+        List<Persona>personas=contactoDao.obtenListaContactos();
+        for (Persona persona : personas) {
+            System.out.println(persona.getNombre());
+        }
+
     }
 
 }

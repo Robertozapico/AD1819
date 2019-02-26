@@ -6,6 +6,7 @@
 package objetoDao;
 
 import ej02unidiranotaciones.HibernateUtil;
+import java.util.List;
 import mapeo.Direccion;
 import mapeo.Persona;
 import org.hibernate.HibernateException;
@@ -50,7 +51,7 @@ public class ContactoDao {
             iniciarOperacion();
             sesion.update(persona);
             tx.commit();
-            
+
         } catch (HibernateException he) {
             manejaExcepcion(he);
             throw he;
@@ -58,28 +59,50 @@ public class ContactoDao {
             sesion.close();
         }
     }
-    //tengo que borrar la direccion
-    public void eliminaContacto(Persona persona) throws HibernateException 
-{ 
-    try 
-    { 
-        iniciarOperacion(); 
-        sesion.delete(persona); 
-        tx.commit(); 
-    } catch (HibernateException he) 
-    { 
-        manejaExcepcion(he); 
-        throw he; 
-    }finally 
-    { 
-        sesion.close(); 
-    } 
-}
-    
-    public void eliminarDireccion(Direccion direccion){
+
+    //tengo que borrar la direccion pero por como esta hecho no permite borrar
+    public void eliminaContacto(Persona persona) throws HibernateException {
+        try {
+            iniciarOperacion();
+            sesion.delete(persona);
+            tx.commit();
+        } catch (HibernateException he) {
+            manejaExcepcion(he);
+            throw he;
+        } finally {
+            sesion.close();
+        }
+
+    }
+
+    public void eliminarDireccion(Direccion direccion) {
         iniciarOperacion();
         sesion.delete(direccion);
         tx.commit();
     }
 
+    public Persona obtenPersona(long idPersona) throws HibernateException {
+        Persona persona = null;
+
+        try {
+            iniciarOperacion();
+            persona = (Persona) sesion.get(Persona.class, idPersona);
+        } finally {
+            sesion.close();
+        }
+        return persona;
+    }
+
+    public List<Persona> obtenListaContactos() throws HibernateException {
+        List<Persona> listaContactos = null;
+
+        try {
+            iniciarOperacion();
+            listaContactos = sesion.createQuery("from Persona").list();
+        } finally {
+            sesion.close();
+        }
+
+        return listaContactos;
+    }
 }
